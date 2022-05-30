@@ -1,4 +1,4 @@
-import {} from "@/lib/interfaces";
+import {Contact} from "@/lib/interfaces";
 
 async function fetchAPI(query: string, { variables = {} } = {}) {
   try {
@@ -30,4 +30,28 @@ async function fetchAPI(query: string, { variables = {} } = {}) {
   } catch (e) {
     console.error(e);
   }
+}
+
+
+
+export async function getContact(): Promise<Contact> {
+    const data = await fetchAPI(
+        `
+    {
+      contact() {
+        title
+        content
+        form {
+            name
+            mail
+            phone
+            message
+            text_button
+        }
+      }
+    }
+  `
+    );
+
+    return data.contact;
 }
