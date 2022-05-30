@@ -1,6 +1,5 @@
 import React, { ReactElement } from "react";
 import Container from "./Container";
-import Link from "next/link";
 
 function cookies() {
   // @ts-ignore
