@@ -1,4 +1,5 @@
-import {Contact} from "@/lib/interfaces";
+import { Contact } from "@/lib/interfaces";
+import { localization } from "@/lib/constants";
 
 async function fetchAPI(query: string, { variables = {} } = {}) {
   try {
@@ -32,26 +33,27 @@ async function fetchAPI(query: string, { variables = {} } = {}) {
   }
 }
 
-
-
 export async function getContact(): Promise<Contact> {
-    const data = await fetchAPI(
-        `
+  const data = await fetchAPI(
+    `
     {
-      contact() {
-        title
-        content
-        form {
-            name
-            mail
-            phone
-            message
-            text_button
+      contact(locale: "${localization}")  {
+        data {
+          attributes {
+            title
+            content
+            contact_form {
+              name
+              mail
+              phone
+              message
+              button_text
+            }
+          }
         }
       }
     }
   `
-    );
-
-    return data.contact;
+  );
+  return data.contact.data.attributes;
 }

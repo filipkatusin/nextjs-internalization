@@ -15,15 +15,15 @@ interface Format {
 }
 
 export interface Contact {
-  title: string
-  content: string
-  form: Form
+  title: string;
+  content: string;
+  contact_form: Form;
 }
 
 interface Form {
-  name: string
-  mail: string
-  phone: string
-  message: string
-  text_button: string
+  name: string;
+  mail: string;
+  phone: string;
+  message: string;
+  button_text: string;
 }

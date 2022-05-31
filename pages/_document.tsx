@@ -14,7 +14,7 @@ export default class MyDocument extends Document {
             src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA}`}
           />
           {/*<link rel="stylesheet" href="/assets/tailwind.min.css" />*/}
-          <link rel="stylesheet" href="/assets/theme.css" />
+          {/*<link rel="stylesheet" href="/assets/theme.css" />*/}
         </Head>
         <body className="dark_">
           <Main />
