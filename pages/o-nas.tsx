@@ -1,10 +1,26 @@
-export default function ONas() {
-    return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+import Layout from "@/components/Layout";
+import { getAboutUs } from "@/lib/api";
+import { AboutUs } from "@/lib/interfaces";
+
+interface Props {
+  about: AboutUs;
 }
 
+export default function AboutUsPage({ about }: Props) {
+  return (
+    <Layout title={about.title}>
+      <div>
+        <div className="font-bold text-4xl">{about.title}</div>
+        <article dangerouslySetInnerHTML={{ __html: about.content ?? "" }} />
+      </div>
+    </Layout>
+  );
+}
 
 export async function getStaticProps() {
-    return {
-        props: { },
-    };
+  const about = (await getAboutUs()) || [];
+
+  return {
+    props: { about },
+  };
 }

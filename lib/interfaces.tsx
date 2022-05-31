@@ -1,6 +1,11 @@
 export interface StrapiImage {
-  url: string;
-  formats: Formats;
+  data: {
+    attributes: {
+      url: string;
+      formats: Formats;
+      name: string;
+    };
+  };
 }
 
 interface Formats {
@@ -26,4 +31,10 @@ interface Form {
   phone: string;
   message: string;
   button_text: string;
+}
+
+export interface AboutUs {
+  title: string;
+  content: string;
+  image: StrapiImage[];
 }
