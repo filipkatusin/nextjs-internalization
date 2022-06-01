@@ -1,19 +1,14 @@
 import { AboutUs, Contact } from "@/lib/interfaces";
 import { localization } from "@/lib/constants";
 
-async function fetchAPI(query: string, { variables = {} } = {}) {
+async function fetchAPI(url: string) {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/graphql`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}?populate=*&locale=${localization}`,
       {
-        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          query,
-          variables,
-        }),
       }
     );
 
@@ -34,51 +29,11 @@ async function fetchAPI(query: string, { variables = {} } = {}) {
 }
 
 export async function getContact(): Promise<Contact> {
-  const data = await fetchAPI(
-    `
-    {
-      contact(locale: "${localization}")  {
-        data {
-          attributes {
-            title
-            content
-            contact_form {
-              name
-              mail
-              phone
-              message
-              button_text
-            }
-          }
-        }
-      }
-    }
-  `
-  );
-  return data.contact.data.attributes;
+  const data = await fetchAPI(`contact`);
+  return data.attributes;
 }
 
 export async function getAboutUs(): Promise<AboutUs> {
-  const data = await fetchAPI(
-    `
-    {
-      aboutUs(locale: "${localization}")  {
-        data {
-          attributes {
-            title
-            content
-            images {
-              data {
-                attributes {
-                  url
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  `
-  );
-  return data.aboutUs.data.attributes;
+  const data = await fetchAPI(`about-us`);
+  return data.attributes;
 }

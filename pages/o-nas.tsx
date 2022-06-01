@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { getAboutUs } from "@/lib/api";
 import { AboutUs } from "@/lib/interfaces";
+import Container from "@/components/Container";
 
 interface Props {
   about: AboutUs;
@@ -9,10 +10,10 @@ interface Props {
 export default function AboutUsPage({ about }: Props) {
   return (
     <Layout title={about.title}>
-      <div>
+      <Container>
         <div className="font-bold text-4xl">{about.title}</div>
         <article dangerouslySetInnerHTML={{ __html: about.content ?? "" }} />
-      </div>
+      </Container>
     </Layout>
   );
 }
