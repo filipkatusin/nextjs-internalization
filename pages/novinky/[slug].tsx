@@ -1,19 +1,16 @@
-export default function NovinkySlug() {
-    return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+export default function NewsPageSlug() {
+  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
 }
-
 
 export async function getStaticProps() {
-    return {
-        props: { },
-    };
+  return {
+    props: {},
+  };
 }
 
-
 export async function getStaticPaths() {
-
-    return {
-        paths: [],
-        fallback: true,
-    };
+  return {
+    paths: [],
+    fallback: true,
+  };
 }

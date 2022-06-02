@@ -19,6 +19,16 @@ interface Format {
   url: string;
 }
 
+interface ImageLink {
+  image: StrapiImage;
+  link: string;
+}
+
+interface TitleLink {
+  title: string;
+  link: string;
+}
+
 export interface Contact {
   title: string;
   content: string;
@@ -37,4 +47,68 @@ export interface AboutUs {
   title: string;
   content: string;
   image: StrapiImage[];
+}
+
+export interface Titles {
+  title_link: TitleLink[];
+  type: string;
+}
+
+export interface Collections {
+  title: string;
+  card_image: StrapiImage;
+  date: Date;
+  cover_image: StrapiImage;
+  section: Section[];
+  checklist: StrapiImage;
+  info: string;
+  type: string;
+  eshop_link: string;
+}
+
+interface Section {
+  title: string;
+  content: string;
+  image: StrapiImage;
+}
+
+export interface News {
+  title: string;
+  content: string;
+  image: StrapiImage;
+  date: Date;
+  slug: string;
+}
+
+export interface NewPage {
+  title: string;
+  seo: SEO;
+}
+
+interface SEO {
+  metaTitle: string;
+  metaDescription: string;
+  metaImage: StrapiImage;
+  metaSocial: MetaSocial[];
+  keywords: string;
+  metaRobots: string;
+  structuredData: JSON;
+  metaViewport: string;
+  canonicalURL: string;
+}
+
+interface MetaSocial {
+  socialNetwork: string;
+  title: string;
+  description: string;
+  image: StrapiImage;
+}
+
+export interface Footer {
+  title: string;
+  images: StrapiImage;
+  logo: StrapiImage;
+  title_link: TitleLink[];
+  image_link: ImageLink[];
+  rights: string;
 }

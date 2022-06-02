@@ -1,5 +1,5 @@
 import Layout from "@/components/Layout";
-import { getContact } from "@/lib/api";
+import { getContactPage } from "@/lib/api";
 import { Contact } from "@/lib/interfaces";
 
 interface Props {
@@ -18,7 +18,7 @@ export default function ContactPage({ contact }: Props) {
 }
 
 export async function getStaticProps() {
-  const contact = (await getContact()) || [];
+  const contact = (await getContactPage()) || [];
 
   return {
     props: { contact },
