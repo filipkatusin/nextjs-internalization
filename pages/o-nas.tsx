@@ -11,7 +11,7 @@ export default function AboutUsPage({ about }: Props) {
   return (
     <Layout title={about.title}>
       <Container>
-        <div className="font-bold text-4xl">{about.title}</div>
+        <div className="font-bold text-4xl my-10">{about.title}</div>
         <article dangerouslySetInnerHTML={{ __html: about.content ?? "" }} />
       </Container>
     </Layout>
