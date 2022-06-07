@@ -2,10 +2,11 @@ import {
   AboutUs,
   Collections,
   Contact,
-  News,
+  IFooter,
+  Menu,
   NewPage,
+  News,
   Titles,
-  Footer,
 } from "@/lib/interfaces";
 import { localization } from "@/lib/constants";
 
@@ -14,9 +15,9 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
     const res = await fetch(
       `${
         process.env.NEXT_PUBLIC_STRAPI_API_URL
-      }/api/${url}?populate=*&locale=${localization}${
+      }/api/${url}?locale=${localization}${
         slug?.length > 2 ? `&filters[slug]=${slug}` : ""
-      }${type?.length > 2 ? `&filters[type]=${type}` : ""}`,
+      }${type?.length > 2 ? `&filters[type]=${type}` : ""}&populate=deep`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -40,13 +41,46 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
   }
 }
 
+async function fetchAPIMenu() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/navigation/render/navigation-${localization}?type=tree`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (res.status != 200) {
+      new Error("Failed request");
+    }
+
+    const json = await res.json();
+    if (json.errors) {
+      console.error(json.errors);
+      new Error("Failed to fetch APIMenu");
+    }
+
+    return json;
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getMenu(): Promise<Menu[]> {
+  const data = await fetchAPIMenu();
+  console.log(data);
+  return data;
+}
+
 export async function getTitles(type: string): Promise<Titles> {
   const data = await fetchAPI(`titles`, "", type);
   return data[0].attributes;
 }
 
-export async function getFooter(): Promise<Footer> {
-  const data = await fetchAPI(`contact`);
+export async function getFooter(): Promise<IFooter> {
+  const data = await fetchAPI(`footer`);
   return data.attributes;
 }
 

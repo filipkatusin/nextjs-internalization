@@ -104,11 +104,16 @@ interface MetaSocial {
   image: StrapiImage;
 }
 
-export interface Footer {
-  title: string;
-  images: StrapiImage;
+export interface IFooter {
+  logo_title: string;
   logo: StrapiImage;
-  title_link: TitleLink[];
-  image_link: ImageLink[];
+  icons_link: ImageLink[];
+  logo_link: ImageLink[];
   rights: string;
+}
+
+export interface Menu {
+  title: string;
+  path: string;
+  items: Menu[];
 }

@@ -1,14 +1,16 @@
 import Layout from "@/components/Layout";
-import { getContactPage } from "@/lib/api";
-import { Contact } from "@/lib/interfaces";
+import { getContactPage, getFooter, getTitles } from "@/lib/api";
+import { Contact, IFooter, Titles } from "@/lib/interfaces";
 
 interface Props {
   contact: Contact;
+  titles: Titles;
+  footer: IFooter;
 }
 
-export default function ContactPage({ contact }: Props) {
+export default function ContactPage({ contact, titles, footer }: Props) {
   return (
-    <Layout title={contact.title}>
+    <Layout titles={titles} footer={footer} title={contact.title}>
       <div>
         <div className="font-bold text-4xl">{contact.title}</div>
         <article dangerouslySetInnerHTML={{ __html: contact.content ?? "" }} />
@@ -19,8 +21,10 @@ export default function ContactPage({ contact }: Props) {
 
 export async function getStaticProps() {
   const contact = (await getContactPage()) || [];
+  const titles = (await getTitles("footer")) || [];
+  const footer = (await getFooter()) || [];
 
   return {
-    props: { contact },
+    props: { contact, titles, footer },
   };
 }
