@@ -1,7 +1,6 @@
 import React from "react";
 import Meta from "@/components/Meta";
 import Footer from "@/components/Footer";
-import { IFooter, Titles } from "@/lib/interfaces";
 
 interface Props {
   children: any;
@@ -11,8 +10,6 @@ interface Props {
   title?: string;
   image?: string;
   description?: string;
-  footer: IFooter;
-  titles: Titles;
 }
 
 export default function Layout({
@@ -22,8 +19,6 @@ export default function Layout({
   title,
   description,
   image,
-  footer,
-  titles,
 }: Props) {
   return (
     <>
@@ -36,7 +31,7 @@ export default function Layout({
       <div className="min-h-full">
         <main>{children}</main>
       </div>
-      {showFooter && <Footer footer={footer} titles={titles} />}
+      {showFooter && <Footer />}
     </>
   );
 }

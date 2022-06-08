@@ -2,12 +2,11 @@ import Container from "@/components/Container";
 import Layout from "@/components/Layout";
 import Head from "next/head";
 import Link from "next/link";
-import { getFooter, getTitles } from "@/lib/api";
 
-export default function NotFound({ footer, titles }) {
+export default function NotFound() {
   return (
     <>
-      <Layout footer={footer} titles={titles}>
+      <Layout>
         <Head>
           <title>Stránka neexistuje</title>
           <meta name="robots" content="noindex, follow" />
@@ -28,13 +27,4 @@ export default function NotFound({ footer, titles }) {
       </Layout>
     </>
   );
-}
-
-export async function getStaticProps() {
-  const footer = (await getFooter()) || [];
-  const titles = (await getTitles("footer")) || [];
-
-  return {
-    props: { footer, titles },
-  };
 }

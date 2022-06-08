@@ -1,11 +1,20 @@
 import { Menu } from "@/lib/interfaces";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getMenu } from "@/lib/api";
 
-interface Props {
-  menu: Menu[];
-}
+export default function TopMenu() {
+  const [menu, setMenu] = useState<Menu[]>([]);
 
-export default function TopMenu({ menu }: Props) {
+  const getEvents = async () => {
+    const menuData = await getMenu();
+    setMenu(menuData);
+  };
+
+  useEffect(() => {
+    getEvents().then();
+  }, []);
+
   return (
     <div>
       {menu.map((m) => (

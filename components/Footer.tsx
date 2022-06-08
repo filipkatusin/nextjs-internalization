@@ -1,22 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { IFooter, Titles } from "@/lib/interfaces";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
-import SlidesPerView from "@/components/SlidesPerView";
+import { getFooter, getTitles } from "@/lib/api";
 
 function cookies() {
   // @ts-ignore
   window.Osano.cm.showDrawer("osano-cm-dom-info-dialog-open");
 }
 
-interface Props {
-  footer: IFooter;
-  titles: Titles;
-}
+export default function Footer() {
+  const [footer, setFooter] = useState<IFooter>();
+  const [titles, setTitles] = useState<Titles>();
 
-export default function Footer({ footer, titles }: Props) {
+  const getEvents = async () => {
+    const footerData = await getFooter();
+    const titlesData = await getTitles("footer");
+    setFooter(footerData);
+    setTitles(titlesData);
+  };
+
+  useEffect(() => {
+    getEvents().then();
+  }, []);
+
   return (
     <footer>
       <Container withoutTopMargin={true} withoutBottomMargin={true}>

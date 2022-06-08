@@ -69,9 +69,7 @@ async function fetchAPIMenu() {
 }
 
 export async function getMenu(): Promise<Menu[]> {
-  const data = await fetchAPIMenu();
-  console.log(data);
-  return data;
+  return await fetchAPIMenu();
 }
 
 export async function getTitles(type: string): Promise<Titles> {

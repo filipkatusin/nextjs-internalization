@@ -6,7 +6,7 @@ interface Props {
   contact: Contact;
 }
 
-export default function ContactPage({ contact }: Props) {
+export default function MyCardPage({ contact }: Props) {
   return (
     <Layout title={contact.title}>
       <div>
