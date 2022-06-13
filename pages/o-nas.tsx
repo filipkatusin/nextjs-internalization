@@ -14,7 +14,7 @@ export default function AboutUsPage({ about, titles }: Props) {
       <Container>
         <div className="font-bold text-4xl my-10">{about.title}</div>
         <article dangerouslySetInnerHTML={{ __html: about.content ?? "" }} />
-        {titles.title_link.map((t) => (
+        {titles?.title_link?.map((t) => (
           <div>{t.title}</div>
         ))}
       </Container>

@@ -17,7 +17,7 @@ export default function TopMenu() {
 
   return (
     <div>
-      {menu.map((m) => (
+      {menu?.map((m) => (
         <Link href={m.path}>
           <a>{m.title}</a>
         </Link>
