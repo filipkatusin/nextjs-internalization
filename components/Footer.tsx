@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { IFooter, Titles } from "@/lib/interfaces";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
-import { getFooter, getTitles } from "@/lib/api";
+import { footer } from "@/src/data/footer";
+import { titles } from "@/src/data/titles";
 
 function cookies() {
   // @ts-ignore
@@ -12,20 +11,6 @@ function cookies() {
 }
 
 export default function Footer() {
-  const [footer, setFooter] = useState<IFooter>();
-  const [titles, setTitles] = useState<Titles>();
-
-  const getEvents = async () => {
-    const footerData = await getFooter();
-    const titlesData = await getTitles("footer");
-    setFooter(footerData);
-    setTitles(titlesData);
-  };
-
-  useEffect(() => {
-    getEvents().then();
-  }, []);
-
   return (
     <footer>
       <Container withoutTopMargin={true} withoutBottomMargin={true}>
@@ -45,7 +30,7 @@ export default function Footer() {
             interval: 5000,
           }}
         >
-          {footer?.logo_link.map((s, index) => (
+          {footer?.logo_link?.map((s, index) => (
             <SplideSlide key={index}>
               <Link href={s?.link}>
                 <a target="_blank">
@@ -67,15 +52,15 @@ export default function Footer() {
         {/*<div>TODO: Menu</div>*/}
       </section>
       <section>
-        <div>
+        {/*<div>
           {titles?.title_link.map((title, index) => (
             <Link href={title.link}>
               <a key={index}>{title.title}</a>
             </Link>
           ))}
-        </div>
+        </div>*/}
         <div>
-          {footer?.icons_link.map((icon, index) => (
+          {footer?.icons_link?.map((icon, index) => (
             <Link href={icon.link}>
               <a target="_blank" key={index}>
                 <img
