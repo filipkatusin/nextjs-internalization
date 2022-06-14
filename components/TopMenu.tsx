@@ -3,7 +3,7 @@ import { menu } from "@/src/data/menu";
 
 export default function TopMenu() {
   return (
-    menu?.length > 1 && (
+    menu && (
       <div>
         {menu?.map((m, index) => (
           <Link key={index} href={m.path}>
