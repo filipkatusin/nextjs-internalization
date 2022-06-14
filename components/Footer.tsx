@@ -17,33 +17,17 @@ export default function Footer() {
         <div>{footer?.logo_title}</div>
       </Container>
       <Container>
-        <Splide
-          className="w-80 h-80"
-          options={{
-            speed: 2000,
-            rewind: true,
-            type: "loop",
-            perPage: 1,
-            pauseOnFocus: false,
-            pauseOnHover: false,
-            autoplay: true,
-            interval: 5000,
-          }}
-        >
-          {footer?.logo_link?.map((s, index) => (
-            <SplideSlide key={index}>
-              <Link href={s?.link}>
-                <a target="_blank">
-                  <img
-                    src={getStrapiUrl(s.image.data.attributes.url)}
-                    alt={""}
-                    className="object-cover w-full h-full"
-                  />
-                </a>
-              </Link>
-            </SplideSlide>
-          ))}
-        </Splide>
+        {footer?.logo_link?.map((s, index) => (
+          <Link key={index} href={s?.link}>
+            <a target="_blank">
+              <img
+                src={getStrapiUrl(s.image.data.attributes.url)}
+                alt={""}
+                className="object-cover w-full h-full"
+              />
+            </a>
+          </Link>
+        ))}
       </Container>
       <section>
         <div>
