@@ -56,27 +56,19 @@ export interface Titles {
 
 export interface Collections {
   title: string;
-  card_image: StrapiImage;
-  date: Date;
-  cover_image: StrapiImage;
-  section: Section[];
-  checklist: StrapiImage;
-  info: string;
-  type: string;
-  eshop_link: string;
-}
-
-interface Section {
-  title: string;
-  content: string;
+  title_color: string;
+  title_background_color: string;
   image: StrapiImage;
+  button_text: string;
+  slug: string;
 }
 
 export interface News {
   title: string;
   content: string;
-  image: StrapiImage;
   date: Date;
+  date_color: string;
+  date_background_color: string;
   slug: string;
 }
 
@@ -116,4 +108,63 @@ export interface Menu {
   title: string;
   path: string;
   items: Menu[];
+}
+
+export interface MainPage {
+  link_section: LinkSection[];
+  product_section: TitleButton;
+  news_section: TitleButton;
+  about_section: {
+    content: string;
+    logo: StrapiImage;
+    button_title: string;
+    button_link: string;
+  };
+  collections: CollectionsRelation;
+  news: NewsRelation;
+  products: ProductsRelation;
+}
+
+interface CollectionsRelation {
+  data: CollectionRelation[];
+}
+
+interface CollectionRelation {
+  attributes: Collections;
+}
+
+interface NewsRelation {
+  data: NewRelation[];
+}
+
+interface NewRelation {
+  attributes: News;
+}
+
+interface ProductsRelation {
+  data: ProductRelation[];
+}
+
+interface ProductRelation {
+  attributes: Products;
+}
+
+export interface Products {
+  title: string;
+  image: StrapiImage;
+  slug: string;
+}
+
+interface LinkSection {
+  title: string;
+  content: string;
+  icon: StrapiImage;
+  button_title: string;
+  button_link: string;
+}
+
+interface TitleButton {
+  title: string;
+  button_title: string;
+  button_link: string;
 }

@@ -3,6 +3,7 @@ import {
   Collections,
   Contact,
   IFooter,
+  MainPage,
   Menu,
   NewPage,
   News,
@@ -93,7 +94,7 @@ export async function getAboutUsPage(): Promise<AboutUs> {
 }
 
 export async function getCollectionPage(): Promise<NewPage> {
-  const data = await fetchAPI(`new-page`);
+  const data = await fetchAPI(`collection-page`);
   return data?.attributes;
 }
 
@@ -119,5 +120,10 @@ export async function getNewsBySlug(slug: string): Promise<News> {
 
 export async function getNewPage(): Promise<NewPage> {
   const data = await fetchAPI(`new-page`);
+  return data?.attributes;
+}
+
+export async function getMainPage(): Promise<MainPage> {
+  const data = await fetchAPI(`main-page`);
   return data?.attributes;
 }

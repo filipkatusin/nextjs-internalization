@@ -1,4 +1,3 @@
-import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
@@ -13,7 +12,7 @@ function cookies() {
 export default function Footer() {
   return (
     <footer>
-      <Container withoutTopMargin={true} withoutBottomMargin={true}>
+      <Container>
         <div>{footer?.logo_title}</div>
       </Container>
       <Container>
@@ -31,7 +30,10 @@ export default function Footer() {
       </Container>
       <section>
         <div>
-          <img src={getStrapiUrl(footer?.logo.data.attributes.url)} alt={""} />
+          <img
+            src={getStrapiUrl(footer?.logo?.data?.attributes?.url)}
+            alt={""}
+          />
         </div>
         {/*<div>TODO: Menu</div>*/}
       </section>

@@ -1,6 +1,7 @@
 import "@splidejs/react-splide/css";
 import "react-image-lightbox/style.css";
 import "@/styles/main.css";
+import "@/styles/splide.css";
 import { useEffect } from "react";
 import { Router } from "next/router";
 import { isProduction } from "@/lib/utils";
