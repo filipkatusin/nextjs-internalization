@@ -1,8 +1,10 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  purge: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
-  plugins: [require("@tailwindcss/custom-forms")],
+  content: [
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
       flex: {
