@@ -15,9 +15,29 @@ h1, h2, h3, h4, h5 {
 
 .container {
     width: 90%;
-    max-width: 1280px !important;
     @media (max-width: 1024px) {
         width: 95%;
+    }
+    @media (max-width: 1560px) {
+        max-width: 1280px !important;
+    }
+    @media (min-width: 1561px) {
+        max-width: 1480px !important;
+    }
+}
+
+.container-products {
+    @media (max-width: 1024px) {
+        width: 95%;
+        margin-left: 5%;
+    }
+    @media (max-width: 1560px) {
+        width: 97%;
+        margin-left: 3%;
+    }
+    @media (min-width: 1561px) {
+        width: 92%;
+        margin-left: 8%;
     }
 }
 
@@ -26,14 +46,14 @@ h1 {
 }
 
 h2 {
-    @apply text-2xl md:text-3xl lg:text-4xl xl:text-6xl font-bold
+    @apply text-5xl xl:text-6xl font-bold
 }
 
 h4 {
-    @apply text-2xl md:text-3xl lg:text-4xl xl:text-3xl font-semibold
+    @apply text-3xl lg:text-4xl xl:text-3xl font-semibold
 }
 h5 {
-    @apply  md:text-lg lg:text-xl xl:text-2xl font-semibold
+    @apply  md:text-lg lg:text-xl text-xl font-semibold
 }
 
 .date-corner{

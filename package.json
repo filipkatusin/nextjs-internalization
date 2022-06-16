@@ -9,8 +9,8 @@
     "external-data": "npm run exec src/bin/external-data.ts",
     "external-data:dev": "npm run exec:dev src/bin/external-data.ts && git update-index --skip-worktree -- src/data/*.json",
     "external-data:dev-cleanup": "git update-index --no-skip-worktree -- src/data/*.json && git co -- src/data/*.json",
-    "exec": "DOTENV_CONFIG_PATH=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js -T",
-    "exec:dev": "DOTENV_CONFIG_PATH=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js"
+    "exec": "NODE_ENV=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js -T",
+    "exec:dev": "NODE_ENV=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js"
   },
   "dependencies": {
     "@splidejs/react-splide": "^0.7.7",
