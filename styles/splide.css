@@ -22,20 +22,19 @@
 
     .splide__arrow--prev {
         left: unset;
-        top: -60px !important;
         height: 3rem;
         width: 3rem;
+        top: -60px !important;
         @media (min-width: 1661px) {
-            right: 18rem !important
+            right: 18rem !important;
         }
         @media (max-width: 1660px) {
-            right: 9rem !important
+            right: 9rem !important;
         }
         @media (max-width: 1024px) {
-            right: 3.2rem !important
+            right: 3.2rem !important;
+            top: -50px !important;
         }
-
-
     }
 
     .splide__arrow--next {
@@ -50,6 +49,7 @@
         }
         @media (max-width: 1024px) {
             right: 0.4rem !important;
+            top: -50px !important;
         }
 
 
