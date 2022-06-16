@@ -1,4 +1,4 @@
-import { Splide, SplideSlide, SplideTrack } from "@splidejs/react-splide";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { getMainPage } from "@/lib/api";
 import { MainPage } from "@/lib/interfaces";
 import Image from "next/image";
@@ -34,7 +34,7 @@ export default function HomePage({ main }: Props) {
           gap: 30,
           padding:
             windowWidth > 1024
-              ? { left: "33%", right: "33%" }
+              ? { left: "32%", right: "32%" }
               : windowWidth > 600
               ? { left: "20%", right: "20%" }
               : { left: "0%", right: "0%" },
@@ -125,7 +125,6 @@ export default function HomePage({ main }: Props) {
           speed: 2000,
           rewind: true,
           perPage: SlidesPerView(),
-          type: "loop",
           pauseOnFocus: false,
           pauseOnHover: false,
           autoplay: true,
@@ -141,30 +140,20 @@ export default function HomePage({ main }: Props) {
               : { left: "0%", right: "3%" },
           gap: 20,
         }}
-        hasTrack={false}
+        className="splide-products container-products"
       >
-        <SplideTrack className="container-products">
-          {main.products?.data.map((product, index) => (
-            <SplideSlide key={index}>
-              <section key={index}>
-                <div className="h-[420px] relative">
-                  <Image
-                    src={product.attributes.image.data.attributes.url}
-                    layout={"fill"}
-                    objectFit="contain"
-                  />
-                </div>
-                <h5 className="text-center px-10">
-                  {product.attributes.title}
-                </h5>
-              </section>
-            </SplideSlide>
-          ))}
-        </SplideTrack>
-        <div className="splide__arrows">
-          <button className="splide__arrow splide__arrow--prev">Prev</button>
-          <button className="splide__arrow splide__arrow--next">Next</button>
-        </div>
+        {main.products?.data.map((product, index) => (
+          <SplideSlide key={index}>
+            <div className="h-[420px] relative">
+              <Image
+                src={product.attributes.image.data.attributes.url}
+                layout={"fill"}
+                objectFit="contain"
+              />
+            </div>
+            <h5 className="text-center px-10">{product.attributes.title}</h5>
+          </SplideSlide>
+        ))}
       </Splide>
       <Container className="mt-10 flex justify-center sm:justify-start">
         <Link href={main?.product_section?.button_link ?? ""}>

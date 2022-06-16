@@ -15,3 +15,52 @@
         width: 3rem;
     }
 }
+
+.splide-products {
+    position: relative;
+    width: auto;
+
+    .splide__arrow--prev {
+        left: unset;
+        top: -60px !important;
+        height: 3rem;
+        width: 3rem;
+        @media (min-width: 1661px) {
+            right: 18rem !important
+        }
+        @media (max-width: 1660px) {
+            right: 9rem !important
+        }
+        @media (max-width: 1024px) {
+            right: 3.2rem !important
+        }
+
+
+    }
+
+    .splide__arrow--next {
+        top: -60px !important;
+        height: 3rem;
+        width: 3rem;
+        @media (min-width: 1661px) {
+            right: 15.1rem !important
+        }
+        @media (max-width: 1660px) {
+            right: 6.1rem !important
+        }
+        @media (max-width: 1024px) {
+            right: 0.4rem !important;
+        }
+
+
+    }
+
+    .splide__arrow {
+        border: 2px solid black;
+        background-color: white !important;
+        border-radius: 0 !important;
+        opacity: 1;
+        height: 3rem;
+        width: 3rem;
+    }
+}
