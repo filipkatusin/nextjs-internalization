@@ -71,7 +71,7 @@ async function fetchAPIMenu() {
 }
 
 export async function getMenu(): Promise<Menu[]> {
-  return fetchAPIMenu();
+  return await fetchAPIMenu();
 }
 
 export async function getTitles(type: string): Promise<Titles> {
