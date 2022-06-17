@@ -1,3 +1,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face { font-family: Satoshi-Bold; font-weight: 600; src: url("../public/fonts/Satoshi-Variable.ttf") }
+@font-face { font-family: Satoshi-Light; src: url("../public/fonts/Satoshi-Variable.ttf") }
+
+html {
+    font-family: Satoshi-Light, sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: Satoshi-Bold, sans-serif;
+}
+
+.container {
+    width: 90%;
+    @media (min-width: 1561px) {
+        max-width: 1480px !important;
+    }
+    @media (max-width: 1560px) {
+        max-width: 1280px !important;
+    }
+    @media (max-width: 1024px) {
+        width: 95%;
+    }
+}
+
+.container-products {
+    @media (min-width: 1561px) {
+        width: 92%;
+        margin-left: 8%;
+    }
+    @media (max-width: 1560px) {
+        width: 97%;
+        margin-left: 3%;
+    }
+    @media (max-width: 1024px) {
+        width: 95%;
+        margin-left: 5%;
+    }
+}
+
+h1 {
+    @apply text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold
+}
+
+h2 {
+    @apply text-5xl xl:text-6xl font-bold
+}
+
+h4 {
+    @apply text-3xl lg:text-4xl xl:text-3xl font-semibold
+}
+h5 {
+    @apply  md:text-lg lg:text-xl text-xl font-semibold
+}
+
+.date-corner{
+    background: red;
+    position: relative;
+}
+
+.date-corner:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    border-top: 10px solid #292929;
+    border-left: 10px solid transparent;
+    width: 0;
+}
+
+.collections-corner {
+    -webkit-clip-path: polygon(0 0, 70% 0, 100% 30%, 100% 100%, 0 100%);
+    clip-path: polygon(0 0, 90% 0, 100% 20%, 100% 100%, 0 100%);
+}
+
+
+.bold-text{
+    font-family: Satoshi-Bold, sans-serif;
+}

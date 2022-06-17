@@ -1,6 +1,10 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
+  content: [
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+  ],
   purge: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("@tailwindcss/custom-forms")],
   theme: {
@@ -41,9 +45,9 @@ module.exports = {
       fontSize: {
         // '4xl': '2.25rem',
         "5xl": "2.5rem",
-        "6xl": "2.75rem",
+        "6xl": "3.5rem",
         "7xl": "4.5rem",
-        "8xl": "6.25rem",
+        "8xl": "5.5rem",
       },
       boxShadow: {
         small: "0 5px 10px rgba(0, 0, 0, 0.12)",

@@ -3,12 +3,13 @@ import {
   Collections,
   Contact,
   IFooter,
+  MainPage,
   Menu,
   NewPage,
   News,
   Titles,
 } from "@/lib/interfaces";
-import { localization } from "@/lib/constants";
+import { localization } from "../lib/constants";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
   try {
@@ -16,8 +17,8 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
       `${
         process.env.NEXT_PUBLIC_STRAPI_API_URL
       }/api/${url}?locale=${localization}${
-        slug?.length > 2 ? `&filters[slug]=${slug}` : ""
-      }${type?.length > 2 ? `&filters[type]=${type}` : ""}&populate=deep`,
+        slug ? `&filters[slug]=${slug}` : ""
+      }${type ? `&filters[type]=${type}` : ""}&populate=deep`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -69,12 +70,12 @@ async function fetchAPIMenu() {
 }
 
 export async function getMenu(): Promise<Menu[]> {
-  return await fetchAPIMenu();
+  return fetchAPIMenu();
 }
 
 export async function getTitles(type: string): Promise<Titles> {
   const data = await fetchAPI(`titles`, "", type);
-  return data[0]?.attributes;
+  return data?.[0]?.attributes;
 }
 
 export async function getFooter(): Promise<IFooter> {
@@ -93,7 +94,7 @@ export async function getAboutUsPage(): Promise<AboutUs> {
 }
 
 export async function getCollectionPage(): Promise<NewPage> {
-  const data = await fetchAPI(`new-page`);
+  const data = await fetchAPI(`collection-page`);
   return data?.attributes;
 }
 
@@ -119,5 +120,10 @@ export async function getNewsBySlug(slug: string): Promise<News> {
 
 export async function getNewPage(): Promise<NewPage> {
   const data = await fetchAPI(`new-page`);
+  return data?.attributes;
+}
+
+export async function getMainPage(): Promise<MainPage> {
+  const data = await fetchAPI(`main-page`);
   return data?.attributes;
 }

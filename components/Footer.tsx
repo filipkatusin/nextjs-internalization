@@ -4,6 +4,8 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
+import { footer } from "@/src/data/footer";
+import { titles } from "@/src/data/titles";
 import { getFooter, getTitles } from "@/lib/api";
 import { FooterForm } from "@/components/FooterForm";
 

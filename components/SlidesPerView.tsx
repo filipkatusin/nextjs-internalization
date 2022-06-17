@@ -15,7 +15,7 @@ export default function SlidesPerView() {
       setSlidesPerView(1);
     } else if (1000 > windowWidth) {
       setSlidesPerView(2);
-    } else if (1300 > windowWidth) {
+    } else if (1400 > windowWidth) {
       setSlidesPerView(3);
     } else {
       setSlidesPerView(4);
