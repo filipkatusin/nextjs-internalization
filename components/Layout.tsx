@@ -31,7 +31,7 @@ export default function Layout({
       <div className="min-h-full">
         <main>{children}</main>
       </div>
-      {showFooter && <Footer />}
+      {/*{showFooter && <Footer />}*/}
     </>
   );
 }

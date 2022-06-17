@@ -1,11 +1,7 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  content: [
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./pages/**/*.{js,ts,jsx,tsx}",
-  ],
-  purge: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
+  content: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("@tailwindcss/custom-forms")],
   theme: {
     extend: {
