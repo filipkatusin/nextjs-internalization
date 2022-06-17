@@ -7,6 +7,7 @@ import Link from "next/link";
 import useWindowDimensions from "@/components/useWindowDimensions";
 import SlidesPerView from "@/components/SlidesPerView";
 import Layout from "@/components/Layout";
+import TextEllipsis from "react-text-ellipsis";
 
 interface Props {
   main: MainPage;
@@ -23,19 +24,19 @@ export default function HomePage({ main }: Props) {
     <Layout>
       <Splide
         options={{
-          speed: 2000,
+          speed: 1500,
           rewind: true,
           type: "loop",
           perPage: 1,
-          pauseOnFocus: false,
-          pauseOnHover: false,
+          pauseOnFocus: true,
+          pauseOnHover: true,
           autoplay: true,
           interval: 5000,
           pagination: false,
           gap: 30,
           dragMinThreshold: {
-            touch: 500,
-            mouse: 0,
+            touch: 10,
+            mouse: 10,
           },
           padding:
             windowWidth > 1024
@@ -65,11 +66,19 @@ export default function HomePage({ main }: Props) {
                   backgroundColor:
                     collection?.attributes?.title_background_color,
                 }}
-                className="absolute bottom-1/3 md:top-1/2 left-14 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden"
+                className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden"
               >
-                {collection?.attributes?.title}
+                <TextEllipsis
+                  lines={2}
+                  tag={"div"}
+                  ellipsisChars={"..."}
+                  tagClass={"className"}
+                  debounceTimeoutOnResize={200}
+                >
+                  {collection?.attributes?.title}
+                </TextEllipsis>
               </h5>
-              <div className="absolute bottom-5 left-14 md:left-10 z-50">
+              <div className="absolute bottom-5 right-2 md:left-10 z-50">
                 <Link href={collection?.attributes?.slug ?? ""}>
                   <a className="mt-8">
                     <button className="border border-white text-white px-5 py-3 flex justify-center  items-center">
@@ -127,7 +136,7 @@ export default function HomePage({ main }: Props) {
       </Container>
       <Splide
         options={{
-          speed: 2000,
+          speed: 1500,
           rewind: true,
           perPage: SlidesPerView(),
           pauseOnFocus: false,
@@ -135,6 +144,10 @@ export default function HomePage({ main }: Props) {
           autoplay: true,
           interval: 5000,
           pagination: false,
+          dragMinThreshold: {
+            touch: 10,
+            mouse: 10,
+          },
           padding:
             windowWidth > 1400
               ? { left: "", right: "10%" }
