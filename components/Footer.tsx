@@ -14,9 +14,7 @@ function cookies() {
   window.Osano.cm.showDrawer("osano-cm-dom-info-dialog-open");
 }
 
-
-export default function Footer() {}
-/*export default function Footer() {
+export default function Footer() {
   const [titles, setTitles] = useState<Titles>();
 
   const getEvents = async () => {
@@ -34,60 +32,72 @@ export default function Footer() {}
       <Container className={"py-12 md:py-24 "}>
         {footer?.logo && (
           <img
-            src={getStrapiUrl(footer?.logo?.data.attributes.url)}
+            src={getStrapiUrl(footer?.logo?.data?.attributes?.url)}
             alt={"logo"}
             className={"mb-8 md:mb-12"}
           />
         )}
-        <div className={"border-top-bottom py-16 px-2"}>
+        <div
+          className={
+            "border-top-bottom py-16 px-2 flex flex-col xl:flex-row items-center space-y-8 xl:space-y-0"
+          }
+        >
           <div
             className={
-              "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-[1fr_1fr_1fr_2fr] gap-4 gap-y-12 "
+              "md:w-full lg:flex lg:flex-3 md:flex-row md:justify-around space-y-8 lg:space-y-0"
             }
           >
-            <div>
-              {footer?.contact && (
-                <div>
-                  <h4 className={"font-bold mb-4 lg:text-lg"}>
-                    {footer?.contact?.title}
-                  </h4>
-                  <ul>
-                    {footer?.contact?.title_value?.map((item, index) => (
-                      <li
-                        key={index}
-                        className={"text-black font-medium lg:text-lg"}
-                      >
-                        {item.title}:
-                        <span className={"underline ml-2"}>{item.value}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-
-            {footer?.section?.map((section, index) => (
-              <div key={index}>
-                <h4 className={"font-bold lg:text-lg mb-4"}>{section.title}</h4>
-                <ul className={"flex flex-col gap-y-4"}>
-                  {section?.link?.map((item, index_2) => (
-                    <li key={index_2}>
-                      <Link href={item?.link}>
-                        <a
-                          className={
-                            "text-black lg:text-lg font-medium opacity-60 transition-opacity hover:opacity-100"
-                          }
-                        >
-                          {item?.title}
-                        </a>
-                      </Link>
+            {footer?.contact && (
+              <div className={"text-center md:flex-1"}>
+                <h4 className={"font-bold mb-2 md:mb-4 lg:text-lg"}>
+                  {footer?.contact?.title}
+                </h4>
+                <ul>
+                  {footer?.contact?.title_value?.map((item, index) => (
+                    <li
+                      key={index}
+                      className={"text-black font-medium lg:text-lg"}
+                    >
+                      {item.title}:
+                      <span className={"underline ml-2"}>{item.value}</span>
                     </li>
                   ))}
                 </ul>
               </div>
-            ))}
+            )}
 
-            <div className={"col-span-2 lg:col-span-1"}>
+            <div
+              className={
+                "md:flex md:w-full md:justify-around md:flex-2 space-y-8 md:space-y-0"
+              }
+            >
+              {footer?.section?.map((section, index) => (
+                <div key={index} className={"text-center"}>
+                  <h4 className={"font-bold lg:text-lg mb-2 md:mb-4"}>
+                    {section.title}
+                  </h4>
+                  <ul className={"flex flex-col gap-y-2 md:gap-y-4"}>
+                    {section?.link?.map((item, index_2) => (
+                      <li key={index_2}>
+                        <Link href={item?.link}>
+                          <a
+                            className={
+                              "text-black lg:text-lg font-medium opacity-60 transition-opacity hover:opacity-100"
+                            }
+                          >
+                            {item?.title}
+                          </a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
+            <div>
               <h5 className={"text-black font-bold"}>
                 {footer?.newslatter?.title}
               </h5>
@@ -102,4 +112,4 @@ export default function Footer() {}
       </Container>
     </footer>
   );
-}*/
+}
