@@ -32,6 +32,10 @@ export default function HomePage({ main }: Props) {
           interval: 5000,
           pagination: false,
           gap: 30,
+          dragMinThreshold: {
+            touch: 50,
+            mouse: 0,
+          },
           padding:
             windowWidth > 1024
               ? { left: "32%", right: "32%" }
