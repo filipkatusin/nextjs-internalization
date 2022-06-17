@@ -6,6 +6,7 @@ import Container from "@/components/Container";
 import Link from "next/link";
 import useWindowDimensions from "@/components/useWindowDimensions";
 import SlidesPerView from "@/components/SlidesPerView";
+import Layout from "@/components/Layout";
 
 interface Props {
   main: MainPage;
@@ -19,7 +20,7 @@ export default function HomePage({ main }: Props) {
   }
 
   return (
-    <>
+    <Layout>
       <Splide
         options={{
           speed: 2000,
@@ -269,7 +270,7 @@ export default function HomePage({ main }: Props) {
           </div>
         </Link>
       </Container>
-    </>
+    </Layout>
   );
 }
 
