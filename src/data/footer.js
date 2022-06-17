@@ -1,1 +1,1 @@
-export const footer = []
+export const footer = {"logo_title":"Karty","rights":"Vsetko","createdAt":"2022-06-13T17:21:27.782Z","updatedAt":"2022-06-13T17:59:22.353Z","publishedAt":"2022-06-13T17:59:22.346Z","vuid":"ec9e0354-c368-4ad2-93b8-07cc120ba235","versionNumber":1,"isVisibleInListView":true,"locale":"sk","logo":{"data":null},"icons_link":[],"logo_link":[],"versions":{"data":[]},"localizations":{"data":[]}}

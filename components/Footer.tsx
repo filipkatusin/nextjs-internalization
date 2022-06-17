@@ -14,7 +14,9 @@ function cookies() {
   window.Osano.cm.showDrawer("osano-cm-dom-info-dialog-open");
 }
 
-export default function Footer() {
+
+export default function Footer() {}
+/*export default function Footer() {
   const [titles, setTitles] = useState<Titles>();
 
   const getEvents = async () => {
@@ -116,4 +118,4 @@ export default function Footer() {
       </Container>
     </footer>
   );
-}
+}*/
