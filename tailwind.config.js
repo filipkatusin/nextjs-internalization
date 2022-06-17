@@ -1,6 +1,8 @@
 module.exports = {
+  mode: "jit",
   darkMode: "class",
   purge: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
+  plugins: [require("@tailwindcss/custom-forms")],
   theme: {
     extend: {
       flex: {
@@ -29,7 +31,8 @@ module.exports = {
         yellow: "#ffc82c",
         "gray-dark": "#273444",
         gray: "#8492a6",
-        "gray-light": "#d3dce6",
+        "gray-footer": "#F8F8F8",
+        black: "#191919",
       },
       fontFamily: {
         sans: ["Graphik", "sans-serif"],

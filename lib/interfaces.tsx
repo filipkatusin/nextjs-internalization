@@ -110,6 +110,31 @@ export interface IFooter {
   icons_link: ImageLink[];
   logo_link: ImageLink[];
   rights: string;
+  contact: FooterContact;
+  section: FooterSection[];
+  newslatter: Newslatter;
+}
+
+export interface FooterContact {
+  title: string;
+  title_value: Title_value[];
+}
+
+export interface FooterSection {
+  title: string;
+  link: TitleLink[];
+}
+
+export interface Title_value {
+  title: string;
+  value: string;
+}
+
+export interface Newslatter {
+  title: string;
+  input_placeholder: string;
+  button_text: string;
+  approval_text: string;
 }
 
 export interface Menu {
