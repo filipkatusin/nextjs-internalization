@@ -34,7 +34,7 @@ export default function HomePage({ main }: Props) {
           pagination: false,
           gap: 30,
           dragMinThreshold: {
-            touch: 50,
+            touch: 500,
             mouse: 0,
           },
           padding:
