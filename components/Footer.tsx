@@ -68,8 +68,8 @@ export default function Footer() {
               <div key={index}>
                 <h4 className={"font-bold lg:text-lg mb-4"}>{section.title}</h4>
                 <ul className={"flex flex-col gap-y-4"}>
-                  {section?.link?.map((item, index) => (
-                    <li key={index}>
+                  {section?.link?.map((item, index_2) => (
+                    <li key={index_2}>
                       <Link href={item?.link}>
                         <a
                           className={
