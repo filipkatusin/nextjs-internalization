@@ -15,13 +15,11 @@ function cookies() {
 }
 
 export default function Footer() {
-  const [footer, setFooter] = useState<IFooter>();
   const [titles, setTitles] = useState<Titles>();
 
   const getEvents = async () => {
     const footerData = await getFooter();
     const titlesData = await getTitles("footer");
-    setFooter(footerData);
     setTitles(titlesData);
   };
 
@@ -31,7 +29,7 @@ export default function Footer() {
 
   return (
     <footer className={"bg-gray-footer"}>
-      <Container withoutBottomMargin={true} className={"py-12 md:py-24 "}>
+      <Container className={"py-12 md:py-24 "}>
         {footer?.logo && (
           <img
             src={getStrapiUrl(footer?.logo?.data.attributes.url)}
