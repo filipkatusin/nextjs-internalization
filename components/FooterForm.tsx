@@ -11,7 +11,7 @@ export const FooterForm: React.FC<FooterFormType> = ({
   className,
 }) => {
   return (
-    <form className={`${className} max-w-[450px]`}>
+    <form className={`${className} max-w-[400px]`}>
       <div className={"flex my-4 bg-green"}>
         <input
           type="text"

@@ -49,7 +49,7 @@ export default function Footer() {
           >
             {footer?.contact && (
               <div className={"text-center lg:text-left md:flex-1"}>
-                <h4 className={"font-bold mb-2 md:mb-4 lg:text-lg"}>
+                <h4 className={"font-bold mb-2 md:mb-4 text-xl lg:text-lg"}>
                   {footer?.contact?.title}
                 </h4>
                 <ul>
@@ -73,7 +73,7 @@ export default function Footer() {
             >
               {footer?.section?.map((section, index) => (
                 <div key={index} className={"text-center lg:text-left"}>
-                  <h4 className={"font-bold lg:text-lg mb-2 md:mb-4"}>
+                  <h4 className={"font-bold text-xl lg:text-lg mb-2 md:mb-4"}>
                     {section.title}
                   </h4>
                   <ul className={"flex flex-col gap-y-2 md:gap-y-4"}>
@@ -106,7 +106,11 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className={"text-black lg:text-lg font-medium opacity-60 pt-8"}>
+        <p
+          className={
+            "text-black text-center xl:text-left lg:text-lg font-medium opacity-60 pt-8"
+          }
+        >
           {footer?.rights}
         </p>
       </Container>
