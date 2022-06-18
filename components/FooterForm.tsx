@@ -11,7 +11,7 @@ export const FooterForm: React.FC<FooterFormType> = ({
   className,
 }) => {
   return (
-    <form className={`${className} max-w-[400px]`}>
+    <form className={`${className} max-w-[450px]`}>
       <div className={"flex my-4 bg-green"}>
         <input
           type="text"
@@ -36,7 +36,7 @@ export const FooterForm: React.FC<FooterFormType> = ({
               "checkmark w-6 h-6 mr-2 inline-block order-2 border-black border-2 cursor-pointer"
             }
           ></div>
-          <p className={"flex-5 text-sm"}>
+          <p className={"flex-5 text-sm font-medium"}>
             {footerData?.newslatter?.approval_text}
           </p>
         </div>

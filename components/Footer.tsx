@@ -29,17 +29,17 @@ export default function Footer() {
 
   return (
     <footer className={"bg-gray-footer"}>
-      <Container className={"py-12 md:py-24 "}>
+      <Container className={"py-12 md:py-28 "}>
         {footer?.logo && (
           <img
             src={getStrapiUrl(footer?.logo?.data?.attributes?.url)}
             alt={"logo"}
-            className={"mb-8 md:mb-12"}
+            className={"mb-8 md:mb-16"}
           />
         )}
         <div
           className={
-            "border-top-bottom py-16 px-2 flex flex-col xl:flex-row items-center space-y-8 xl:space-y-0"
+            "border-top-bottom py-16 lg:py-20 px-2 flex flex-col xl:flex-row items-center space-y-8 xl:space-y-0 xl:items-start"
           }
         >
           <div
@@ -48,7 +48,7 @@ export default function Footer() {
             }
           >
             {footer?.contact && (
-              <div className={"text-center md:flex-1"}>
+              <div className={"text-center lg:text-left md:flex-1"}>
                 <h4 className={"font-bold mb-2 md:mb-4 lg:text-lg"}>
                   {footer?.contact?.title}
                 </h4>
@@ -72,7 +72,7 @@ export default function Footer() {
               }
             >
               {footer?.section?.map((section, index) => (
-                <div key={index} className={"text-center"}>
+                <div key={index} className={"text-center lg:text-left"}>
                   <h4 className={"font-bold lg:text-lg mb-2 md:mb-4"}>
                     {section.title}
                   </h4>
@@ -98,7 +98,7 @@ export default function Footer() {
 
           <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
             <div>
-              <h5 className={"text-black font-bold"}>
+              <h5 className={"text-black text-base font-bold"}>
                 {footer?.newslatter?.title}
               </h5>
               <FooterForm footerData={footer} />
