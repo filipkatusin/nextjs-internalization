@@ -70,9 +70,9 @@ export default function Meta({
       )}
 
       {/* cookies */}
-      {isProduction && (
-        <script src="https://cmp.osano.com/16CVroSfyRw7C8hnN/a01051fc-d7f7-4939-b0a3-0ca8178d1fbc/osano.js" />
-      )}
+      {/*{isProduction && (*/}
+      {/*  <script src="https://cmp.osano.com/16CVroSfyRw7C8hnN/a01051fc-d7f7-4939-b0a3-0ca8178d1fbc/osano.js" />*/}
+      {/*)}*/}
     </Head>
   );
 }
