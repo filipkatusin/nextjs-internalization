@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { Titles } from "@/lib/interfaces";
+import React from "react";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
-import { getFooter, getTitles } from "@/lib/api";
 import { FooterForm } from "@/components/FooterForm";
 
 function cookies() {
@@ -13,18 +11,6 @@ function cookies() {
 }
 
 export default function Footer() {
-  const [titles, setTitles] = useState<Titles>();
-
-  const getEvents = async () => {
-    const footerData = await getFooter();
-    const titlesData = await getTitles("footer");
-    setTitles(titlesData);
-  };
-
-  useEffect(() => {
-    getEvents().then();
-  }, []);
-
   return (
     <footer className={"bg-gray-footer"}>
       <Container className={"py-12 md:py-28 "}>

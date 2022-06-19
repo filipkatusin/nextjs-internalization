@@ -10,7 +10,7 @@ interface Props {
 export default function ContactPage({ contact }: Props) {
   return (
     <Layout title={contact.title}>
-      <TopMenu></TopMenu>
+      <TopMenu />
       <div className={`min-h-screen`}>
         <div className="font-bold text-4xl">{contact.title}</div>
         <article dangerouslySetInnerHTML={{ __html: contact.content ?? "" }} />

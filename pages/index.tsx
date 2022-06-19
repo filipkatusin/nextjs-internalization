@@ -25,9 +25,8 @@ export default function HomePage({ main }: Props) {
       <Splide
         options={{
           speed: 1500,
-          rewind: true,
-          type: "loop",
           perPage: 1,
+          type: "loop",
           pauseOnFocus: true,
           pauseOnHover: true,
           autoplay: true,
@@ -54,6 +53,7 @@ export default function HomePage({ main }: Props) {
                 src={collection?.attributes?.image?.data?.attributes?.url}
                 layout={"fill"}
                 objectFit="cover"
+                priority
               />
               <div
                 style={{ backgroundColor: "rgba(0,0,0,0.40)" }}
@@ -137,6 +137,7 @@ export default function HomePage({ main }: Props) {
         options={{
           speed: 1500,
           rewind: true,
+          type: "loop",
           perPage: SlidesPerView(),
           pauseOnFocus: false,
           pauseOnHover: false,
@@ -166,6 +167,7 @@ export default function HomePage({ main }: Props) {
                 src={product.attributes.image.data.attributes.url}
                 layout={"fill"}
                 objectFit="contain"
+                priority
               />
             </div>
             <h5 className="text-center px-10">{product.attributes.title}</h5>

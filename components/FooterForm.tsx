@@ -2,7 +2,7 @@ import React from "react";
 import { IFooter } from "@/lib/interfaces";
 
 interface FooterFormType {
-  footerData: IFooter;
+  footerData: any;
   className?: string;
 }
 
