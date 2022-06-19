@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import { getContactPage } from "@/lib/api";
 import { Contact } from "@/lib/interfaces";
+import TopMenu from "@/components/TopMenu";
 
 interface Props {
   contact: Contact;
@@ -9,7 +10,8 @@ interface Props {
 export default function ContactPage({ contact }: Props) {
   return (
     <Layout title={contact.title}>
-      <div>
+      <TopMenu></TopMenu>
+      <div className={`min-h-screen`}>
         <div className="font-bold text-4xl">{contact.title}</div>
         <article dangerouslySetInnerHTML={{ __html: contact.content ?? "" }} />
       </div>

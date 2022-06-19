@@ -193,3 +193,15 @@ interface TitleButton {
   button_title: string;
   button_link: string;
 }
+
+interface HeaderComponent {
+  id: number;
+  name: string;
+  link: string;
+}
+
+export interface Header {
+  socials: HeaderComponent[];
+  buttonShop: HeaderComponent;
+  buttonMyCard: HeaderComponent;
+}

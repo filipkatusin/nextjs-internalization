@@ -8,6 +8,7 @@ import {
   NewPage,
   News,
   Titles,
+  Header,
 } from "@/lib/interfaces";
 import { localization } from "../lib/constants";
 
@@ -125,5 +126,10 @@ export async function getNewPage(): Promise<NewPage> {
 
 export async function getMainPage(): Promise<MainPage> {
   const data = await fetchAPI(`main-page`);
+  return data?.attributes;
+}
+
+export async function getHeader(): Promise<Header> {
+  const data = await fetchAPI(`header`);
   return data?.attributes;
 }
