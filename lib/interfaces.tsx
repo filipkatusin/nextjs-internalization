@@ -202,6 +202,7 @@ interface HeaderComponent {
 
 export interface Header {
   socials: HeaderComponent[];
-  buttonShop: HeaderComponent;
-  buttonMyCard: HeaderComponent;
+  button_shop: HeaderComponent;
+  button_my_card: HeaderComponent;
+  sk_icon: { data: { attributes: { url: string } } };
 }

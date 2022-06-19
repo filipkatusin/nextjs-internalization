@@ -1,0 +1,86 @@
+.menu-gray-div {
+     align-items: center;
+     height: 4rem;
+     background: #F8F8F8;
+     border-bottom: 1px solid #EDEDED;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+
+@media (min-width: 768px) {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}
+
+}
+
+.menu-icon {
+     height: 1.5rem;
+     width: 1.5rem;
+}
+
+.menu-cart-number {
+     position: relative;
+     margin-top: 0.75rem;
+     margin-left: 0.75rem;
+     width: 1rem;
+     height: 1rem;
+}
+
+.menu-cart-number img {
+     position: absolute;
+     z-index: 40;
+     width: 1rem;
+     height: 1rem;
+}
+
+.menu-cart-number div {
+     display: flex;
+     position: relative;
+     z-index: 50;
+     color: #ffffff;
+     font-size: 0.875rem;
+     line-height: 1.25rem;
+     justify-content: center;
+     align-items: center;
+     width: 1rem;
+     height: 1rem;
+     font-weight: 500;
+}
+
+.menu-black-div {
+     display: flex;
+     position: relative;
+     z-index: 10;
+     padding-left: 1rem;
+     padding-right: 1rem;
+     justify-content: flex-end;
+     align-items: center;
+     height: 2.5rem;
+     gap: 1rem;
+     background: #191919;
+     color: #bfbfbf;
+
+
+@media (min-width: 768px) {
+     padding-left: 2.5rem;
+     padding-right: 2.5rem;
+}
+}
+
+.menu-button-shop {
+    padding: 0.5rem 1rem;
+    background-color: #ffffff;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    border-width: 2px;
+    border-color: #000000;
+}
+
+.menu-button-card {
+    padding: 0.5rem 1rem;
+    transition-duration: 200ms;
+    transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    color: #ffffff;
+    background: #EE2D3A;
+}

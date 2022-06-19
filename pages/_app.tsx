@@ -4,6 +4,7 @@ import "@/styles/main.css";
 import "@/styles/borders.css";
 import "@/styles/formCheckBox.css";
 import "@/styles/splide.css";
+import "@/styles/menu.css";
 import { useEffect } from "react";
 import { Router } from "next/router";
 import { isProduction } from "@/lib/utils";
