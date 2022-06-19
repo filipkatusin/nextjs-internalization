@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { IFooter, Titles } from "@/lib/interfaces";
-import { Splide, SplideSlide } from "@splidejs/react-splide";
+import { Titles } from "@/lib/interfaces";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
-import { titles } from "@/src/data/titles";
 import { getFooter, getTitles } from "@/lib/api";
 import { FooterForm } from "@/components/FooterForm";
 
@@ -14,9 +12,7 @@ function cookies() {
   window.Osano.cm.showDrawer("osano-cm-dom-info-dialog-open");
 }
 
-
-export default function Footer() {}
-/*export default function Footer() {
+export default function Footer() {
   const [titles, setTitles] = useState<Titles>();
 
   const getEvents = async () => {
@@ -118,4 +114,4 @@ export default function Footer() {}
       </Container>
     </footer>
   );
-}*/
+}

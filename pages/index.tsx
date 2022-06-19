@@ -54,7 +54,6 @@ export default function HomePage({ main }: Props) {
                 src={collection?.attributes?.image?.data?.attributes?.url}
                 layout={"fill"}
                 objectFit="cover"
-                priority
               />
               <div
                 style={{ backgroundColor: "rgba(0,0,0,0.40)" }}
