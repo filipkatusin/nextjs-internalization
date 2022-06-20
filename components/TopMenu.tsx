@@ -203,14 +203,18 @@ export default function TopMenu() {
             <div className={`flex gap-4`}>
               {header && (
                 <Link href={header.button_shop.link}>
-                  <a className={`menu-button-shop hover:bg-black/20`}>
+                  <a
+                    className={`menu-button-shop hover:bg-black hover:text-white`}
+                  >
                     {header.button_shop.name}
                   </a>
                 </Link>
               )}
               {header && (
                 <Link href={header.button_my_card.link}>
-                  <a className={`menu-button-card hover:bg-[#a8222b]`}>
+                  <a
+                    className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
+                  >
                     <span className={`inline-block align-middle`}>
                       {header.button_my_card.name}
                     </span>

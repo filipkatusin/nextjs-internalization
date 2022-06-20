@@ -10,12 +10,16 @@ import Layout from "@/components/Layout";
 import TextEllipsis from "react-text-ellipsis";
 import TopMenu from "@/components/TopMenu";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
+import Button from "@/components/Button";
+import { useState } from "react";
 
 interface Props {
   main: MainPage;
 }
 
 export default function HomePage({ main }: Props) {
+  const [over, setOver] = useState(9999);
+
   let windowWidth = 0;
   if (typeof window !== "undefined") {
     const size = useWindowDimensions();
@@ -87,7 +91,7 @@ export default function HomePage({ main }: Props) {
                       {collection?.attributes.button_text}
                       <img
                         className="h-3 w-3 ml-3"
-                        src="/icons/right-arrow-white.svg"
+                        src={"/icons/right-arrow-white.svg"}
                         alt={""}
                       />
                     </button>
@@ -116,11 +120,19 @@ export default function HomePage({ main }: Props) {
             <Link href={link?.button_link ?? ""}>
               <div>
                 <a className="flex justify-center mt-8">
-                  <button className="border px-5 py-3 flex justify-center  items-center">
+                  <button
+                    onMouseOver={() => setOver(index + 100)}
+                    onMouseOut={() => setOver(9999)}
+                    className="border-2 px-5 py-3 flex justify-center font-semibold items-center transition-all hover:bg-black hover:text-white"
+                  >
                     {link?.button_title}
                     <img
                       className="h-3 w-3 ml-3"
-                      src="/icons/right-arrow.svg"
+                      src={
+                        over == index + 100
+                          ? "/icons/right-arrow-white.svg"
+                          : "/icons/right-arrow.svg"
+                      }
                       alt={""}
                     />
                   </button>
@@ -178,20 +190,10 @@ export default function HomePage({ main }: Props) {
         ))}
       </Splide>
       <Container className="mt-10 flex justify-center sm:justify-start">
-        <Link href={main?.product_section?.button_link ?? ""}>
-          <div>
-            <a className="mt-8">
-              <button className="border px-5 py-3 flex justify-center  items-center">
-                {main?.product_section?.button_title}
-                <img
-                  className="h-3 w-3 ml-3"
-                  src="/icons/right-arrow.svg"
-                  alt={""}
-                />
-              </button>
-            </a>
-          </div>
-        </Link>
+        <Button
+          label={main?.product_section?.button_title}
+          link={main?.product_section?.button_link}
+        />
       </Container>
       <section
         className="flex flex-col   mt-40  relative"
@@ -246,11 +248,19 @@ export default function HomePage({ main }: Props) {
         <Link href={main?.product_section?.button_link ?? ""}>
           <div>
             <a className="mb-10 md:mb-20 flex justify-center">
-              <button className="border text-white border-white px-5 py-3 flex justify-center  items-center">
+              <button
+                onMouseOver={() => setOver(1000)}
+                onMouseOut={() => setOver(9999)}
+                className="border text-white border-2 border-white px-5 py-3 flex justify-center items-center transition-all hover:bg-white hover:border-black hover:text-black"
+              >
                 {main?.product_section?.button_title}
                 <img
                   className="h-3 w-3 ml-3"
-                  src="/icons/right-arrow-white.svg"
+                  src={
+                    over == 1000
+                      ? "/icons/right-arrow.svg"
+                      : "/icons/right-arrow-white.svg"
+                  }
                   alt={""}
                 />
               </button>
@@ -272,20 +282,10 @@ export default function HomePage({ main }: Props) {
             __html: main?.about_section?.content ?? "",
           }}
         />
-        <Link href={main?.about_section?.button_link ?? ""}>
-          <div>
-            <a className="mt-8 flex justify-center">
-              <button className="border px-5 py-3 flex justify-center  items-center">
-                {main?.about_section?.button_title}
-                <img
-                  className="h-3 w-3 ml-3"
-                  src="/icons/right-arrow.svg"
-                  alt={""}
-                />
-              </button>
-            </a>
-          </div>
-        </Link>
+        <Button
+          label={main?.about_section?.button_title}
+          link={main?.about_section?.button_link}
+        />
       </Container>
       <section className={"border-top-bottom"}>
         <Container

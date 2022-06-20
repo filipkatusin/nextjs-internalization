@@ -13,7 +13,7 @@ import {
 import { localization } from "../lib/constants";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0 vsce list faustinoaq"
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
   try {
     const res = await fetch(
       `${

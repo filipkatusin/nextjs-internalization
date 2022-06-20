@@ -28,8 +28,8 @@ h1, h2, h3, h4, h5 {
 
 .container-products {
     @media (min-width: 1561px) {
-        width: 92%;
-        margin-left: 8%;
+        width: 93% !important;
+        margin-left: 7% !important;
     }
     @media (max-width: 1560px) {
         width: 97%;
@@ -78,4 +78,12 @@ h5 {
 
 .bold-text{
     font-family: Satoshi-Bold, sans-serif;
+}
+
+.arrow-hover {
+    background: url("../public/icons/right-arrow.svg");
+}
+
+.arrow-hover:hover {
+    background: url("../public/icons/right-arrow-white.svg");
 }

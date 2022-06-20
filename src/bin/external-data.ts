@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
-import { IFooter, Menu, Titles } from "@/lib/interfaces";
+import { IFooter, Menu } from "@/lib/interfaces";
 
-const { getMenu, getFooter, getTitles, getHeader } = require("../../lib/api");
+const { getMenu, getFooter, getHeader } = require("../../lib/api");
 
 const fs = require("fs");
 const path = require("path");
