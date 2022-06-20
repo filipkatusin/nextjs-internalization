@@ -2,12 +2,11 @@
      align-items: center;
      height: 4rem;
      background: #F8F8F8;
-     border-bottom: 1px solid #EDEDED;
-    padding-left: 1rem;
-    padding-right: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
 
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
 }
@@ -51,9 +50,9 @@
 .menu-black-div {
      display: flex;
      position: relative;
-     z-index: 10;
-     padding-left: 1rem;
-     padding-right: 1rem;
+     z-index: 30;
+     padding-left: 0.5rem;
+     padding-right: 0.5rem;
      justify-content: flex-end;
      align-items: center;
      height: 2.5rem;
@@ -62,7 +61,7 @@
      color: #bfbfbf;
 
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
      padding-left: 2.5rem;
      padding-right: 2.5rem;
 }
@@ -83,4 +82,10 @@
     transition-timing-function: cubic-bezier(0, 0, 0.2, 1);
     color: #ffffff;
     background: #EE2D3A;
+}
+
+.menu-lang-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    opacity: 0.75;
 }

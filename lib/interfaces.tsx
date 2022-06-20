@@ -8,18 +8,6 @@ export interface StrapiImage {
   };
 }
 
-export interface StrapiImages {
-  data: [
-    {
-      attributes: {
-        url: string;
-        formats: Formats;
-        name: string;
-      };
-    }
-  ];
-}
-
 interface Formats {
   thumbnail: Format;
   large: Format;
@@ -131,7 +119,7 @@ export interface FooterSection {
 
 export interface CardProductionSection {
   title: string;
-  logo: StrapiImages;
+  logo: {data: StrapiImage[]};
 }
 
 export interface Title_value {
@@ -223,4 +211,5 @@ export interface Header {
   button_shop: HeaderComponent;
   button_my_card: HeaderComponent;
   sk_icon: { data: { attributes: { url: string } } };
+  en_icon: { data: { attributes: { url: string } } };
 }
