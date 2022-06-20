@@ -8,6 +8,18 @@ export interface StrapiImage {
   };
 }
 
+export interface StrapiImages {
+  data: [
+    {
+      attributes: {
+        url: string;
+        formats: Formats;
+        name: string;
+      };
+    }
+  ];
+}
+
 interface Formats {
   thumbnail: Format;
   large: Format;
@@ -117,6 +129,11 @@ export interface FooterSection {
   link: TitleLink[];
 }
 
+export interface CardProductionSection {
+  title: string;
+  logo: StrapiImages;
+}
+
 export interface Title_value {
   title: string;
   value: string;
@@ -148,6 +165,7 @@ export interface MainPage {
   collections: CollectionsRelation;
   news: NewsRelation;
   products: ProductsRelation;
+  card_production_section: CardProductionSection;
 }
 
 interface CollectionsRelation {
