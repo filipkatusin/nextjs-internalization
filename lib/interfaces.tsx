@@ -153,7 +153,6 @@ export interface MainPage {
   collections: CollectionsRelation;
   news: NewsRelation;
   products: ProductsRelation;
-  card_production_section: CardProductionSection;
 }
 
 interface CollectionsRelation {
