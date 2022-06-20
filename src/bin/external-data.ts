@@ -20,7 +20,6 @@ const getData = async (basePath: string): Promise<void> => {
     console.log("Fetching links...");
     const footer: IFooter = await getFooter();
     const menu: Menu[] = await getMenu();
-    const titles: Titles = await getTitles("footer");
     const header = await getHeader();
     console.log(`Fetched ${menu.length} links `);
     console.log(`Fetched ${footer}`);
@@ -34,11 +33,6 @@ const getData = async (basePath: string): Promise<void> => {
       path.join(basePath, "src/data/menu.js"),
       "export const menu = ",
       menu || []
-    );
-    await writeJsonFile(
-      path.join(basePath, "src/data/titles.js"),
-      "export const titles = ",
-      titles || []
     );
     await writeJsonFile(
       path.join(basePath, "src/data/header.js"),
