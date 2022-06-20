@@ -205,4 +205,5 @@ export interface Header {
   button_shop: HeaderComponent;
   button_my_card: HeaderComponent;
   sk_icon: { data: { attributes: { url: string } } };
+  en_icon: { data: { attributes: { url: string } } };
 }
