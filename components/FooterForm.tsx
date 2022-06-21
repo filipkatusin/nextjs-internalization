@@ -17,7 +17,7 @@ export const FooterForm: React.FC<FooterFormType> = ({
           type="text"
           placeholder={footerData?.newslatter?.input_placeholder}
           className={
-            "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black font-semibold outline-0"
+            "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
           }
         />
         <button
