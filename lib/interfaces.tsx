@@ -1,10 +1,8 @@
 export interface StrapiImage {
-  data: {
-    attributes: {
-      url: string;
-      formats: Formats;
-      name: string;
-    };
+  attributes: {
+    url: string;
+    formats: Formats;
+    name: string;
   };
 }
 
@@ -20,7 +18,7 @@ interface Format {
 }
 
 interface ImageLink {
-  image: StrapiImage;
+  image: { data: StrapiImage };
   link: string;
 }
 
@@ -46,7 +44,7 @@ interface Form {
 export interface AboutUs {
   title: string;
   content: string;
-  image: StrapiImage[];
+  image: { data: StrapiImage[] };
 }
 
 export interface Titles {
@@ -58,7 +56,7 @@ export interface Collections {
   title: string;
   title_color: string;
   title_background_color: string;
-  image: StrapiImage;
+  image: { data: StrapiImage };
   button_text: string;
   slug: string;
 }
@@ -80,7 +78,7 @@ export interface NewPage {
 interface SEO {
   metaTitle: string;
   metaDescription: string;
-  metaImage: StrapiImage;
+  metaImage: { data: StrapiImage };
   metaSocial: MetaSocial[];
   keywords: string;
   metaRobots: string;
@@ -93,12 +91,12 @@ interface MetaSocial {
   socialNetwork: string;
   title: string;
   description: string;
-  image: StrapiImage;
+  image: { data: StrapiImage };
 }
 
 export interface IFooter {
   logo_title: string;
-  logo: StrapiImage;
+  logo: { data: StrapiImage };
   icons_link: ImageLink[];
   logo_link: ImageLink[];
   rights: string;
@@ -119,7 +117,9 @@ export interface FooterSection {
 
 export interface CardProductionSection {
   title: string;
-  logo: {data: StrapiImage[]};
+  logo: {
+    data: StrapiImage[];
+  };
 }
 
 export interface Title_value {
@@ -146,13 +146,14 @@ export interface MainPage {
   news_section: TitleButton;
   about_section: {
     content: string;
-    logo: StrapiImage;
+    logo: { data: StrapiImage };
     button_title: string;
     button_link: string;
   };
   collections: CollectionsRelation;
   news: NewsRelation;
   products: ProductsRelation;
+  card_production_section: CardProductionSection;
 }
 
 interface CollectionsRelation {
@@ -181,14 +182,14 @@ interface ProductRelation {
 
 export interface Products {
   title: string;
-  image: StrapiImage;
+  image: { data: StrapiImage };
   slug: string;
 }
 
 interface LinkSection {
   title: string;
   content: string;
-  icon: StrapiImage;
+  icon: { data: StrapiImage };
   button_title: string;
   button_link: string;
 }
