@@ -2,18 +2,18 @@ import {
   AboutUs,
   Collections,
   Contact,
+  Header,
   IFooter,
   MainPage,
   Menu,
   NewPage,
   News,
   Titles,
-  Header,
 } from "@/lib/interfaces";
 import { localization } from "../lib/constants";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const res = await fetch(
       `${
@@ -44,10 +44,11 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
   }
 }
 
-async function fetchAPIMenu() {
+async function fetchAPIExternalData(url: string) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/navigation/render/navigation-${localization}?type=tree`,
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}?locale=all&populate=deep`,
       {
         headers: {
           "Content-Type": "application/json",
@@ -62,16 +63,62 @@ async function fetchAPIMenu() {
     const json = await res.json();
     if (json.errors) {
       console.error(json.errors);
-      new Error("Failed to fetch APIMenu");
+      new Error("Failed to fetch API");
     }
 
-    return json;
+    return json.data;
   } catch (e) {
     console.error(e);
   }
 }
 
-export async function getMenu(): Promise<Menu[]> {
+async function fetchAPIMenu() {
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/navigation/render/navigation-sk?type=tree`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    const res2 = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/navigation/render/navigation-en?type=tree`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    if (res.status != 200) {
+      new Error("Failed request");
+    }
+
+    if (res2.status != 200) {
+      new Error("Failed request2");
+    }
+
+    const json = await res.json();
+    const json2 = await res2.json();
+    if (json.errors) {
+      console.error(json.errors);
+      new Error("Failed to fetch APIMenu");
+    }
+
+    if (json2.errors) {
+      console.error(json2.errors);
+      new Error("Failed to fetch APIMenu2");
+    }
+
+    return [[...json], [...json2]];
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+export async function getMenu(): Promise<Menu[][]> {
   return await fetchAPIMenu();
 }
 
@@ -81,7 +128,7 @@ export async function getTitles(type: string): Promise<Titles> {
 }
 
 export async function getFooter(): Promise<IFooter> {
-  const data = await fetchAPI(`footer`);
+  const data = await fetchAPIExternalData(`footer`);
   return data?.attributes;
 }
 
@@ -131,6 +178,6 @@ export async function getMainPage(): Promise<MainPage> {
 }
 
 export async function getHeader(): Promise<Header> {
-  const data = await fetchAPI(`header`);
+  const data = await fetchAPIExternalData(`header`);
   return data?.attributes;
 }

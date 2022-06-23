@@ -3,13 +3,33 @@ import { menu } from "@/src/data/menu";
 import { header } from "@/src/data/header";
 import { useEffect, useRef, useState } from "react";
 import Container from "@/components/Container";
+import { localization } from "@/lib/constants";
+import { Header } from "@/lib/interfaces";
 
 export default function TopMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
+  const [headerData, setHeaderData] = useState<any>({});
+  const [menuData, setMenuData] = useState<any>([]);
 
   const menuRef = useRef();
   const langRef = useRef();
+
+  useEffect(() => {
+    const localizations: { [key: string]: Header } = {};
+    const att = header.localizations.data[0].attributes;
+    att.localizations.data.forEach((e) => {
+      localizations[e.attributes.locale] = e.attributes;
+    });
+    setHeaderData(
+      {
+        [att.locale]: att,
+        ...localizations,
+      }[localization]
+    );
+
+    setMenuData(localization === "sk" ? menu[0] : menu[1]);
+  }, []);
 
   useEffect(() => {
     const closeDropdown = (e) => {
@@ -32,13 +52,13 @@ export default function TopMenu() {
   }, []);
 
   return (
-    menu &&
-    header && (
+    menuData &&
+    headerData && (
       <nav>
         <div className={`bg-[#191919] relative z-30`}>
           <Container className={`menu-black-div`}>
-            {header.socials?.map((s, index) => (
-              <Link key={index} href={s.link}>
+            {headerData.socials?.map((s, index) => (
+              <Link key={index} href={s.link ?? ""}>
                 <a
                   className={`underline underline-offset-4 hover:font-bold decoration-[#bfbfbf]`}
                 >
@@ -52,10 +72,10 @@ export default function TopMenu() {
               ref={langRef}
               onClick={() => setLangDropdown((prev) => !prev)}
             >
-              {header && (
+              {headerData && (
                 <img
                   alt={""}
-                  src={header.sk_icon.data.attributes.url}
+                  src={headerData.sk_icon?.data.attributes.url}
                   className={`h-5 w-5`}
                 />
               )}
@@ -67,19 +87,19 @@ export default function TopMenu() {
             className={`bg-[#191919] p-3 w-11 absolute flex flex-col gap-3 -top-0 z-50 -right-1 lg:right-7`}
           >
             <button className={``}>
-              {header && (
+              {headerData && (
                 <img
                   alt={""}
-                  src={header.sk_icon.data.attributes?.url}
+                  src={headerData.sk_icon?.data.attributes?.url}
                   className={`menu-lang-icon hover:opacity-100`}
                 />
               )}
             </button>
             <button className={``}>
-              {header && (
+              {headerData && (
                 <img
                   alt={""}
-                  src={header.en_icon.data.attributes?.url}
+                  src={headerData.en_icon?.data.attributes?.url}
                   className={`menu-lang-icon hover:opacity-100`}
                 />
               )}
@@ -138,7 +158,7 @@ export default function TopMenu() {
           <Container>
             <div className={`flex justify-between`}>
               <div className={`flex flex-col gap-3`}>
-                {menu?.map((m, index) => (
+                {menuData?.map((m, index) => (
                   <Link key={index} href={m.path}>
                     <a>{m.title}</a>
                   </Link>
@@ -164,18 +184,18 @@ export default function TopMenu() {
               </div>
             </div>
             <div className={`flex mt-4 justify-end gap-4`}>
-              {header && (
-                <Link href={header.button_shop.link}>
+              {headerData && (
+                <Link href={headerData.button_shop?.link ?? ""}>
                   <a className={`menu-button-shop hover:bg-black/20`}>
-                    {header.button_shop.name}
+                    {headerData.button_shop?.name}
                   </a>
                 </Link>
               )}
-              {header && (
-                <Link href={header.button_my_card.link}>
+              {headerData && (
+                <Link href={headerData.button_my_card?.link ?? ""}>
                   <a className={`menu-button-card hover:bg-[#a8222b]`}>
                     <span className={`inline-block align-middle`}>
-                      {header.button_my_card.name}
+                      {headerData.button_my_card?.name}
                     </span>
                     <img
                       src={`/assets/chevron-down.svg`}
@@ -194,29 +214,34 @@ export default function TopMenu() {
             className={`menu-gray-div hidden lg:flex font-bold justify-between`}
           >
             <div className={`flex gap-4`}>
-              {menu?.map((m, index) => (
-                <Link key={index} href={m.path}>
-                  <a className={"hover:text-[#EE2D3A]"}>{m.title}</a>
+              {menuData?.map((m, index) => (
+                <Link key={index} href={m.path ?? ""}>
+                  <a
+                    style={{ fontWeight: "600" }}
+                    className={"hover:text-[#EE2D3A]"}
+                  >
+                    {m.title}
+                  </a>
                 </Link>
               ))}
             </div>
             <div className={`flex gap-4`}>
-              {header && (
-                <Link href={header.button_shop.link}>
+              {headerData && (
+                <Link href={headerData.button_shop?.link ?? ""}>
                   <a
                     className={`menu-button-shop hover:bg-black hover:text-white`}
                   >
-                    {header.button_shop.name}
+                    {headerData.button_shop?.name}
                   </a>
                 </Link>
               )}
-              {header && (
-                <Link href={header.button_my_card.link}>
+              {headerData && (
+                <Link href={headerData.button_my_card?.link ?? ""}>
                   <a
                     className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
                   >
                     <span className={`inline-block align-middle`}>
-                      {header.button_my_card.name}
+                      {headerData.button_my_card?.name}
                     </span>
                     <img
                       src={`/assets/chevron-down.svg`}

@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { IFooter, Menu } from "@/lib/interfaces";
+import {Header, IFooter, Menu} from "@/lib/interfaces";
 
 const { getMenu, getFooter, getHeader } = require("../../lib/api");
 
@@ -20,7 +20,7 @@ const getData = async (basePath: string): Promise<void> => {
     console.log("Fetching links...");
     const footer: IFooter = await getFooter();
     const menu: Menu[] = await getMenu();
-    const header = await getHeader();
+    const header: Header = await getHeader();
     console.log(`Fetched ${menu.length} links `);
     console.log(`Fetched ${footer}`);
 

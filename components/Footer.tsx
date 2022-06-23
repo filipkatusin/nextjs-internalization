@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
 import { FooterForm } from "@/components/FooterForm";
+import { localization } from "@/lib/constants";
+import { header } from "@/src/data/header";
 
 function cookies() {
   // @ts-ignore
@@ -11,12 +13,28 @@ function cookies() {
 }
 
 export default function Footer() {
+  const [footerData, setFooterData] = useState<any>({});
+
+  useEffect(() => {
+    const localizations: { [key: string]: any } = {};
+    const att = header.localizations.data[0].attributes;
+    att.localizations.data.forEach((e) => {
+      localizations[e.attributes.locale] = e.attributes;
+    });
+    setFooterData(
+      {
+        [att.locale]: att,
+        ...localizations,
+      }[localization]
+    );
+  }, []);
+
   return (
     <footer className={"bg-gray-footer"}>
       <Container className={"py-12 md:py-28 "}>
-        {footer?.logo && (
+        {footerData?.logo && (
           <img
-            src={getStrapiUrl(footer?.logo?.data?.attributes?.url)}
+            src={getStrapiUrl(footerData?.logo?.data?.attributes?.url)}
             alt={"logo"}
             className={"mb-8 md:mb-16"}
           />
@@ -31,13 +49,13 @@ export default function Footer() {
               "md:w-full lg:flex lg:flex-3 md:flex-row md:justify-around space-y-8 lg:space-y-0"
             }
           >
-            {footer?.contact && (
+            {footerData?.contact && (
               <div className={"text-center lg:text-left md:flex-1"}>
                 <h4 className={"font-bold mb-2 md:mb-4 text-xl lg:text-lg"}>
-                  {footer?.contact?.title}
+                  {footerData?.contact?.title}
                 </h4>
                 <ul>
-                  {footer?.contact?.title_value?.map((item, index) => (
+                  {footerData?.contact?.title_value?.map((item, index) => (
                     <li
                       key={index}
                       className={"text-black font-medium lg:text-lg"}
@@ -55,7 +73,7 @@ export default function Footer() {
                 "md:flex md:w-full md:justify-around md:flex-2 space-y-8 md:space-y-0"
               }
             >
-              {footer?.section?.map((section, index) => (
+              {footerData?.section?.map((section, index) => (
                 <div key={index} className={"text-center lg:text-left"}>
                   <h4 className={"font-bold text-xl lg:text-lg mb-2 md:mb-4"}>
                     {section.title}
@@ -83,7 +101,7 @@ export default function Footer() {
           <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
             <div>
               <h5 className={"text-black text-base font-bold"}>
-                {footer?.newslatter?.title}
+                {footerData?.newslatter?.title}
               </h5>
               <FooterForm footerData={footer} />
             </div>
