@@ -287,6 +287,30 @@ export default function HomePage({ main }: Props) {
           link={main?.about_section?.button_link}
         />
       </Container>
+      <section className={"border-top-bottom"}>
+        <Container
+          className={
+            "text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 gap-y-12"
+          }
+        >
+          <h3 className={"text-2xl md:text-3xl"}>
+            {main?.card_production_section?.title}
+          </h3>
+          <div
+            className={
+              "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
+            }
+          >
+            {main?.card_production_section?.logo?.data?.map((data) => (
+              <img
+                src={getStrapiUrl(data.attributes.url)}
+                alt="company logo"
+                className={"h-12 md:h-16"}
+              />
+            ))}
+          </div>
+        </Container>
+      </section>
     </Layout>
   );
 }
