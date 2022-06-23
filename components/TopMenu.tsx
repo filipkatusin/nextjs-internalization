@@ -3,6 +3,9 @@ import { menu } from "@/src/data/menu";
 import { header } from "@/src/data/header";
 import { useEffect, useRef, useState } from "react";
 import Container from "@/components/Container";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/src/app/store";
+import { changeLanguage } from "@/src/features/languageSlice";
 import { localization } from "@/lib/constants";
 import { Header } from "@/lib/interfaces";
 
@@ -11,6 +14,19 @@ export default function TopMenu() {
   const [langDropdown, setLangDropdown] = useState(false);
   const [headerData, setHeaderData] = useState<any>({});
   const [menuData, setMenuData] = useState<any>([]);
+  const [langIcon, setLangIcon] = useState("en_icon");
+
+  const languageState = useSelector((state: RootState) => state.language.value);
+
+  const [language, setLanguage] = useState("en");
+
+  const dispatch = useDispatch();
+
+  const changeLanguageState = (lang) => {
+    setLanguage(lang);
+    dispatch(changeLanguage(language));
+    //console.log(languageState);
+  };
 
   const menuRef = useRef();
   const langRef = useRef();
@@ -75,7 +91,7 @@ export default function TopMenu() {
               {headerData && (
                 <img
                   alt={""}
-                  src={headerData.sk_icon?.data.attributes.url}
+                  src={header[langIcon].data.attributes.url}
                   className={`h-5 w-5`}
                 />
               )}
@@ -92,6 +108,11 @@ export default function TopMenu() {
                   alt={""}
                   src={headerData.sk_icon?.data.attributes?.url}
                   className={`menu-lang-icon hover:opacity-100`}
+                  onClick={() => {
+                    setLangIcon("sk_icon");
+                    //setLanguage("sk");
+                    changeLanguageState("sk");
+                  }}
                 />
               )}
             </button>
@@ -101,6 +122,11 @@ export default function TopMenu() {
                   alt={""}
                   src={headerData.en_icon?.data.attributes?.url}
                   className={`menu-lang-icon hover:opacity-100`}
+                  onClick={() => {
+                    setLangIcon("en_icon");
+                    //setLanguage("en");
+                    changeLanguageState("en");
+                  }}
                 />
               )}
             </button>

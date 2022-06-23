@@ -13,6 +13,7 @@
     "exec:dev": "NODE_ENV=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^1.8.2",
     "@splidejs/react-splide": "^0.7.7",
     "next": "latest",
     "postcss-import": "14.1.0",
@@ -20,10 +21,11 @@
     "react": "18.1.0",
     "react-dom": "18.1.0",
     "react-image-lightbox": "^5.1.4",
+    "react-redux": "^8.0.2",
     "react-scripts": "5.0.1",
+    "react-text-ellipsis": "1.6.0",
     "ts-node": "^10.8.1",
-    "typescript": "4.6.4",
-    "react-text-ellipsis": "1.6.0"
+    "typescript": "4.6.4"
   },
   "devDependencies": {
     "@tailwindcss/custom-forms": "^0.2.1",
