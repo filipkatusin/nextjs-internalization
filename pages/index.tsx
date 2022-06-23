@@ -9,7 +9,6 @@ import SlidesPerView from "@/components/SlidesPerView";
 import Layout from "@/components/Layout";
 import TextEllipsis from "react-text-ellipsis";
 import TopMenu from "@/components/TopMenu";
-import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import { useState } from "react";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
@@ -29,7 +28,7 @@ export default function HomePage({ main }: Props) {
 
   return (
     <Layout>
-        <TopMenu/>
+      <TopMenu />
       <Splide
         options={{
           speed: 1500,
