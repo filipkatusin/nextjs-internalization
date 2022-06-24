@@ -5,7 +5,6 @@ import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
 import { FooterForm } from "@/components/FooterForm";
 import { localization } from "@/lib/constants";
-import { header } from "@/src/data/header";
 
 function cookies() {
   // @ts-ignore
@@ -17,7 +16,7 @@ export default function Footer() {
 
   useEffect(() => {
     const localizations: { [key: string]: any } = {};
-    const att = header.localizations.data[0].attributes;
+    const att = footer.localizations.data[0].attributes;
     att.localizations.data.forEach((e) => {
       localizations[e.attributes.locale] = e.attributes;
     });
