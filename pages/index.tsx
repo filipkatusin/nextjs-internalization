@@ -301,8 +301,9 @@ export default function HomePage({ main }: Props) {
               "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
             }
           >
-            {main?.card_production_section?.logo?.data?.map((data) => (
+            {main?.card_production_section?.logo?.data?.map((data, index) => (
               <img
+                key={index}
                 src={getStrapiUrl(data.attributes.url)}
                 alt="company logo"
                 className={"h-12 sm:h-14 md:h-16"}
