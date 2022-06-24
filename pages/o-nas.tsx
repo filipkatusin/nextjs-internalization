@@ -22,9 +22,9 @@ export default function AboutUsPage({ about, titles }: Props) {
   );
 }
 
-export async function getStaticProps() {
-  const about = (await getAboutUsPage()) || [];
-  const titles = (await getTitles("collection")) || [];
+export async function getStaticProps(locale: string) {
+  const about = (await getAboutUsPage(locale)) || [];
+  const titles = (await getTitles("collection", locale)) || [];
 
   return {
     props: { about, titles },

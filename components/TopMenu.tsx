@@ -3,33 +3,20 @@ import { menu } from "@/src/data/menu";
 import { header } from "@/src/data/header";
 import { useEffect, useRef, useState } from "react";
 import Container from "@/components/Container";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/src/app/store";
-import { changeLanguage } from "@/src/features/languageSlice";
-import { localization } from "@/lib/constants";
 import { Header } from "@/lib/interfaces";
+import { useRouter } from "next/router";
 
 export default function TopMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
   const [headerData, setHeaderData] = useState<any>({});
   const [menuData, setMenuData] = useState<any>([]);
-  const [langIcon, setLangIcon] = useState("en_icon");
-
-  const languageState = useSelector((state: RootState) => state.language.value);
-
-  const [language, setLanguage] = useState("en");
-
-  const dispatch = useDispatch();
-
-  const changeLanguageState = (lang) => {
-    setLanguage(lang);
-    dispatch(changeLanguage(language));
-    //console.log(languageState);
-  };
+  const [langIcon, setLangIcon] = useState("sk_icon");
+  const [localization, setLocalization] = useState("sk");
 
   const menuRef = useRef();
   const langRef = useRef();
+  const router = useRouter();
 
   useEffect(() => {
     const localizations: { [key: string]: Header } = {};
@@ -43,9 +30,8 @@ export default function TopMenu() {
         ...localizations,
       }[localization]
     );
-
     setMenuData(localization === "sk" ? menu[0] : menu[1]);
-  }, []);
+  }, [localization]);
 
   useEffect(() => {
     const closeDropdown = (e) => {
@@ -104,30 +90,36 @@ export default function TopMenu() {
           >
             <button className={``}>
               {headerData && (
-                <img
-                  alt={""}
-                  src={headerData.sk_icon?.data.attributes?.url}
-                  className={`menu-lang-icon hover:opacity-100`}
-                  onClick={() => {
-                    setLangIcon("sk_icon");
-                    //setLanguage("sk");
-                    changeLanguageState("sk");
-                  }}
-                />
+                <Link href={router.asPath} locale={(router.locale = "sk")}>
+                  <a>
+                    <img
+                      alt={""}
+                      src={headerData.sk_icon?.data.attributes?.url}
+                      className={`menu-lang-icon hover:opacity-100`}
+                      onClick={() => {
+                        setLangIcon("sk_icon");
+                        setLocalization("sk");
+                      }}
+                    />
+                  </a>
+                </Link>
               )}
             </button>
             <button className={``}>
               {headerData && (
-                <img
-                  alt={""}
-                  src={headerData.en_icon?.data.attributes?.url}
-                  className={`menu-lang-icon hover:opacity-100`}
-                  onClick={() => {
-                    setLangIcon("en_icon");
-                    //setLanguage("en");
-                    changeLanguageState("en");
-                  }}
-                />
+                <Link href={router.asPath} locale={(router.locale = "en")}>
+                  <a>
+                    <img
+                      alt={""}
+                      src={headerData.en_icon?.data.attributes?.url}
+                      className={`menu-lang-icon hover:opacity-100`}
+                      onClick={() => {
+                        setLangIcon("en_icon");
+                        setLocalization("en");
+                      }}
+                    />
+                  </a>
+                </Link>
               )}
             </button>
           </div>

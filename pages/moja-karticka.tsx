@@ -17,8 +17,8 @@ export default function MyCardPage({ contact }: Props) {
   );
 }
 
-export async function getStaticProps() {
-  const contact = (await getContactPage()) || [];
+export async function getStaticProps(locale: string) {
+  const contact = (await getContactPage(locale)) || [];
 
   return {
     props: { contact },

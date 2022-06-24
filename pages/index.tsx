@@ -316,8 +316,8 @@ export default function HomePage({ main }: Props) {
   );
 }
 
-export async function getStaticProps() {
-  const main = (await getMainPage()) || [];
+export async function getStaticProps({ locale }) {
+  const main = (await getMainPage(locale)) || [];
 
   return {
     props: { main },

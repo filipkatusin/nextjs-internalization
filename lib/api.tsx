@@ -10,15 +10,12 @@ import {
   News,
   Titles,
 } from "@/lib/interfaces";
-import { localization } from "../lib/constants";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
   process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const res = await fetch(
-      `${
-        process.env.NEXT_PUBLIC_STRAPI_API_URL
-      }/api/${url}?locale=${localization}${
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}${
         slug ? `&filters[slug]=${slug}` : ""
       }${type ? `&filters[type]=${type}` : ""}&populate=deep`,
       {
@@ -122,8 +119,11 @@ export async function getMenu(): Promise<Menu[][]> {
   return await fetchAPIMenu();
 }
 
-export async function getTitles(type: string): Promise<Titles> {
-  const data = await fetchAPI(`titles`, "", type);
+export async function getTitles(
+  type: string,
+  localization: string
+): Promise<Titles> {
+  const data = await fetchAPI(`titles?locale=${localization}`, "", type);
   return data?.[0]?.attributes;
 }
 
@@ -132,48 +132,59 @@ export async function getFooter(): Promise<IFooter> {
   return data?.attributes;
 }
 
-export async function getContactPage(): Promise<Contact> {
-  const data = await fetchAPI(`contact`);
+export async function getContactPage(localization: string): Promise<Contact> {
+  const data = await fetchAPI(`contact?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getAboutUsPage(): Promise<AboutUs> {
-  const data = await fetchAPI(`about-us`);
+export async function getAboutUsPage(localization: string): Promise<AboutUs> {
+  const data = await fetchAPI(`about-us?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getCollectionPage(): Promise<NewPage> {
-  const data = await fetchAPI(`collection-page`);
+export async function getCollectionPage(
+  localization: string
+): Promise<NewPage> {
+  const data = await fetchAPI(`collection-page?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getCollections(type: string): Promise<Collections> {
-  const data = await fetchAPI(`collection`, "", type);
+export async function getCollections(
+  type: string,
+  localization: string
+): Promise<Collections> {
+  const data = await fetchAPI(`collection?locale=${localization}`, "", type);
   return data?.attributes;
 }
 
-export async function getCollectionBySlug(slug: string): Promise<Collections> {
-  const data = await fetchAPI(`collections`, slug);
+export async function getCollectionBySlug(
+  slug: string,
+  localization: string
+): Promise<Collections> {
+  const data = await fetchAPI(`collections?locale=${localization}`, slug);
   return data?.attributes;
 }
 
-export async function getNews(): Promise<News> {
-  const data = await fetchAPI(`news`);
+export async function getNews(localization: string): Promise<News> {
+  const data = await fetchAPI(`news?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getNewsBySlug(slug: string): Promise<News> {
-  const data = await fetchAPI(`news`, slug);
+export async function getNewsBySlug(
+  slug: string,
+  localization: string
+): Promise<News> {
+  const data = await fetchAPI(`news?locale=${localization}`, slug);
   return data?.attributes;
 }
 
-export async function getNewPage(): Promise<NewPage> {
-  const data = await fetchAPI(`new-page`);
+export async function getNewPage(localization: string): Promise<NewPage> {
+  const data = await fetchAPI(`new-page?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getMainPage(): Promise<MainPage> {
-  const data = await fetchAPI(`main-page`);
+export async function getMainPage(localization: string): Promise<MainPage> {
+  const data = await fetchAPI(`main-page?locale=${localization}`);
   return data?.attributes;
 }
 

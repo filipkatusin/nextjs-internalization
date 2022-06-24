@@ -4,7 +4,6 @@ import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
 import { FooterForm } from "@/components/FooterForm";
-import { localization } from "@/lib/constants";
 
 function cookies() {
   // @ts-ignore
@@ -14,19 +13,28 @@ function cookies() {
 export default function Footer() {
   const [footerData, setFooterData] = useState<any>({});
 
+  let id = "0";
+
   useEffect(() => {
     const localizations: { [key: string]: any } = {};
     const att = footer.localizations.data[0].attributes;
     att.localizations.data.forEach((e) => {
       localizations[e.attributes.locale] = e.attributes;
     });
+    if (typeof window !== "undefined") {
+      id = window.location.href;
+    }
+    console.log(id);
+    const localization = id.split("/")[3];
+    console.log("aaa", localization);
+
     setFooterData(
       {
         [att.locale]: att,
         ...localizations,
-      }[localization]
+      }[localization == "en" ? "en" : "sk"]
     );
-  }, []);
+  });
 
   return (
     <footer className={"bg-gray-footer"}>
