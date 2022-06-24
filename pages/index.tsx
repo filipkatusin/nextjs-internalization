@@ -290,7 +290,7 @@ export default function HomePage({ main }: Props) {
       <section className={"border-top-bottom"}>
         <Container
           className={
-            "text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 gap-y-12"
+            "text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 space-y-8 lg:space-y-0"
           }
         >
           <h3 className={"text-2xl md:text-3xl"}>
@@ -305,7 +305,7 @@ export default function HomePage({ main }: Props) {
               <img
                 src={getStrapiUrl(data.attributes.url)}
                 alt="company logo"
-                className={"h-12 md:h-16"}
+                className={"h-12 sm:h-14 md:h-16"}
               />
             ))}
           </div>
