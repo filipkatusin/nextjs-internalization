@@ -44,7 +44,7 @@ interface Form {
 export interface AboutUs {
   title: string;
   content: string;
-  image: { data: StrapiImage[] };
+  images: { data: StrapiImage[] };
 }
 
 export interface Titles {

@@ -1,6 +1,7 @@
 import React from "react";
 import Meta from "@/components/Meta";
 import Footer from "@/components/Footer";
+import TopMenu from "@/components/TopMenu";
 
 interface Props {
   children: any;
@@ -28,6 +29,7 @@ export default function Layout({
         image={image}
         description={description}
       />
+      <TopMenu />
       <div className="min-h-full">
         <main>{children}</main>
       </div>

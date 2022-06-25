@@ -24,9 +24,7 @@ export default function Footer() {
     if (typeof window !== "undefined") {
       id = window.location.href;
     }
-    console.log(id);
     const localization = id.split("/")[3];
-    console.log("aaa", localization);
 
     setFooterData(
       {
@@ -105,14 +103,14 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
-            <div>
-              <h5 className={"text-black text-base font-bold"}>
-                {footerData?.newslatter?.title}
-              </h5>
-              <FooterForm footerData={footer} />
-            </div>
-          </div>
+          {/*<div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>*/}
+          {/*  <div>*/}
+          {/*    <h5 className={"text-black text-base font-bold"}>*/}
+          {/*      {footerData?.newslatter?.title}*/}
+          {/*    </h5>*/}
+          {/*    <FooterForm footerData={footer} />*/}
+          {/*  </div>*/}
+          {/*</div>*/}
         </div>
 
         <p

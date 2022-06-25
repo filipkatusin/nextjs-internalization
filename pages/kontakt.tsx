@@ -1,7 +1,8 @@
 import Layout from "@/components/Layout";
 import { getContactPage } from "@/lib/api";
 import { Contact } from "@/lib/interfaces";
-import TopMenu from "@/components/TopMenu";
+import Container from "@/components/Container";
+import Heading from "@/components/Heading";
 
 interface Props {
   contact: Contact;
@@ -10,16 +11,19 @@ interface Props {
 export default function ContactPage({ contact }: Props) {
   return (
     <Layout title={contact.title}>
-      <TopMenu />
-      <div className={`min-h-screen`}>
-        <div className="font-bold text-4xl">{contact.title}</div>
-        <article dangerouslySetInnerHTML={{ __html: contact.content ?? "" }} />
-      </div>
+      <Heading label={contact.title} />
+      <Container className="flex mb-10">
+        <article
+          className="flex-1"
+          dangerouslySetInnerHTML={{ __html: contact.content ?? "" }}
+        />
+        <div className="flex-1"></div>
+      </Container>
     </Layout>
   );
 }
 
-export async function getStaticProps(locale: string) {
+export async function getStaticProps({ locale }) {
   const contact = (await getContactPage(locale)) || [];
 
   return {

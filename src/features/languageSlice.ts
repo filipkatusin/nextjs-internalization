@@ -13,7 +13,6 @@ export const languageSlice = createSlice({
   initialState,
   reducers: {
     changeLanguage: (state, action: PayloadAction<string>) => {
-      console.log(action.payload);
       return {
         ...state,
         value: action.payload,

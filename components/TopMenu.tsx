@@ -7,16 +7,17 @@ import { Header } from "@/lib/interfaces";
 import { useRouter } from "next/router";
 
 export default function TopMenu() {
+  const router = useRouter();
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
   const [headerData, setHeaderData] = useState<any>({});
   const [menuData, setMenuData] = useState<any>([]);
-  const [langIcon, setLangIcon] = useState("sk_icon");
-  const [localization, setLocalization] = useState("sk");
+  const [langIcon, setLangIcon] = useState(router.locale + "_icon");
+  const [localization, setLocalization] = useState(router.locale);
 
   const menuRef = useRef();
   const langRef = useRef();
-  const router = useRouter();
 
   useEffect(() => {
     const localizations: { [key: string]: Header } = {};
@@ -129,7 +130,7 @@ export default function TopMenu() {
         >
           <Container className={`menu-gray-div flex relative z-30 gap-4`}>
             <div
-              className={`absolute -top-10 left-2 lg:left-10 w-10 h-[92px] bg-[#EE2D3A] z-40`}
+              className={`absolute -top-10 left-0 w-10 h-[92px] bg-[#EE2D3A] z-40`}
             ></div>
             <img
               src={`/assets/logo.svg`}
@@ -234,12 +235,7 @@ export default function TopMenu() {
             <div className={`flex gap-4`}>
               {menuData?.map((m, index) => (
                 <Link key={index} href={m.path ?? ""}>
-                  <a
-                    style={{ fontWeight: "600" }}
-                    className={"hover:text-[#EE2D3A]"}
-                  >
-                    {m.title}
-                  </a>
+                  <a className={"hover:text-[#EE2D3A] text-lg"}>{m.title}</a>
                 </Link>
               ))}
             </div>
