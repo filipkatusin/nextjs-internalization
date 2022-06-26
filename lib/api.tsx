@@ -8,6 +8,7 @@ import {
   Menu,
   NewPage,
   News,
+  NewsSlug,
   Titles,
 } from "@/lib/interfaces";
 
@@ -151,30 +152,29 @@ export async function getCollectionPage(
 
 export async function getCollections(
   type: string,
-  localization: string
+  localization: string,
+  slug?: string
 ): Promise<Collections> {
-  const data = await fetchAPI(`collection?locale=${localization}`, "", type);
+  const data = await fetchAPI(`collection?locale=${localization}`, slug, type);
   return data?.attributes;
 }
 
 export async function getCollectionBySlug(
-  slug: string,
   localization: string
 ): Promise<Collections> {
-  const data = await fetchAPI(`collections?locale=${localization}`, slug);
+  const data = await fetchAPI(`collections?locale=${localization}`);
   return data?.attributes;
 }
 
-export async function getNews(localization: string): Promise<News> {
-  const data = await fetchAPI(`news?locale=${localization}`);
-  return data?.attributes;
+export async function getNews(
+  localization: string,
+  slug?: string
+): Promise<NewsSlug[]> {
+  return await fetchAPI(`news?locale=${localization}`, slug);
 }
 
-export async function getNewsBySlug(
-  slug: string,
-  localization: string
-): Promise<News> {
-  const data = await fetchAPI(`news?locale=${localization}`, slug);
+export async function getNewsBySlug(): Promise<NewsSlug[]> {
+  const data = await fetchAPI(`news?locale=all`);
   return data?.attributes;
 }
 

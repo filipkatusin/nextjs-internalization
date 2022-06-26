@@ -3,7 +3,6 @@ import Link from "next/link";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Container from "@/components/Container";
 import { footer } from "@/src/data/footer";
-import { FooterForm } from "@/components/FooterForm";
 
 function cookies() {
   // @ts-ignore
@@ -107,7 +106,44 @@ export default function Footer() {
               <h5 className={"text-black text-base font-bold"}>
                 {footerData?.newslatter?.title}
               </h5>
-              <FooterForm footerData={footer} />
+              <form className={` max-w-[400px]`}>
+                <div className={"flex my-4 bg-green"}>
+                  <input
+                    type="text"
+                    placeholder={footerData?.newslatter?.input_placeholder}
+                    className={
+                      "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
+                    }
+                  />
+                  <button
+                    className={
+                      "bg-white px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
+                    }
+                  >
+                    {footerData?.newslatter?.button_text}
+                  </button>
+                </div>
+                <label
+                  htmlFor="newslatterCheckbox"
+                  className={"label-container"}
+                >
+                  <div className={"flex flex-row-reverse"}>
+                    <input
+                      id="newslatterCheckbox"
+                      type="checkbox"
+                      className={"hidden"}
+                    />
+                    <div
+                      className={
+                        "checkmark w-6 h-6 mr-2 inline-block order-2 border-black border-2 cursor-pointer"
+                      }
+                    ></div>
+                    <p className={"flex-5 text-sm font-medium"}>
+                      {footerData?.newslatter?.approval_text}
+                    </p>
+                  </div>
+                </label>
+              </form>
             </div>
           </div>
         </div>

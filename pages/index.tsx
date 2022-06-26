@@ -211,60 +211,72 @@ export default function HomePage({ main }: Props) {
         </h2>
         <Container className="grid xl:grid-cols-3 my-10 md:my-20 gap-1 z-10">
           {main?.news?.data?.map((news, index) => (
-            <div
-              className="p-5 sm:p-14 sm:mx-20 md:mx-40 lg:mx-60 xl:mx-0"
-              style={{ backgroundColor: "#292929" }}
+            <Link
               key={index}
+              as={`/novinky/${news?.attributes?.slug}`}
+              href="/novinky/[slug]"
             >
-              <div className="flex">
-                <div
-                  className="px-3 py-1 text-xs date-corner"
-                  style={{
-                    color: news.attributes.date_color,
-                    backgroundColor: news.attributes.date_background_color,
-                  }}
-                >
-                  {Intl.DateTimeFormat("sk", {
-                    day: "numeric",
-                    month: "numeric",
-                    year: "numeric",
-                  }).format(new Date(news.attributes.date))}
+              <a
+                className="sm:mx-20 md:mx-40 lg:mx-60 xl:mx-0 "
+                style={{ backgroundColor: "#292929" }}
+              >
+                {news.attributes?.image.data && (
+                  <div className="h-[250px] sm:h-[350px] md:h-[400px] relative">
+                    <Image
+                      src={news?.attributes?.image?.data?.attributes.url}
+                      layout={"fill"}
+                      objectFit="cover"
+                    />
+                  </div>
+                )}
+                <div className="px-5 sm:px-14 mt-10">
+                  <div className="flex ">
+                    <div
+                      className="px-3 py-1 text-xs date-corner"
+                      style={{
+                        color: news.attributes.date_color,
+                        backgroundColor: news.attributes.date_background_color,
+                      }}
+                    >
+                      {Intl.DateTimeFormat("sk", {
+                        day: "numeric",
+                        month: "numeric",
+                        year: "numeric",
+                      }).format(new Date(news.attributes.date))}
+                    </div>
+                  </div>
+                  <div className="text-white text-2xl font mt-5 mb-10 w-2/3">
+                    {news.attributes.title}
+                  </div>
                 </div>
-              </div>
-              <h4 className="text-white mt-10 sm:mt-20">
-                {news.attributes.title}
-              </h4>
-              <article
-                className="text-white mt-5 opacity-50"
-                dangerouslySetInnerHTML={{
-                  __html: news?.attributes?.content ?? "",
-                }}
-              />
-            </div>
+              </a>
+            </Link>
           ))}
         </Container>
-        <Link href={main?.product_section?.button_link ?? ""}>
-          <div>
-            <a className="mb-10 md:mb-20 flex justify-center">
-              <button
-                onMouseOver={() => setOver(1000)}
-                onMouseOut={() => setOver(9999)}
-                className="border text-white border-2 border-white px-5 py-3 flex justify-center items-center transition-all hover:bg-white hover:border-black hover:text-black"
-              >
-                {main?.product_section?.button_title}
-                <img
-                  className="h-3 w-3 ml-3"
-                  src={
-                    over == 1000
-                      ? "/icons/right-arrow.svg"
-                      : "/icons/right-arrow-white.svg"
-                  }
-                  alt={""}
-                />
-              </button>
-            </a>
-          </div>
-        </Link>
+        <div>
+          <Link href={main?.news_section?.button_link ?? ""}>
+            <div>
+              <a className="mb-10 md:mb-20 flex justify-center">
+                <button
+                  onMouseOver={() => setOver(1000)}
+                  onMouseOut={() => setOver(9999)}
+                  className="border text-white border-2 border-white px-5 py-3 flex justify-center items-center transition-all hover:bg-white hover:border-black hover:text-black"
+                >
+                  {main?.product_section?.button_title}
+                  <img
+                    className="h-3 w-3 ml-3"
+                    src={
+                      over == 1000
+                        ? "/icons/right-arrow.svg"
+                        : "/icons/right-arrow-white.svg"
+                    }
+                    alt={""}
+                  />
+                </button>
+              </a>
+            </div>
+          </Link>
+        </div>
       </section>
       <Container className="flex flex-col text-center justify-center my-20 md:my-32">
         <div className=" flex justify-center">

@@ -64,6 +64,7 @@ export interface Collections {
 export interface News {
   title: string;
   content: string;
+  image: { data: StrapiImage };
   date: Date;
   date_color: string;
   date_background_color: string;
@@ -170,6 +171,18 @@ interface NewsRelation {
 
 interface NewRelation {
   attributes: News;
+}
+
+export interface NewsSlug {
+  attributes: {
+    title: string;
+    content: string;
+    image: { data: StrapiImage };
+    date: Date;
+    date_color: string;
+    date_background_color: string;
+    slug: string;
+  };
 }
 
 interface ProductsRelation {
