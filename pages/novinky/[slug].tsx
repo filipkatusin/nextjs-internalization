@@ -1,5 +1,4 @@
 import Layout from "@/components/Layout";
-import Heading from "@/components/Heading";
 import Container from "@/components/Container";
 import Image from "next/image";
 import { getNews, getNewsBySlug } from "@/lib/api";
