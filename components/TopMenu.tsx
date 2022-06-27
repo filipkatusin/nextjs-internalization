@@ -57,116 +57,128 @@ export default function TopMenu() {
   return (
     menuData &&
     headerData && (
-      <nav>
-        <div className={`bg-[#191919] relative z-30`}>
-          <Container className={`menu-black-div`}>
-            {headerData.socials?.map((s, index) => (
-              <Link key={index} href={s.link ?? ""}>
-                <a
-                  className={`underline underline-offset-4 hover:font-bold decoration-[#bfbfbf]`}
-                >
-                  {s.name}
-                </a>
-              </Link>
-            ))}
-            <div className={`w-[1px] h-7 bg-white/[16%]`}></div>
+      <>
+        <div className={`sticky top-0 lg:relative z-[150]`}>
+          <div className={`bg-[#191919] relative z-30`}>
+            <Container className={`menu-black-div`}>
+              {headerData.socials?.map((s, index) => (
+                <Link key={index} href={s.link ?? ""}>
+                  <a
+                    className={`underline underline-offset-4 hover:font-bold decoration-[#bfbfbf]`}
+                  >
+                    {s.name}
+                  </a>
+                </Link>
+              ))}
+              <div className={`w-[1px] h-7 bg-white/[16%]`}></div>
 
-            <button
-              ref={langRef}
-              onClick={() => setLangDropdown((prev) => !prev)}
-            >
-              {headerData && (
-                <img
-                  alt={""}
-                  src={header[langIcon].data.attributes.url}
-                  className={`h-5 w-5`}
-                />
-              )}
-            </button>
-          </Container>
-        </div>
-        <Container className={`${langDropdown ? "flex" : "hidden"} relative`}>
-          <div
-            className={`bg-[#191919] p-3 w-11 absolute flex flex-col gap-3 -top-0 z-50 -right-1 lg:right-7`}
-          >
-            <button className={``}>
-              {headerData && (
-                <Link href={router.asPath} locale={(router.locale = "sk")}>
-                  <a>
-                    <img
-                      alt={""}
-                      src={headerData.sk_icon?.data.attributes?.url}
-                      className={`menu-lang-icon hover:opacity-100`}
-                      onClick={() => {
-                        setLangIcon("sk_icon");
-                        setLocalization("sk");
-                      }}
-                    />
-                  </a>
-                </Link>
-              )}
-            </button>
-            <button className={``}>
-              {headerData && (
-                <Link href={router.asPath} locale={(router.locale = "en")}>
-                  <a>
-                    <img
-                      alt={""}
-                      src={headerData.en_icon?.data.attributes?.url}
-                      className={`menu-lang-icon hover:opacity-100`}
-                      onClick={() => {
-                        setLangIcon("en_icon");
-                        setLocalization("en");
-                      }}
-                    />
-                  </a>
-                </Link>
-              )}
-            </button>
+              <button
+                ref={langRef}
+                onClick={() => setLangDropdown((prev) => !prev)}
+              >
+                {headerData && (
+                  <img
+                    alt={""}
+                    src={header[langIcon].data.attributes.url}
+                    className={`h-5 w-5`}
+                  />
+                )}
+              </button>
+            </Container>
           </div>
-        </Container>
-        <div
-          className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED] relative z-30`}
-        >
-          <Container className={`menu-gray-div flex relative z-30 gap-4`}>
+          <Container className={`${langDropdown ? "flex" : "hidden"} relative`}>
             <div
-              className={`absolute -top-10 left-0 w-10 h-[92px] bg-[#EE2D3A] z-40`}
-            ></div>
-            <img
-              src={`/assets/logo.svg`}
-              alt={""}
-              className={`w-10 h-10 z-50`}
-            />
-            <div className={`grow`}>
-              <img src={`/assets/sportzoo.svg`} alt={""} className={`h-6`} />
+              className={`bg-[#191919] p-3 w-11 absolute flex flex-col gap-3 -top-0 z-50 -right-1 lg:right-7`}
+            >
+              <button className={``}>
+                {headerData && (
+                  <Link href={router.asPath} locale={(router.locale = "sk")}>
+                    <a>
+                      <img
+                        alt={""}
+                        src={headerData.sk_icon?.data.attributes?.url}
+                        className={`menu-lang-icon hover:opacity-100`}
+                        onClick={() => {
+                          setLangIcon("sk_icon");
+                          setLocalization("sk");
+                        }}
+                      />
+                    </a>
+                  </Link>
+                )}
+              </button>
+              <button className={``}>
+                {headerData && (
+                  <Link href={router.asPath} locale={(router.locale = "en")}>
+                    <a>
+                      <img
+                        alt={""}
+                        src={headerData.en_icon?.data.attributes?.url}
+                        className={`menu-lang-icon hover:opacity-100`}
+                        onClick={() => {
+                          setLangIcon("en_icon");
+                          setLocalization("en");
+                        }}
+                      />
+                    </a>
+                  </Link>
+                )}
+              </button>
             </div>
-            <div className={`flex lg:hidden`}>
+          </Container>
+          <div
+            className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED] relative z-30`}
+          >
+            <Container className={`menu-gray-div flex relative z-30 gap-4`}>
+              <div
+                className={`absolute -top-10 left-0 w-12 h-[96px] md:w-14 md:h-[100px] bg-[#EE2D3A] z-40`}
+              ></div>
+
               <img
-                src={`/assets/menu.svg`}
+                src={`/assets/logo.svg`}
                 alt={""}
-                ref={menuRef}
-                onClick={() => setMenuOpen((prev) => !prev)}
+                className={`w-12 h-12 md:w-14 md:h-14 z-50`}
               />
-            </div>
-            <div className={`hidden lg:flex gap-4`}>
-              <img
-                src={`/assets/magnifyingGlass.svg`}
-                alt={""}
-                className={`menu-icon justify-self-end`}
-              />
-              <div className={`menu-icon relative justify-self-end`}>
+
+              <div className={`grow`}>
+                <Link href={"/"}>
+                  <a>
+                    <img
+                      src={`/assets/sportzoo.svg`}
+                      alt={""}
+                      className={`h-6`}
+                    />
+                  </a>
+                </Link>
+              </div>
+              <div className={`flex lg:hidden`}>
                 <img
-                  src={`/assets/shoppingBag.svg`}
+                  src={`/assets/menu.svg`}
                   alt={""}
-                  className={`menu-icon absolute`}
+                  ref={menuRef}
+                  onClick={() => setMenuOpen((prev) => !prev)}
                 />
-                <div className={`menu-cart-number`}>
-                  <img src={`/assets/Ellipse.svg`} alt={""} className={``} />
-                  <div className={``}>0</div>
+              </div>
+              <div className={`hidden lg:flex gap-4`}>
+                <img
+                  src={`/assets/magnifyingGlass.svg`}
+                  alt={""}
+                  className={`menu-icon justify-self-end`}
+                />
+                <div className={`menu-icon relative justify-self-end`}>
+                  <img
+                    src={`/assets/shoppingBag.svg`}
+                    alt={""}
+                    className={`menu-icon absolute`}
+                  />
+                  <div className={`menu-cart-number`}>
+                    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />
+                    <div className={``}>0</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Container>
+            </Container>
+          </div>
         </div>
 
         <div
@@ -228,7 +240,9 @@ export default function TopMenu() {
           </Container>
         </div>
 
-        <div className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED]`}>
+        <div
+          className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED] lg:sticky lg:top-0 lg:z-[100]`}
+        >
           <Container
             className={`menu-gray-div hidden lg:flex font-bold justify-between`}
           >
@@ -268,7 +282,7 @@ export default function TopMenu() {
             </div>
           </Container>
         </div>
-      </nav>
+      </>
     )
   );
 }
