@@ -9,15 +9,15 @@ import SlidesPerView from "@/components/SlidesPerView";
 import Layout from "@/components/Layout";
 import TextEllipsis from "react-text-ellipsis";
 import Button from "@/components/Button";
-import { useState } from "react";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
+import { useRouter } from "next/router";
 
 interface Props {
   main: MainPage;
 }
 
 export default function HomePage({ main }: Props) {
-  const [over, setOver] = useState(9999);
+  const router = useRouter();
 
   let windowWidth = 0;
   if (typeof window !== "undefined") {
@@ -53,7 +53,7 @@ export default function HomePage({ main }: Props) {
       >
         {main?.collections?.data.map((collection, index) => (
           <SplideSlide key={index}>
-            <div className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px]">
+            <div className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px]">
               <Image
                 src={collection?.attributes?.image?.data?.attributes?.url}
                 layout={"fill"}
@@ -83,7 +83,10 @@ export default function HomePage({ main }: Props) {
                 </TextEllipsis>
               </h5>
               <div className="absolute bottom-5 right-2 md:left-10 z-50">
-                <Link href={collection?.attributes?.slug ?? ""}>
+                <Link
+                  as={`/kolekcie/${collection?.attributes?.slug}`}
+                  href="/kolekcie/[slug]"
+                >
                   <a className="mt-8">
                     <button className="border border-white text-white px-5 py-3 flex justify-center  items-center">
                       {collection?.attributes.button_text}
@@ -102,7 +105,7 @@ export default function HomePage({ main }: Props) {
       </Splide>
       <Container className="grid sm:grid-cols-3 gap-14 mt-20 md:mt-32">
         {main?.link_section?.map((link, index) => (
-          <section className="" key={index}>
+          <section className="text-center" key={index}>
             <div className="h-[200px] relative">
               <Image
                 src={link.icon.data.attributes.url}
@@ -116,26 +119,12 @@ export default function HomePage({ main }: Props) {
               dangerouslySetInnerHTML={{ __html: link?.content ?? "" }}
             />
             <Link href={link?.button_link ?? ""}>
-              <div>
-                <a className="flex justify-center mt-8">
-                  <button
-                    onMouseOver={() => setOver(index + 100)}
-                    onMouseOut={() => setOver(9999)}
-                    className="border-2 px-5 py-3 flex justify-center font-semibold items-center transition-all hover:bg-black hover:text-white"
-                  >
-                    {link?.button_title}
-                    <img
-                      className="h-3 w-3 ml-3"
-                      src={
-                        over == index + 100
-                          ? "/icons/right-arrow-white.svg"
-                          : "/icons/right-arrow.svg"
-                      }
-                      alt={""}
-                    />
-                  </button>
-                </a>
-              </div>
+              <a className="inline-block mt-8">
+                <button className="button-hover-effect border-2 px-5 py-3 flex justify-center font-semibold items-center transition-all hover:bg-black hover:text-white">
+                  {link?.button_title}
+                  <div className="arrow h-3 w-3 ml-3" />
+                </button>
+              </a>
             </Link>
           </section>
         ))}
@@ -253,28 +242,14 @@ export default function HomePage({ main }: Props) {
             </Link>
           ))}
         </Container>
-        <div>
+        <div className="inline-flex justify-center">
           <Link href={main?.news_section?.button_link ?? ""}>
-            <div>
-              <a className="mb-10 md:mb-20 flex justify-center">
-                <button
-                  onMouseOver={() => setOver(1000)}
-                  onMouseOut={() => setOver(9999)}
-                  className="border text-white border-2 border-white px-5 py-3 flex justify-center items-center transition-all hover:bg-white hover:border-black hover:text-black"
-                >
-                  {main?.product_section?.button_title}
-                  <img
-                    className="h-3 w-3 ml-3"
-                    src={
-                      over == 1000
-                        ? "/icons/right-arrow.svg"
-                        : "/icons/right-arrow-white.svg"
-                    }
-                    alt={""}
-                  />
-                </button>
-              </a>
-            </div>
+            <a className="mb-10 md:mb-20 inline-block justify-center">
+              <button className="button-hover-effect-black border text-white border-2 border-white px-5 py-3 flex justify-center items-center transition-all hover:bg-white hover:border-black hover:text-black">
+                {main?.product_section?.button_title}
+                <div className="arrow h-3 w-3 ml-3" />
+              </button>
+            </a>
           </Link>
         </div>
       </section>
@@ -329,6 +304,7 @@ export default function HomePage({ main }: Props) {
 export async function getStaticProps({ locale }) {
   const main = (await getMainPage(locale)) || [];
 
+  console.log(main);
   return {
     props: { main },
   };

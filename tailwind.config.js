@@ -1,7 +1,10 @@
 module.exports = {
   mode: "jit",
   darkMode: "class",
-  content: ["./components/**/*.{js,ts,jsx,tsx}", "./pages/**/*.{js,ts,jsx,tsx}"],
+  content: [
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
+  ],
   plugins: [require("@tailwindcss/custom-forms")],
   theme: {
     extend: {
@@ -48,6 +51,10 @@ module.exports = {
       boxShadow: {
         small: "0 5px 10px rgba(0, 0, 0, 0.12)",
         medium: "0 8px 30px rgba(0, 0, 0, 0.12)",
+      },
+      screens: {
+        "3xl": { min: "1786px" },
+        // => @media (min-width: 1280px) { ... }
       },
     },
   },

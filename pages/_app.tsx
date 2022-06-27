@@ -10,7 +10,6 @@ import { Router } from "next/router";
 import { isProduction } from "@/lib/utils";
 import { GTMPageView } from "@/lib/gtm";
 import { Provider } from "react-redux";
-import { store } from "@/src/app/store";
 
 export default function MyApp({ Component, pageProps }) {
   useEffect(() => {
@@ -23,9 +22,5 @@ export default function MyApp({ Component, pageProps }) {
     };
   }, []);
 
-  return (
-    <Provider store={store}>
-      <Component {...pageProps} />
-    </Provider>
-  );
+  return <Component {...pageProps} />;
 }

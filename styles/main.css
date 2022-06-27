@@ -2,8 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face { font-family: Satoshi-Bold; font-weight: 600; src: url("../public/fonts/Satoshi-Variable.ttf") }
-@font-face { font-family: Satoshi-Light; src: url("../public/fonts/Satoshi-Variable.ttf") }
+@font-face {
+    font-family: Satoshi-Bold;
+    font-weight: 600;
+    src: url("../public/fonts/Satoshi-Variable.ttf")
+}
+
+@font-face {
+    font-family: Satoshi-Light;
+    src: url("../public/fonts/Satoshi-Variable.ttf")
+}
 
 html {
     font-family: Satoshi-Light, sans-serif;
@@ -37,30 +45,38 @@ h1, h2, h3, h4, h5 {
 
 .container {
     width: 90%;
+
     @media (min-width: 1561px) {
         max-width: 1480px !important;
     }
+
     @media (max-width: 1560px) {
         max-width: 1280px !important;
     }
+
     @media (max-width: 1024px) {
         width: 95%;
     }
+
 }
 
 .container-products {
+
     @media (min-width: 1561px) {
         width: 93% !important;
         margin-left: 7% !important;
     }
+
     @media (max-width: 1560px) {
         width: 97%;
         margin-left: 3%;
     }
+
     @media (max-width: 1024px) {
         width: 95%;
         margin-left: 5%;
     }
+
 }
 
 h1 {
@@ -74,11 +90,12 @@ h2 {
 h4 {
     @apply text-3xl lg:text-4xl xl:text-3xl font-semibold
 }
+
 h5 {
-    @apply  md:text-lg lg:text-xl text-xl font-semibold
+    @apply md:text-lg lg:text-xl text-xl font-semibold
 }
 
-.date-corner{
+.date-corner {
     background: red;
     position: relative;
 }
@@ -86,7 +103,8 @@ h5 {
 .date-corner:before {
     content: '';
     position: absolute;
-    top: 0; right: 0;
+    top: 0;
+    right: 0;
     border-top: 10px solid #292929;
     border-left: 10px solid transparent;
     width: 0;
@@ -98,7 +116,7 @@ h5 {
 }
 
 
-.bold-text{
+.bold-text {
     font-family: Satoshi-Bold, sans-serif;
 }
 
@@ -108,4 +126,26 @@ h5 {
 
 .arrow-hover:hover {
     background: url("../public/icons/right-arrow-white.svg");
+}
+
+.button-hover-effect {
+    .arrow {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../public/icons/right-arrow.svg");
+    }
+    &:hover .arrow {
+        background-image: url("../public/icons/right-arrow-white.svg") !important;
+    }
+}
+
+.button-hover-effect-black {
+    .arrow {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../public/icons/right-arrow-white.svg");
+    }
+    &:hover .arrow {
+        background-image: url("../public/icons/right-arrow.svg") !important;
+    }
 }

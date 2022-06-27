@@ -92,8 +92,8 @@ export default function TopMenu() {
             >
               <button className={``}>
                 {headerData && (
-                  <Link href={router.asPath} locale={(router.locale = "sk")}>
-                    <a>
+                  <Link href={router.asPath} locale={"sk"}>
+                    <a onClick={() => (router.locale = "sk")}>
                       <img
                         alt={""}
                         src={headerData.sk_icon?.data.attributes?.url}
@@ -109,8 +109,8 @@ export default function TopMenu() {
               </button>
               <button className={``}>
                 {headerData && (
-                  <Link href={router.asPath} locale={(router.locale = "en")}>
-                    <a>
+                  <Link href={router.asPath} locale={"en"}>
+                    <a onClick={() => (router.locale = "en")}>
                       <img
                         alt={""}
                         src={headerData.en_icon?.data.attributes?.url}
@@ -134,11 +134,13 @@ export default function TopMenu() {
                 className={`absolute -top-10 left-0 w-12 h-[96px] md:w-14 md:h-[100px] bg-[#EE2D3A] z-40`}
               ></div>
 
-              <img
-                src={`/assets/logo.svg`}
-                alt={""}
-                className={`w-12 h-12 md:w-14 md:h-14 z-50`}
-              />
+              <Link href={"/"}>
+                <img
+                  src={`/assets/logo.svg`}
+                  alt={""}
+                  className={`w-12 h-12 md:w-14 md:h-14 z-50`}
+                />
+              </Link>
 
               <div className={`grow`}>
                 <Link href={"/"}>

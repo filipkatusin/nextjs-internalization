@@ -18,7 +18,7 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}${
         slug ? `&filters[slug]=${slug}` : ""
-      }${type ? `&filters[type]=${type}` : ""}&populate=deep`,
+      }${type ? `&filters[type]=${type}` : ""}&populate=deep,4`,
       {
         headers: {
           "Content-Type": "application/json",

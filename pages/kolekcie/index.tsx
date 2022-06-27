@@ -1,5 +1,14 @@
+import Layout from "@/components/Layout";
+import Container from "@/components/Container";
+
 export default function CollectionPage() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <Layout>
+      <Container>
+        <div></div>
+      </Container>
+    </Layout>
+  );
 }
 
 export async function getStaticProps() {
