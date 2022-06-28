@@ -48,17 +48,30 @@ export interface AboutUs {
 }
 
 export interface Titles {
+  title;
   title_link: TitleLink[];
   type: string;
 }
 
+export interface RelationTitles {
+  data: {
+    attributes: {
+      title;
+      title_link: TitleLink[];
+      type: string;
+    };
+  };
+}
+
 export interface Collections {
-  title: string;
-  title_color: string;
-  title_background_color: string;
-  image: { data: StrapiImage };
-  button_text: string;
-  slug: string;
+  attributes: {
+    title: string;
+    title_color: string;
+    title_background_color: string;
+    image: { data: StrapiImage };
+    date: Date;
+    slug: string;
+  };
 }
 
 export interface News {
@@ -74,6 +87,13 @@ export interface News {
 export interface NewPage {
   title: string;
   seo: SEO;
+}
+
+export interface CollectionInterface {
+  title: string;
+  date_of_release: string;
+  filter_year: RelationTitles;
+  filter_type: RelationTitles;
 }
 
 interface SEO {
@@ -142,6 +162,7 @@ export interface Menu {
 }
 
 export interface MainPage {
+  collection_button: string;
   link_section: LinkSection[];
   product_section: TitleButton;
   news_section: TitleButton;
@@ -158,11 +179,7 @@ export interface MainPage {
 }
 
 interface CollectionsRelation {
-  data: CollectionRelation[];
-}
-
-interface CollectionRelation {
-  attributes: Collections;
+  data: Collections[];
 }
 
 interface NewsRelation {

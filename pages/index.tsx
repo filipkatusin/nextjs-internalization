@@ -18,6 +18,8 @@ interface Props {
 
 export default function HomePage({ main }: Props) {
   const router = useRouter();
+  const colLink = router.locale == "sk" ? "kolekcie" : "collections";
+  const newsLink = router.locale == "sk" ? "novinky" : "news";
 
   let windowWidth = 0;
   if (typeof window !== "undefined") {
@@ -84,12 +86,12 @@ export default function HomePage({ main }: Props) {
               </h5>
               <div className="absolute bottom-5 right-2 md:left-10 z-50">
                 <Link
-                  as={`/kolekcie/${collection?.attributes?.slug}`}
-                  href="/kolekcie/[slug]"
+                  as={`/${colLink}/${collection?.attributes?.slug}`}
+                  href={`/${colLink}/[slug]`}
                 >
                   <a className="mt-8">
                     <button className="border border-white text-white px-5 py-3 flex justify-center  items-center">
-                      {collection?.attributes.button_text}
+                      {main.collection_button}
                       <img
                         className="h-3 w-3 ml-3"
                         src={"/icons/right-arrow-white.svg"}
@@ -202,8 +204,8 @@ export default function HomePage({ main }: Props) {
           {main?.news?.data?.map((news, index) => (
             <Link
               key={index}
-              as={`/novinky/${news?.attributes?.slug}`}
-              href="/novinky/[slug]"
+              as={`/${newsLink}/${news?.attributes?.slug}`}
+              href={`/${newsLink}/[slug]`}
             >
               <a
                 className="sm:mx-20 md:mx-40 lg:mx-60 xl:mx-0 "
@@ -304,7 +306,6 @@ export default function HomePage({ main }: Props) {
 export async function getStaticProps({ locale }) {
   const main = (await getMainPage(locale)) || [];
 
-  console.log(main);
   return {
     props: { main },
   };

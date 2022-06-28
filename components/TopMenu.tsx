@@ -135,11 +135,9 @@ export default function TopMenu() {
               ></div>
 
               <Link href={"/"}>
-                <img
-                  src={`/assets/logo.svg`}
-                  alt={""}
-                  className={`w-12 h-12 md:w-14 md:h-14 z-50`}
-                />
+                <a className={`w-12 h-12 md:w-14 md:h-14 z-50`}>
+                  <img src={`/assets/logo.svg`} alt={""} />
+                </a>
               </Link>
 
               <div className={`grow`}>

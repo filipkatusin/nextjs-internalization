@@ -1,5 +1,6 @@
 import {
   AboutUs,
+  CollectionInterface,
   Collections,
   Contact,
   Header,
@@ -7,13 +8,11 @@ import {
   MainPage,
   Menu,
   NewPage,
-  News,
   NewsSlug,
   Titles,
 } from "@/lib/interfaces";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}${
@@ -43,7 +42,6 @@ async function fetchAPI(url: string, slug?: string, type?: string) {
 }
 
 async function fetchAPIExternalData(url: string) {
-  process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}?locale=all&populate=deep`,
@@ -145,18 +143,17 @@ export async function getAboutUsPage(localization: string): Promise<AboutUs> {
 
 export async function getCollectionPage(
   localization: string
-): Promise<NewPage> {
+): Promise<CollectionInterface> {
   const data = await fetchAPI(`collection-page?locale=${localization}`);
   return data?.attributes;
 }
 
 export async function getCollections(
-  type: string,
   localization: string,
-  slug?: string
+  slug?: string,
+  type?: string
 ): Promise<Collections> {
-  const data = await fetchAPI(`collection?locale=${localization}`, slug, type);
-  return data?.attributes;
+  return await fetchAPI(`collections?locale=${localization}`, slug, type);
 }
 
 export async function getCollectionBySlug(
