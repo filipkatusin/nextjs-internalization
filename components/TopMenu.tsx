@@ -184,7 +184,7 @@ export default function TopMenu() {
         </div>
 
         <div
-          className={`lg:hidden absolute w-screen px-2 py-4 bg-[#F8F8F8] font-semibold ${
+          className={`lg:hidden fixed w-screen px-2 py-4 bg-[#F8F8F8] font-semibold ${
             menuOpen ? "translate-y-0 z-30" : "-translate-y-full z-0"
           } ease-in-out duration-300`}
         >
