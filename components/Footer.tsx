@@ -141,13 +141,8 @@ export default function Footer() {
               <Formik
                 initialValues={{ email: "", checkbox: false }}
                 validationSchema={NewsletterSchema}
-                isInitialValid={false}
-                onSubmit={(values, { setSubmitting, resetForm }) => {
-                  setTimeout(() => {
-                    alert(JSON.stringify(values, null, 2));
-                    setSubmitting(false);
-                  }, 400);
-                }}
+                validateOnMount={true}
+                onSubmit={() => {}}
               >
                 {({
                   values,
@@ -170,7 +165,7 @@ export default function Footer() {
                           "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
                         }
                       />
-                      {!isValid ? (
+                      {!isValid || values.email.length === 0 ? (
                         <button
                           type={"submit"}
                           className={
@@ -187,7 +182,11 @@ export default function Footer() {
                             className={
                               "h-full flex items-center block px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
                             }
-                            onClick={() => resetForm()}
+                            onClick={() =>
+                              setTimeout(() => {
+                                resetForm();
+                              }, 200)
+                            }
                           >
                             <button type={"button"} className={"font-bold"}>
                               {footerData?.newslatter?.button_text}
