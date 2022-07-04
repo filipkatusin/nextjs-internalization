@@ -19,7 +19,9 @@ export default function Button({ label, link, arrow, className }: Props) {
     <Link href={link ?? ""}>
       <a className="flex justify-center">
         <button
-          className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className}`}
+          className={
+            "button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
+          }
         >
           {label}
           {arrow && <div className="arrow h-3 w-3 ml-3" />}
