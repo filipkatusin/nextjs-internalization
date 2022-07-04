@@ -18,7 +18,7 @@ export default function CollectionPage({ data, collections }: Props) {
   collections?.sort(function (a, b) {
     return b.attributes?.date
       ?.toString()
-      .localeCompare(a.attributes?.date.toString());
+      .localeCompare(a.attributes?.date?.toString());
   });
 
   return (
