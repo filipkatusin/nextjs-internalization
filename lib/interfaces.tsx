@@ -229,6 +229,16 @@ export interface PlannedCollections {
   };
 }
 
+export interface PlannedCollections {
+  title: string;
+  planned_date_text: string;
+  published_collection_button_text: string;
+  unpublished_collection_text: string;
+  collections: {
+    data: Collections[];
+  };
+}
+
 interface CollectionsRelation {
   data: Collections[];
 }
