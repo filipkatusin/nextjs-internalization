@@ -63,6 +63,11 @@ export interface RelationTitles {
   };
 }
 
+export enum IsPublished {
+  published = "published",
+  unpublished = "unpublished",
+}
+
 export interface Collections {
   attributes: {
     title: string;
@@ -71,6 +76,10 @@ export interface Collections {
     image: { data: StrapiImage };
     date: Date;
     slug: string;
+    manufacturer_logo: {
+      data: StrapiImage;
+    };
+    is_published: IsPublished;
   };
 }
 
@@ -176,6 +185,16 @@ export interface MainPage {
   news: NewsRelation;
   products: ProductsRelation;
   card_production_section: CardProductionSection;
+}
+
+export interface PlannedCollections {
+  title: string;
+  planned_date_text: string;
+  published_collection_button_text: string;
+  unpublished_collection_text: string;
+  collections: {
+    data: Collections[];
+  };
 }
 
 interface CollectionsRelation {
