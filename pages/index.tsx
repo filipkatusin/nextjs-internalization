@@ -255,8 +255,45 @@ export default function HomePage({ main }: Props) {
           </Link>
         </div>
       </section>
-      <Container className="flex flex-col text-center justify-center my-20 md:my-32">
-        <div className=" flex justify-center">
+      <Container className="flex flex-col text-center justify-center mb-20 mt-16 md:mb-32 md:mt-24">
+        <div className="bg-[#F7F7F7] mb-16 flex md:mx-10 flex-col lg:flex-row pb-12 lg:pb-0 justify-between">
+          <div className="flex flex-col items-start basis-2/5 p-12">
+            {main && (
+              <img
+                src={main?.live_section?.logo?.data?.attributes?.url}
+                alt={""}
+                className={`h-16`}
+              />
+            )}
+            <h3 className="mt-10 text-lg md:text-2xl lg:text-3xl xl:text-4xl bold-text">
+              {main?.live_section?.title}
+            </h3>
+            <article
+              className="text-left mt-3"
+              dangerouslySetInnerHTML={{
+                __html: main?.live_section?.text ?? "",
+              }}
+            ></article>
+            <Link href={main?.live_section?.button_link}>
+              <a className="inline-block mt-10 justify-center">
+                <button className="button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white">
+                  {main?.live_section?.button_text}
+                  <div className="arrow h-3 w-3 ml-3" />
+                </button>
+              </a>
+            </Link>
+          </div>
+          <div className="flex items-center lg:justify-start justify-center space-x-8 overflow-hidden max-w-[680px]">
+            {main?.live_section?.images?.data.map((image) => (
+              <img
+                src={image.attributes.url}
+                alt={""}
+                className={`h-60 md:h-80`}
+              />
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center">
           <img
             className="w-20 h-20"
             src={main?.about_section?.logo?.data?.attributes?.url}
@@ -274,6 +311,37 @@ export default function HomePage({ main }: Props) {
           link={main?.about_section?.button_link}
         />
       </Container>
+      <Splide
+        options={{
+          speed: 1500,
+          perPage: 1,
+          type: "loop",
+          pauseOnFocus: true,
+          pauseOnHover: true,
+          autoplay: true,
+          interval: 5000,
+          pagination: false,
+          gap: 30,
+          dragMinThreshold: {
+            touch: 10,
+            mouse: 10,
+          },
+          padding: 0,
+        }}
+        className="gallery-splide bg-[#232221]"
+      >
+        {main?.gallery_section?.images?.data?.map((image, index) => (
+          <SplideSlide key={index}>
+            <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
+              <img
+                src={image.attributes.url}
+                alt={""}
+                className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
+              />
+            </div>
+          </SplideSlide>
+        ))}
+      </Splide>
       <section className={"border-top-bottom"}>
         <Container
           className={

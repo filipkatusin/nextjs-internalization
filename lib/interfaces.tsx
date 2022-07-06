@@ -172,6 +172,15 @@ export interface MainPage {
     button_title: string;
     button_link: string;
   };
+  live_section: {
+    title: string;
+    text: string;
+    button_text: string;
+    button_link: string;
+    logo: { data: StrapiImage };
+    images: { data: StrapiImage[] };
+  };
+  gallery_section: { images: { data: StrapiImage[] } };
   collections: CollectionsRelation;
   news: NewsRelation;
   products: ProductsRelation;
