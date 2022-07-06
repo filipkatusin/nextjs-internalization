@@ -367,7 +367,7 @@ export default function HomePage({ main, planned_collections }: Props) {
           />
         </div>
         <article
-          className="mt-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text mb-10"
+          className="mt-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text"
           dangerouslySetInnerHTML={{
             __html: main?.about_section?.content ?? "",
           }}
