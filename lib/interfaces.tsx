@@ -69,7 +69,7 @@ export interface RelationTitles {
   data: {
     attributes: {
       title;
-      title_type: TitleType[];
+      title_link: TitleLink[];
       type: string;
     };
   };
