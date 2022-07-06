@@ -185,6 +185,11 @@ export interface MainPage {
   news: NewsRelation;
   products: ProductsRelation;
   card_production_section: CardProductionSection;
+  social_networks: {
+    title: string;
+    social_network_icon: ImageLink[];
+    social_network_image: ImageLink[];
+  };
 }
 
 interface CollectionsRelation {
