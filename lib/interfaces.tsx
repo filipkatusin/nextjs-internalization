@@ -105,6 +105,11 @@ export interface CollectionInterface {
   filter_type: RelationTitles;
 }
 
+export interface CollectionsFilters {
+  year: string;
+  type: string;
+}
+
 interface SEO {
   metaTitle: string;
   metaDescription: string;
