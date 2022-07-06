@@ -185,6 +185,11 @@ export async function getMainPage(localization: string): Promise<MainPage> {
   return data?.attributes;
 }
 
+export async function getPlannedCollections(localization: string) {
+  const data = await fetchAPI(`planned-collection?locale=${localization}`);
+  return data?.attributes;
+}
+
 export async function getHeader(): Promise<Header> {
   const data = await fetchAPIExternalData(`header`);
   return data?.attributes;

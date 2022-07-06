@@ -38,7 +38,7 @@ export default function Footer() {
   const errorMessages = {
     sk: {
       email: {
-        required: "Email je povinny.",
+        required: "Email je povinný.",
         valid: "Email musí mať validný formát.",
       },
       checkbox: {
