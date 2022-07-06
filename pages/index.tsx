@@ -348,13 +348,12 @@ export default function HomePage({ main, planned_collections }: Props) {
               </a>
             </Link>
           </div>
-          <div className="flex items-center justify-center lg:justify-start space-x-5 md:space-x-8 overflow-hidden md:max-w-[680px]">
-            {main?.live_section?.images?.data.map((image, index) => (
+          <div className="flex items-center lg:justify-start justify-center space-x-8 overflow-hidden max-w-[680px]">
+            {main?.live_section?.images?.data.map((image) => (
               <img
-                key={index}
                 src={image.attributes.url}
                 alt={""}
-                className={`h-80`}
+                className={`h-60 md:h-80`}
               />
             ))}
           </div>
@@ -464,6 +463,37 @@ export default function HomePage({ main, planned_collections }: Props) {
         </div>
       </Container>
 
+      <Splide
+        options={{
+          speed: 1500,
+          perPage: 1,
+          type: "loop",
+          pauseOnFocus: true,
+          pauseOnHover: true,
+          autoplay: true,
+          interval: 5000,
+          pagination: false,
+          gap: 30,
+          dragMinThreshold: {
+            touch: 10,
+            mouse: 10,
+          },
+          padding: 0,
+        }}
+        className="gallery-splide bg-[#232221]"
+      >
+        {main?.gallery_section?.images?.data?.map((image, index) => (
+          <SplideSlide key={index}>
+            <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
+              <img
+                src={image.attributes.url}
+                alt={""}
+                className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
+              />
+            </div>
+          </SplideSlide>
+        ))}
+      </Splide>
       <section className={"border-top-bottom"}>
         <Container
           className={
