@@ -22,7 +22,7 @@ export default function NewsPage({ news, newPage }: Props) {
             as={`/novinky/${one?.attributes?.slug}`}
             href="/novinky/[slug]"
           >
-            <a className="relative transition-all opacity-40 hover:opacity-100 hover:scale-105 duration-500">
+            <a className="relative transition-all md:opacity-60 hover:opacity-100 hover:scale-105 duration-500">
               {one.attributes?.image?.data && (
                 <div className="h-[250px] sm:h-[350px] md:h-[400px] relative">
                   <Image
