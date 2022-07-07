@@ -381,7 +381,7 @@ export default function HomePage({ main, planned_collections }: Props) {
             <div className={"flex w-full items-end"}>
               <ImageDiv
                 imageUrl={
-                  main?.social_networks?.social_network_image[1].image?.data
+                  main?.social_networks?.social_network_image[1]?.image?.data
                     ?.attributes?.url
                 }
                 link={main?.social_networks?.social_network_image[1]?.link}
