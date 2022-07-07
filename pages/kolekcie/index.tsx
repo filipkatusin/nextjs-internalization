@@ -1,14 +1,11 @@
 import Layout from "@/components/Layout";
 import Container from "@/components/Container";
-import {
-  getCollectionPage,
-  getCollections,
-  getPlannedCollections,
-} from "@/lib/api";
+import { getCollectionPage, getCollections } from "@/lib/api";
 import {
   CollectionInterface,
   Collections,
   CollectionsFilters,
+  FilterType,
   IsPublished,
 } from "@/lib/interfaces";
 import Heading from "@/components/Heading";
@@ -18,55 +15,45 @@ import { useState } from "react";
 interface Props {
   data: CollectionInterface;
   collections: Collections[];
-  plannedCollectionsVuids: string[];
 }
 
-export default function CollectionPage({
-  data,
-  collections,
-  plannedCollectionsVuids,
-}: Props) {
+export default function CollectionPage({ data, collections }: Props) {
   const [filters, setFilters] = useState<CollectionsFilters>({
-    year: data?.filter_year?.data?.attributes?.title_link[0].title,
-    type: data?.filter_type?.data?.attributes?.title_link[0].title,
+    year: data?.filter_year.data.attributes.title_type.find(
+      (item) => item.filter_type == FilterType.all
+    ).title,
+    type: data?.filter_type.data.attributes.title_type.find(
+      (item) => item.filter_type == FilterType.all
+    ).filter_type,
   });
 
-  const filterCollections = (collection) => {
-    //vsetky typy
-    if (
-      filters.type === data?.filter_type?.data?.attributes?.title_link[0].title
-    ) {
-      return filters.year ===
-        data?.filter_year?.data?.attributes?.title_link[0].title
-        ? true
-        : new Date(collection.attributes.date).getFullYear().toString() ===
-            filters.year;
+  const checkYear = (data: CollectionInterface, collection: Collections) => {
+    return filters.year ===
+      data?.filter_year.data.attributes.title_type.find(
+        (item) => item.filter_type == FilterType.all
+      ).title
+      ? true
+      : new Date(collection.attributes.date).getFullYear().toString() ===
+          filters.year;
+  };
+
+  const filterCollections = (collection: Collections) => {
+    if (filters.type === FilterType.all) {
+      return checkYear(data, collection);
     }
 
-    //vytvorene
     if (
-      filters.type ===
-        data?.filter_type?.data?.attributes?.title_link[1].title &&
-      !plannedCollectionsVuids.includes(collection.attributes.vuid)
+      filters.type === FilterType.created &&
+      collection.attributes.is_published === IsPublished.published
     ) {
-      return filters.year ===
-        data?.filter_year?.data?.attributes?.title_link[0].title
-        ? true
-        : new Date(collection.attributes.date).getFullYear().toString() ===
-            filters.year;
+      return checkYear(data, collection);
     }
 
-    //pripravujeme
     if (
-      filters.type ===
-        data?.filter_type?.data?.attributes?.title_link[2].title &&
-      plannedCollectionsVuids.includes(collection.attributes.vuid)
+      filters.type === FilterType.prepared &&
+      collection.attributes.is_published === IsPublished.unpublished
     ) {
-      return filters.year ===
-        data?.filter_year?.data?.attributes?.title_link[0].title
-        ? true
-        : new Date(collection.attributes.date).getFullYear().toString() ===
-            filters.year;
+      return checkYear(data, collection);
     }
   };
 
@@ -75,36 +62,44 @@ export default function CollectionPage({
       <Heading label={data.title} />
       <Container>
         <div className="flex space-x-5 justify-center">
-          {data?.filter_year?.data?.attributes?.title_link?.map((title) => (
-            <div
-              className={`py-2 px-3 font-bold hover:text-red cursor-pointer transition-all ${
-                filters.year === title.title ? "text-red" : "text-black"
-              }`}
-              onClick={() => setFilters({ ...filters, year: title.title })}
-            >
-              {title.title}
-            </div>
-          ))}
+          {data?.filter_year?.data?.attributes?.title_type?.map(
+            (title, index) => (
+              <div
+                key={index}
+                className={`py-2 px-3 font-bold hover:text-red cursor-pointer transition-all ${
+                  filters.year === title.title ? "text-red" : "text-black"
+                }`}
+                onClick={() => setFilters({ ...filters, year: title.title })}
+              >
+                {title.title}
+              </div>
+            )
+          )}
         </div>
 
         <div className="flex space-x-10 justify-center mt-10">
-          {data?.filter_type?.data?.attributes?.title_link?.map((title) => (
-            <div
-              className={`hover:cursor-pointer hover:font-bold hover:text-red ${
-                filters.type === title.title
-                  ? "text-red font-bold"
-                  : "text-black"
-              }`}
-              onClick={() => setFilters({ ...filters, type: title.title })}
-            >
-              {title.title}
-            </div>
-          ))}
+          {data?.filter_type?.data?.attributes?.title_type?.map(
+            (title, index) => (
+              <div
+                key={index}
+                className={`hover:cursor-pointer hover:font-bold hover:text-red ${
+                  filters.type === title.filter_type
+                    ? "text-red font-bold"
+                    : "text-black"
+                }`}
+                onClick={() =>
+                  setFilters({ ...filters, type: title.filter_type })
+                }
+              >
+                {title.title}
+              </div>
+            )
+          )}
         </div>
 
         <section className="grid grid-cols-3 mt-20 gap-10">
           {collections?.filter(filterCollections).map((collection, index) => (
-            <div>
+            <div key={index}>
               {collection?.attributes?.image?.data && (
                 <div className="h-80 relative">
                   <Image
@@ -138,7 +133,6 @@ export default function CollectionPage({
 export async function getStaticProps({ locale }) {
   const data = ((await getCollectionPage(locale)) || []) as CollectionInterface;
   const collections = ((await getCollections(locale)) || []) as Collections[];
-  const plannedCollections = (await getPlannedCollections(locale)) || [];
 
   data?.filter_year?.data?.attributes?.title_link?.sort(function (a, b) {
     return b.title?.localeCompare(a.title);
@@ -159,12 +153,6 @@ export async function getStaticProps({ locale }) {
     props: {
       data,
       collections,
-      plannedCollectionsVuids:
-        plannedCollections.collections?.data
-          .filter(
-            (item) => item.attributes.is_published === IsPublished.published
-          )
-          .map((item) => item.attributes.vuid) ?? [],
     },
   };
 }

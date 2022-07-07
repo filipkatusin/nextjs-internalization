@@ -27,6 +27,18 @@ interface TitleLink {
   link: string;
 }
 
+export enum FilterType {
+  all = "all",
+  year = "year",
+  created = "created",
+  prepared = "prepared",
+}
+
+interface TitleType {
+  title: string;
+  filter_type: FilterType;
+}
+
 export interface Contact {
   title: string;
   content: string;
@@ -58,6 +70,7 @@ export interface RelationTitles {
     attributes: {
       title;
       title_link: TitleLink[];
+      title_type: TitleType[];
       type: string;
     };
   };
