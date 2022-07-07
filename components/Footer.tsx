@@ -136,7 +136,7 @@ export default function Footer() {
           <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
             <div>
               <h5 className={"text-black text-base font-bold"}>
-                {footerData?.newslatter?.title}
+                {footerData?.newsletter?.title}
               </h5>
               <Formik
                 initialValues={{ email: "", checkbox: false }}
@@ -160,7 +160,7 @@ export default function Footer() {
                         onChange={handleChange}
                         onBlur={handleBlur}
                         value={values.email}
-                        placeholder={footerData?.newslatter?.input_placeholder}
+                        placeholder={footerData?.newsletter?.input_placeholder}
                         className={
                           "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
                         }
@@ -172,7 +172,7 @@ export default function Footer() {
                             "bg-white px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
                           }
                         >
-                          {footerData?.newslatter?.button_text}
+                          {footerData?.newsletter?.button_text}
                         </button>
                       ) : (
                         <div className={"block"}>
@@ -189,7 +189,7 @@ export default function Footer() {
                             }
                           >
                             <button type={"button"} className={"font-bold"}>
-                              {footerData?.newslatter?.button_text}
+                              {footerData?.newsletter?.button_text}
                             </button>
                           </a>
                         </div>
@@ -200,12 +200,12 @@ export default function Footer() {
                     </div>
 
                     <label
-                      htmlFor="newslatterCheckbox"
+                      htmlFor="newsletterCheckbox"
                       className={"label-container"}
                     >
                       <div className={"flex flex-row-reverse mt-4"}>
                         <input
-                          id="newslatterCheckbox"
+                          id="newsletterCheckbox"
                           type="checkbox"
                           name="checkbox"
                           onChange={handleChange}
@@ -219,7 +219,7 @@ export default function Footer() {
                           }
                         ></div>
                         <p className={"flex-5 text-sm font-medium"}>
-                          {footerData?.newslatter?.approval_text}
+                          {footerData?.newsletter?.approval_text}
                         </p>
                       </div>
                       <div className={"text-red-500 mt-1 text-sm md:text-base"}>
@@ -238,7 +238,7 @@ export default function Footer() {
             "text-black text-center xl:text-left lg:text-lg font-medium opacity-60 pt-8"
           }
         >
-          {footer?.rights}
+          {footerData?.rights}
         </p>
       </Container>
     </footer>
