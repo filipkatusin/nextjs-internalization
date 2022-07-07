@@ -19,19 +19,19 @@ interface Props {
 
 export default function CollectionPage({ data, collections }: Props) {
   const [filters, setFilters] = useState<CollectionsFilters>({
-    year: data?.filter_year.data.attributes.title_type.find(
+    year: data?.filter_year?.data?.attributes?.title_type?.find(
       (item) => item.filter_type == FilterType.all
-    ).title,
-    type: data?.filter_type.data.attributes.title_type.find(
+    )?.title,
+    type: data?.filter_type?.data?.attributes?.title_type?.find(
       (item) => item.filter_type == FilterType.all
-    ).filter_type,
+    )?.filter_type,
   });
 
   const checkYear = (data: CollectionInterface, collection: Collections) => {
     return filters.year ===
-      data?.filter_year.data.attributes.title_type.find(
+      data?.filter_year?.data?.attributes?.title_type?.find(
         (item) => item.filter_type == FilterType.all
-      ).title
+      )?.title
       ? true
       : new Date(collection.attributes.date).getFullYear().toString() ===
           filters.year;
