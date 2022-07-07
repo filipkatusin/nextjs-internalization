@@ -69,7 +69,6 @@ export interface RelationTitles {
   data: {
     attributes: {
       title;
-      title_link: TitleLink[];
       title_type: TitleType[];
       type: string;
     };
@@ -116,6 +115,7 @@ export interface CollectionInterface {
   date_of_release: string;
   filter_year: RelationTitles;
   filter_type: RelationTitles;
+  button_hover_text: string;
 }
 
 export interface CollectionsFilters {

@@ -37,6 +37,7 @@ module.exports = {
         "gray-footer": "#F8F8F8",
         black: "#191919",
         red: "#EE2D3A",
+        "red-hover": "#be2630",
       },
       fontFamily: {
         sans: ["Graphik", "sans-serif"],
