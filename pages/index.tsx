@@ -283,13 +283,13 @@ export default function HomePage({ main }: Props) {
               </a>
             </Link>
           </div>
-          <div className="flex items-center lg:justify-start justify-center space-x-8 overflow-hidden max-w-[680px]">
+          <div className="flex items-center justify-center lg:justify-start space-x-5 md:space-x-8 overflow-hidden md:max-w-[680px]">
             {main?.live_section?.images?.data.map((image, index) => (
               <img
                 key={index}
                 src={image.attributes.url}
                 alt={""}
-                className={`h-60 md:h-80`}
+                className={`h-80`}
               />
             ))}
           </div>
