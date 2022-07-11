@@ -64,7 +64,7 @@ export default function CollectionPage({ data, collections }: Props) {
     <Layout>
       <Heading label={data.title} />
       <Container>
-        <div className="flex space-x-5 justify-center">
+        <div className="flex space-x-5 flex-wrap justify-center max-w-4xl mx-auto">
           {data?.filter_year?.data?.attributes?.title_type?.map(
             (title, index) => (
               <div
@@ -118,7 +118,7 @@ export default function CollectionPage({ data, collections }: Props) {
                     layout="fill"
                     objectFit="cover"
                     className={
-                      "transform transition-transform duration-300 group-hover:scale-[110%]"
+                      "transform transition-transform duration-300 group-hover:scale-[115%]"
                     }
                   />
                   <div
