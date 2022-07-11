@@ -27,6 +27,18 @@ interface TitleLink {
   link: string;
 }
 
+interface TitleContent {
+  title: string;
+  content: string;
+}
+
+interface TitleValues {
+  title: string;
+  values: {
+    text: string;
+  }[];
+}
+
 export enum FilterType {
   all = "all",
   year = "year",
@@ -43,6 +55,42 @@ export interface Contact {
   title: string;
   content: string;
   contact_form: Form;
+}
+
+export interface MyCard {
+  title: string;
+  title_content: TitleContent[];
+  cardsAmounts: {
+    title: string;
+    cardAmountOption: CardAmountOption[];
+    cardAmountText: {
+      text: string;
+    }[];
+    additionalText: string;
+  };
+  card_amount_text: string;
+  design: {
+    title: string;
+    design_option: {
+      title: string;
+      images: { data: StrapiImage[] };
+    }[];
+  };
+  card_front_side: TitleValues;
+  card_back_side: TitleValues;
+  next_step_button_text: string;
+}
+
+interface CardAmountOption {
+  amount: number;
+  baseDesignPrice: string;
+  advancedDesignPrice: string;
+  customDesignPrice: string;
+}
+
+interface DesignOption {
+  title: string;
+  images: { data: StrapiImage[] };
 }
 
 interface Form {

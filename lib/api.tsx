@@ -136,6 +136,11 @@ export async function getContactPage(localization: string): Promise<Contact> {
   return data?.attributes;
 }
 
+export async function getMyCardPage(localization: string): Promise<any> {
+  const data = await fetchAPI(`my-card?locale=${localization}`);
+  return data?.attributes;
+}
+
 export async function getAboutUsPage(localization: string): Promise<AboutUs> {
   const data = await fetchAPI(`about-us?locale=${localization}`);
   return data?.attributes;

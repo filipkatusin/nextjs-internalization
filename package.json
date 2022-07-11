@@ -13,6 +13,7 @@
     "exec:dev": "NODE_ENV=./.env ts-node -P tsconfig.json -r dotenv/config -r next/dist/server/node-polyfill-fetch.js"
   },
   "dependencies": {
+    "@headlessui/react": "^1.6.6",
     "@reduxjs/toolkit": "^1.8.2",
     "@splidejs/react-splide": "^0.7.7",
     "formik": "^2.2.9",
