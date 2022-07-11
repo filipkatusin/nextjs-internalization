@@ -64,12 +64,12 @@ export default function CollectionPage({ data, collections }: Props) {
     <Layout>
       <Heading label={data.title} />
       <Container>
-        <div className="flex space-x-5 flex-wrap justify-center max-w-4xl mx-auto">
+        <div className="flex flex-wrap justify-center max-w-4xl mx-auto">
           {data?.filter_year?.data?.attributes?.title_type?.map(
             (title, index) => (
               <div
                 key={index}
-                className={`py-2 px-3 font-bold hover:text-red cursor-pointer transition-all ${
+                className={`py-2 px-3 mx-2 font-bold hover:text-red cursor-pointer transition-all ${
                   filters.year === title.title ? "text-red" : "text-black"
                 }`}
                 onClick={() => setFilters({ ...filters, year: title.title })}
@@ -80,12 +80,12 @@ export default function CollectionPage({ data, collections }: Props) {
           )}
         </div>
 
-        <div className="flex space-x-10 justify-center mt-8">
+        <div className="flex flex-wrap justify-center mt-8">
           {data?.filter_type?.data?.attributes?.title_type?.map(
             (title, index) => (
               <div
                 key={index}
-                className={`hover:cursor-pointer hover:font-bold hover:text-red ${
+                className={`mx-5 my-1 hover:cursor-pointer hover:font-bold hover:text-red ${
                   filters.type === title.filter_type
                     ? "text-red font-bold"
                     : "text-black"
