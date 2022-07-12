@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.8.2",
     "@splidejs/react-splide": "^0.7.7",
     "formik": "^2.2.9",
+    "graphql": "^16.5.0",
     "next": "latest",
     "postcss-import": "14.1.0",
     "prettier": "^2.6.2",

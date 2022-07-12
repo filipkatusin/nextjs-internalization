@@ -199,3 +199,34 @@ export async function getHeader(): Promise<Header> {
   const data = await fetchAPIExternalData(`header`);
   return data?.attributes;
 }
+
+export async function createFormSubmission(formValues) {
+  //console.log("values", formValues);
+  const data = {
+    data: {
+      name: formValues.name,
+      mail: formValues.mail,
+      phone: formValues.phone,
+      message: formValues.message,
+    },
+  };
+  await fetch(
+    `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/contact-form-submissions`,
+    {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  )
+    .then((res) => res.json())
+    .then((res) => {
+      console.log("res", res);
+      console.log("values", data);
+    })
+    .catch((res) => {
+      console.log(res);
+    });
+}
