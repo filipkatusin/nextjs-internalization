@@ -117,7 +117,7 @@ export default function Footer() {
                   <ul className={"flex flex-col gap-y-2 md:gap-y-4"}>
                     {section?.link?.map((item, index_2) => (
                       <li key={index_2}>
-                        <Link href={item?.link}>
+                        <Link href={item?.link ?? ""}>
                           <a
                             className={
                               "text-black lg:text-lg font-medium opacity-60 transition-opacity hover:opacity-100"

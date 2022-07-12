@@ -92,7 +92,7 @@ export default function TopMenu() {
             >
               <button className={``}>
                 {headerData && (
-                  <Link href={router.asPath} locale={"sk"}>
+                  <Link href={router?.asPath ?? ""} locale={"sk"}>
                     <a onClick={() => (router.locale = "sk")}>
                       <img
                         alt={""}
@@ -109,7 +109,7 @@ export default function TopMenu() {
               </button>
               <button className={``}>
                 {headerData && (
-                  <Link href={router.asPath} locale={"en"}>
+                  <Link href={router?.asPath ?? ""} locale={"en"}>
                     <a onClick={() => (router.locale = "en")}>
                       <img
                         alt={""}
@@ -129,7 +129,7 @@ export default function TopMenu() {
           <div
             className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED] relative z-30`}
           >
-            <Container className={`menu-gray-div flex relative z-30 gap-4`}>
+            <Container className={`menu-gray-div flex relative z-30 space-x-4`}>
               <div
                 className={`absolute -top-10 left-0 w-12 h-[96px] md:w-14 md:h-[100px] bg-[#EE2D3A] z-40`}
               ></div>
@@ -159,7 +159,7 @@ export default function TopMenu() {
                   onClick={() => setMenuOpen((prev) => !prev)}
                 />
               </div>
-              <div className={`hidden lg:flex gap-4`}>
+              <div className={`hidden lg:flex space-x-4`}>
                 <img
                   src={`/assets/magnifyingGlass.svg`}
                   alt={""}
@@ -195,7 +195,7 @@ export default function TopMenu() {
                   </Link>
                 ))}
               </div>
-              <div className={`gap-4 flex`}>
+              <div className={`space-x-4 flex`}>
                 <img
                   src={`/assets/magnifyingGlass.svg`}
                   alt={""}
@@ -214,7 +214,7 @@ export default function TopMenu() {
                 </div>
               </div>
             </div>
-            <div className={`flex mt-4 justify-end gap-4`}>
+            <div className={`flex mt-4 justify-end space-x-4`}>
               {headerData && (
                 <Link href={headerData.button_shop?.link ?? ""}>
                   <a className={`menu-button-shop hover:bg-black/20`}>
@@ -246,14 +246,14 @@ export default function TopMenu() {
           <Container
             className={`menu-gray-div hidden lg:flex font-bold justify-between`}
           >
-            <div className={`flex gap-4`}>
+            <div className={`flex space-x-8`}>
               {menuData?.map((m, index) => (
                 <Link key={index} href={m.path ?? ""}>
                   <a className={"hover:text-[#EE2D3A] text-lg"}>{m.title}</a>
                 </Link>
               ))}
             </div>
-            <div className={`flex gap-4`}>
+            <div className={`flex space-x-4`}>
               {headerData && (
                 <Link href={headerData.button_shop?.link ?? ""}>
                   <a
