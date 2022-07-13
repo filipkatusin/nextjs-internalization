@@ -28,10 +28,9 @@ interface TitleLink {
 }
 
 export enum FilterType {
-  all = "all",
   year = "year",
-  created = "created",
-  prepared = "prepared",
+  cars = "cards",
+  stickers = "stickers",
 }
 
 interface TitleType {
@@ -70,6 +69,10 @@ export interface RelationTitles {
     attributes: {
       title;
       title_link: TitleLink[];
+      title_type: TitleType[];
+      value: {
+        text: string;
+      }[];
       type: string;
     };
   };
