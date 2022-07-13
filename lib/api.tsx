@@ -199,7 +199,6 @@ export async function getHeader(): Promise<Header> {
   const data = await fetchAPIExternalData(`header`);
   return data?.attributes;
 }
-
 export async function createFormSubmission(formValues) {
   //console.log("values", formValues);
   const data = {
