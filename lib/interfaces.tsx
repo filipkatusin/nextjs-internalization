@@ -131,6 +131,11 @@ export enum IsPublished {
   unpublished = "unpublished",
 }
 
+export enum CollectionType {
+  cards = "cards",
+  stickers = "stickers",
+}
+
 export interface Collections {
   attributes: {
     title: string;
@@ -143,6 +148,7 @@ export interface Collections {
       data: StrapiImage;
     };
     is_published: IsPublished;
+    collection_type: CollectionType;
   };
 }
 
@@ -163,10 +169,11 @@ export interface NewPage {
 
 export interface CollectionInterface {
   title: string;
-  date_of_release: string;
   filter_year: RelationTitles;
   filter_type: RelationTitles;
   button_hover_text: string;
+  filer_search_text: string;
+  filter_search_placeholder: string;
 }
 
 export interface CollectionsFilters {
