@@ -1,0 +1,20 @@
+.custom-gap {
+  margin: -5px;
+}
+
+.custom-gap li {
+  margin: 5px;
+}
+
+.cut-corner {
+  position: relative;
+}
+
+.cut-corner:before {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  border-top: 18px solid white;
+  border-left: 18px solid #EE2D3A;
+  width: 0;
+}

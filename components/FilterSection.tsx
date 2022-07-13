@@ -1,4 +1,5 @@
 import { FilterType } from "@/lib/interfaces";
+import { Field } from "formik";
 
 type Props = {
   data: {
@@ -8,33 +9,42 @@ type Props = {
       filter_type: FilterType;
     }[];
   };
+  name: string;
 };
 
-export default function FilterSection({ data }: Props) {
+export default function FilterSection({ data, name }: Props) {
   return (
     <div>
-      <h6 className={"font-bold text-xl text-2xl md:text-lg mb-1"}>
+      <h6 className={"font-bold text-2xl text-2xl md:text-lg mb-1"}>
         {data?.title}
       </h6>
-      <ul className={"space-y-1"}>
-        {data?.title_type?.map((item, index) => (
-          <li key={index}>
-            <label
-              htmlFor={`${item?.filter_type}_${item?.title}`}
-              className={
-                "w-full max-w-[250px] xl:max-w-none md:w-full flex justify-between text-lg md:text-base cursor-pointer hover:text-red transition-all"
-              }
-            >
-              {item?.title}
+      <ul>
+        <div
+          role="group"
+          aria-labelledby="checkbox-group"
+          className={"space-y-1 md:space-y-0"}
+        >
+          {data?.title_type?.map((item, index) => (
+            <li key={index}>
+              <label
+                htmlFor={`${item?.filter_type}_${item?.title}`}
+                className={
+                  "w-full max-w-[250px] xl:max-w-none md:w-full flex justify-between text-xl md:text-base cursor-pointer hover:text-red transition-all"
+                }
+              >
+                {item?.title}
 
-              <input
-                type="checkbox"
-                id={`${item?.filter_type}_${item?.title}`}
-                className={"accent-red cursor-pointer"}
-              />
-            </label>
-          </li>
-        ))}
+                <Field
+                  type="checkbox"
+                  id={`${item?.filter_type}_${item?.title}`}
+                  className={"accent-red cursor-pointer"}
+                  name={name}
+                  value={item?.title}
+                />
+              </label>
+            </li>
+          ))}
+        </div>
       </ul>
     </div>
   );
