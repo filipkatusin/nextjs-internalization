@@ -147,8 +147,32 @@ export interface Collections {
       data: StrapiImage;
     };
     is_published: IsPublished;
+    shop_link: string;
+    kolekcia_section: {
+      title: string;
+      text: string;
+      image: { data: StrapiImage };
+      id: number;
+    }[];
+    description: string;
+    info_section: {
+      start: string;
+      start_input: string;
+      sale: string;
+      sale_input: string;
+      album: string;
+      album_input: string;
+      pack: string;
+      pack_input: string;
+      content: string;
+      content_input: string;
+    };
+    kolekcia: string;
+    shop_button_text: string;
+    checklist_button_text: string;
+    info_title: string;
     collection_type: CollectionType;
-  };
+  }
 }
 
 export interface News {
@@ -169,6 +193,7 @@ export interface NewPage {
 
 export interface CollectionInterface {
   title: string;
+  date_of_release: string;
   filter_year: RelationTitles;
   filter_type: RelationTitles;
   button_hover_text: string;
