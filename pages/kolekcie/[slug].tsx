@@ -1,16 +1,14 @@
 import Container from "@/components/Container";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { getMainPage, getOneCollectionBySlug } from "@/lib/api";
-import { Collection, MainPage } from "@/lib/interfaces";
-import { getStrapiUrl } from "@/lib/get-strapi-url";
+import { getCollectionBySlug, getCollections } from "@/lib/api";
+import { Collections } from "@/lib/interfaces";
 
 interface Props {
-  collection: Collection;
-  main: MainPage;
+  collection: Collections;
 }
 
-export default function CollectionPageSlug({ collection, main }: Props) {
+export default function CollectionPageSlug({ collection }: Props) {
   return (
     <Layout>
       <Container>
@@ -20,48 +18,57 @@ export default function CollectionPageSlug({ collection, main }: Props) {
           <div
             className={`collections-corner py-1 px-2 text-white bg-[#EE2D3A]`}
           >
-            {collection?.kolekcia}
+            {collection?.attributes?.kolekcia}
           </div>
-          <h1 className={`text-center mt-2 md:mt-6`}>
-            {collection ? collection?.title : "Loading"}
+          <h1 className={`text-center lea leading-tight mt-2 md:mt-6`}>
+            {collection ? collection?.attributes?.title : "Loading"}
           </h1>
           <article
             className="text-center"
-            dangerouslySetInnerHTML={{ __html: collection?.description ?? "" }}
+            dangerouslySetInnerHTML={{
+              __html: collection?.attributes?.description ?? "",
+            }}
           />
           <div
             className={`flex flex-col md:flex-row space-y-4 md:mt-4 md:space-y-0 md:space-x-4`}
           >
-            <Link href={"/"}>
-              <a
-                className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
-              >
-                <span className={`inline-block align-middle`}>
-                  {collection?.shop_button_text}
-                </span>
-                <img
-                  src={`/assets/chevron-down.svg`}
-                  alt={""}
-                  className={`inline-block ml-4`}
-                />
-              </a>
-            </Link>
-            <Link href={"/"}>
-              <a className={`menu-button-shop hover:bg-black hover:text-white`}>
-                <span className={`inline-block align-middle`}>
-                  {collection?.checklist_button_text}
-                </span>
-                <img
-                  src={`/icons/right-arrow.svg`}
-                  alt={""}
-                  className={`inline-block ml-4`}
-                />
-              </a>
-            </Link>
+            {collection?.attributes?.shop_link && (
+              <Link href={collection?.attributes?.shop_link ?? ""}>
+                <a
+                  className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
+                >
+                  <span className={`inline-block align-middle`}>
+                    {collection?.attributes?.shop_button_text}
+                  </span>
+                  <img
+                    src={`/assets/chevron-down.svg`}
+                    alt={""}
+                    className={`inline-block ml-4`}
+                  />
+                </a>
+              </Link>
+            )}
+            {/*TODO: file link*/}
+            {collection?.attributes?.shop_link && (
+              <Link href={collection?.attributes?.shop_link ?? ""}>
+                <a
+                  className={`menu-button-shop hover:bg-black hover:text-white`}
+                >
+                  <span className={`inline-block align-middle`}>
+                    {collection?.attributes?.checklist_button_text}
+                  </span>
+                  <img
+                    src={`/icons/right-arrow.svg`}
+                    alt={""}
+                    className={`inline-block ml-4`}
+                  />
+                </a>
+              </Link>
+            )}
           </div>
         </div>
         <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
-        {collection?.kolekcia_section.map((kolekcia) =>
+        {collection?.attributes?.kolekcia_section?.map((kolekcia) =>
           kolekcia.id % 2 == 0 ? (
             <div
               key={kolekcia.id}
@@ -101,55 +108,57 @@ export default function CollectionPageSlug({ collection, main }: Props) {
           )
         )}
         <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
-        <h2 className={`mt-20 text-center`}>{collection?.info_title}</h2>
+        <h2 className={`mt-20 text-center`}>
+          {collection?.attributes?.info_title}
+        </h2>
         <div
           className={`mt-10 bg-[#F8F8F8] md:w-2/3 lg:w-1/2 mx-auto grid grid-cols-2 p-4 md:p-8`}
         >
           <div className={`pb-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.start}
+            {collection?.attributes?.info_section?.start}
           </div>
           <div className={`pb-3 border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.start_input}
+            {collection?.attributes?.info_section?.start_input}
           </div>
           <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.sale}
+            {collection?.attributes?.info_section?.sale}
           </div>
-          <Link href={collection ? collection?.shop_link : ""}>
+          <Link href={collection?.attributes?.shop_link ?? ""}>
             <a>
               <div className={`py-3 border-b-[1px] border-stone-200`}>
-                {collection?.info_section?.sale_input}
+                {collection?.attributes?.info_section?.sale_input}
               </div>
             </a>
           </Link>
           <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.album}
+            {collection?.attributes?.info_section?.album}
           </div>
           <div className={`py-3 border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.album_input}
+            {collection?.attributes?.info_section?.album_input}
           </div>
           <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.info_section?.pack}
+            {collection?.attributes?.info_section?.pack}
           </div>
           <div
             className={`py-3 border-b-[1px] border-stone-200`}
             dangerouslySetInnerHTML={{
-              __html: collection?.info_section?.pack_input ?? "",
+              __html: collection?.attributes?.info_section?.pack_input ?? "",
             }}
           ></div>
           <div className={`pt-3 font-semibold`}>
-            {collection?.info_section?.content}
+            {collection?.attributes?.info_section?.content}
           </div>
           <div
             className={`pt-3`}
             dangerouslySetInnerHTML={{
-              __html: collection?.info_section?.content_input ?? "",
+              __html: collection?.attributes?.info_section?.content_input ?? "",
             }}
           >
             {}
           </div>
         </div>
 
-        <section className="mt-20 border-top-bottom text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 space-y-8 lg:space-y-0">
+        {/*<section className="mt-20 border-top-bottom text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 space-y-8 lg:space-y-0">
           <h3 className={"text-2xl md:text-3xl"}>
             {main?.card_production_section?.title}
           </h3>
@@ -167,29 +176,32 @@ export default function CollectionPageSlug({ collection, main }: Props) {
               />
             ))}
           </div>
-        </section>
+        </section>*/}
       </Container>
     </Layout>
   );
 }
 
-export async function getStaticProps(context: {
-  locale: string;
-  params: { slug: string };
-}) {
-  const { slug } = context.params;
-  const { locale } = context;
-  const collection = (await getOneCollectionBySlug(slug)) || [];
-  const main = (await getMainPage(locale)) || [];
+export async function getStaticProps({ locale, params }) {
+  const data = (await getCollections(locale, params?.slug)) || [];
 
   return {
-    props: { collection, main },
+    props: {
+      collection: {
+        ...data[0],
+      },
+    },
   };
 }
 
 export async function getStaticPaths() {
+  const allCollections = (await getCollectionBySlug()) || [];
+
   return {
-    paths: [],
+    paths:
+      allCollections?.map(
+        (collection) => `/kolekcie/${collection?.attributes?.slug}`
+      ) || [],
     fallback: true,
   };
 }

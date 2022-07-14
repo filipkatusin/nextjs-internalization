@@ -172,7 +172,7 @@ export interface Collections {
     checklist_button_text: string;
     info_title: string;
     collection_type: CollectionType;
-  }
+  };
 }
 
 export interface News {
@@ -289,16 +289,6 @@ export interface MainPage {
     title: string;
     social_network_icon: ImageLink[];
     social_network_image: ImageLink[];
-  };
-}
-
-export interface PlannedCollections {
-  title: string;
-  planned_date_text: string;
-  published_collection_button_text: string;
-  unpublished_collection_text: string;
-  collections: {
-    data: Collections[];
   };
 }
 
