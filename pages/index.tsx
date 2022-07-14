@@ -65,7 +65,10 @@ export default function HomePage({ main, planned_collections }: Props) {
                 priority
               />
               <div
-                style={{ backgroundColor: "rgba(0,0,0,0.40)" }}
+                style={{
+                  background:
+                    "linear-gradient(360deg, #191919 -8.52%, rgba(25, 25, 25, 0) 100%)",
+                }}
                 className="absolute top-0 left-0 w-full h-full z-90"
               />
               <h5
@@ -367,7 +370,7 @@ export default function HomePage({ main, planned_collections }: Props) {
           />
         </div>
         <article
-          className="mt-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text"
+          className="my-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text"
           dangerouslySetInnerHTML={{
             __html: main?.about_section?.content ?? "",
           }}
