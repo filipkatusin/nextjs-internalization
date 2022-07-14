@@ -98,6 +98,10 @@ interface Form {
   phone: string;
   message: string;
   button_text: string;
+  name_placeholder: string;
+  mail_placeholder: string;
+  phone_placeholder: string;
+  message_placeholder: string;
 }
 
 export interface AboutUs {
