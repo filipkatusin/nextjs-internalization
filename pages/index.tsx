@@ -348,13 +348,13 @@ export default function HomePage({ main, planned_collections }: Props) {
               </a>
             </Link>
           </div>
-          <div className="flex items-center justify-center lg:justify-start space-x-5 md:space-x-8 overflow-hidden md:max-w-[680px]">
+          <div className="flex items-center lg:justify-start justify-center space-x-8 overflow-hidden max-w-[680px]">
             {main?.live_section?.images?.data.map((image, index) => (
               <img
                 key={index}
                 src={image.attributes.url}
                 alt={""}
-                className={`h-80`}
+                className={`h-60 md:h-80`}
               />
             ))}
           </div>
@@ -367,7 +367,7 @@ export default function HomePage({ main, planned_collections }: Props) {
           />
         </div>
         <article
-          className="mt-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text mb-10"
+          className="mt-10 md:mx-14 lg:mx-24 xl-mx-40 2xl:mx-60 text-lg md:text-2xl lg:text-3xl xl:text-4xl  bold-text"
           dangerouslySetInnerHTML={{
             __html: main?.about_section?.content ?? "",
           }}

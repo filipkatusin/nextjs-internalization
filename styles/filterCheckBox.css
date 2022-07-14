@@ -1,0 +1,30 @@
+.label-container-filter {
+    position: relative;
+}
+
+.label-container-filter input:checked ~ .checkmark-filter {
+    background: red;
+}
+
+.checkmark-filter:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the checkmark-filter when checked */
+.container input:checked ~ .checkmark-filter:after {
+    display: block;
+}
+
+.label-container-filter .checkmark-filter:after {
+    right: 5px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

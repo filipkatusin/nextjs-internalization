@@ -40,10 +40,9 @@ interface TitleValues {
 }
 
 export enum FilterType {
-  all = "all",
   year = "year",
-  created = "created",
-  prepared = "prepared",
+  cars = "cards",
+  stickers = "stickers",
 }
 
 interface TitleType {
@@ -117,7 +116,11 @@ export interface RelationTitles {
   data: {
     attributes: {
       title;
+      title_link: TitleLink[];
       title_type: TitleType[];
+      value: {
+        text: string;
+      }[];
       type: string;
     };
   };
@@ -126,6 +129,11 @@ export interface RelationTitles {
 export enum IsPublished {
   published = "published",
   unpublished = "unpublished",
+}
+
+export enum CollectionType {
+  cards = "cards",
+  stickers = "stickers",
 }
 
 export interface Collections {
@@ -140,6 +148,7 @@ export interface Collections {
       data: StrapiImage;
     };
     is_published: IsPublished;
+    collection_type: CollectionType;
   };
 }
 
@@ -160,10 +169,11 @@ export interface NewPage {
 
 export interface CollectionInterface {
   title: string;
-  date_of_release: string;
   filter_year: RelationTitles;
   filter_type: RelationTitles;
   button_hover_text: string;
+  filer_search_text: string;
+  filter_search_placeholder: string;
 }
 
 export interface CollectionsFilters {
@@ -264,6 +274,16 @@ export interface MainPage {
     title: string;
     social_network_icon: ImageLink[];
     social_network_image: ImageLink[];
+  };
+}
+
+export interface PlannedCollections {
+  title: string;
+  planned_date_text: string;
+  published_collection_button_text: string;
+  unpublished_collection_text: string;
+  collections: {
+    data: Collections[];
   };
 }
 

@@ -4,173 +4,287 @@ import { getCollectionPage, getCollections } from "@/lib/api";
 import {
   CollectionInterface,
   Collections,
-  CollectionsFilters,
-  FilterType,
   IsPublished,
 } from "@/lib/interfaces";
 import Heading from "@/components/Heading";
 import Image from "next/image";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import Link from "next/link";
+import FilterSection from "@/components/FilterSection";
+import { Field, Formik } from "formik";
+import FilterButton from "@/components/FilterButton";
 
 interface Props {
   data: CollectionInterface;
   collections: Collections[];
 }
 
-export default function CollectionPage({ data, collections }: Props) {
-  const [filters, setFilters] = useState<CollectionsFilters>({
-    year: data?.filter_year?.data?.attributes?.title_type?.find(
-      (item) => item.filter_type == FilterType.all
-    )?.title,
-    type: data?.filter_type?.data?.attributes?.title_type?.find(
-      (item) => item.filter_type == FilterType.all
-    )?.filter_type,
-  });
+interface InitialValues {
+  search: string;
+  type: string[];
+  year: string[];
+}
 
-  const checkYear = (data: CollectionInterface, collection: Collections) => {
-    return filters.year ===
-      data?.filter_year?.data?.attributes?.title_type?.find(
-        (item) => item.filter_type == FilterType.all
-      )?.title
+const initialValues: InitialValues = {
+  search: "",
+  type: [],
+  year: [],
+};
+
+export default function CollectionPage({ data, collections }: Props) {
+  const [mobileFilterOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [typeTitle, setTypeTitle] = useState({});
+
+  useEffect(() => {
+    const titleTypes = data?.filter_type?.data?.attributes?.title_type;
+    const result = {};
+
+    titleTypes.map((type) => {
+      result[type.filter_type] = type.title;
+    });
+
+    setTypeTitle(result);
+  }, []);
+
+  const checkYear = (collection: Collections, values: InitialValues) => {
+    return values.year.length === 0
       ? true
-      : new Date(collection.attributes.date).getFullYear().toString() ===
-          filters.year;
+      : values.year.includes(
+          new Date(collection.attributes.date).getFullYear().toString()
+        );
   };
 
-  const filterCollections = (collection: Collections) => {
-    if (filters.type === FilterType.all) {
-      return checkYear(data, collection);
-    }
+  const checkType = (collection: Collections, values: InitialValues) => {
+    return values.type.length === 0
+      ? true
+      : values.type.includes(typeTitle[collection.attributes.collection_type]);
+  };
 
-    if (
-      filters.type === FilterType.created &&
-      collection.attributes.is_published === IsPublished.published
-    ) {
-      return checkYear(data, collection);
-    }
+  const checkSearch = (
+    collection: Collections,
+    filterValues: InitialValues
+  ) => {
+    return filterValues.search.length === 0
+      ? true
+      : filterValues?.search
+          ?.toLowerCase()
+          ?.split(" ")
+          ?.every((word) =>
+            collection?.attributes?.title
+              ?.toLowerCase()
+              ?.split(" ")
+              .find((title) => title.startsWith(word))
+          );
+  };
 
-    if (
-      filters.type === FilterType.prepared &&
-      collection.attributes.is_published === IsPublished.unpublished
-    ) {
-      return checkYear(data, collection);
-    }
+  const filterCollections = (
+    collection: Collections,
+    values: InitialValues
+  ) => {
+    return (
+      checkYear(collection, values) &&
+      checkType(collection, values) &&
+      checkSearch(collection, values)
+    );
   };
 
   return (
     <Layout>
       <Heading label={data.title} />
-      <Container>
-        <div className="flex flex-wrap justify-center max-w-4xl mx-auto">
-          {data?.filter_year?.data?.attributes?.title_type?.map(
-            (title, index) => (
-              <div
-                key={index}
-                className={`py-2 px-3 mx-2 font-bold hover:text-red cursor-pointer transition-all ${
-                  filters.year === title.title ? "text-red" : "text-black"
-                }`}
-                onClick={() => setFilters({ ...filters, year: title.title })}
+      <Formik initialValues={initialValues} onSubmit={() => {}}>
+        {({ values, setValues }) => (
+          <Container className={"flex items-start"}>
+            <aside
+              className={`mr-4 md:mr-12 xl:mr-20 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
+                mobileFilterOpen ? "left-0" : "-left-[100%]"
+              } md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all`}
+            >
+              <button
+                className={
+                  "absolute top-[70px] right-10 p-3 cursor-pointer md:hidden"
+                }
+                onClick={() => setMobileMenuOpen(false)}
               >
-                {title.title}
+                <img
+                  src="/assets/close.svg"
+                  alt="close mobile filter button"
+                  className={"h-6"}
+                />
+              </button>
+              <h4 className={"mb-4 md:text-2xl"}>Filter</h4>
+              <div className={"mb-6"}>
+                <h5 className={"mb-1 md:text-base"}>
+                  {data?.filer_search_text}
+                </h5>
+                <Field
+                  type="text"
+                  name="search"
+                  placeholder={data?.filter_search_placeholder}
+                  className={
+                    "w-full border-2 border-black px-4 py-2 font-bold placeholder:font-bold focus:outline-none"
+                  }
+                />
               </div>
-            )
-          )}
-        </div>
 
-        <div className="flex flex-wrap justify-center mt-8">
-          {data?.filter_type?.data?.attributes?.title_type?.map(
-            (title, index) => (
+              <FilterSection
+                data={data?.filter_type?.data?.attributes}
+                name={"type"}
+              />
+
+              <div className={"bg-gray-footer h-[1px] w-full my-4"} />
+
+              <FilterSection
+                data={data?.filter_year?.data?.attributes}
+                name={"year"}
+              />
+            </aside>
+
+            <section className="flex-1 pb-20">
+              <div className={"flex justify-start mb-6 md:hidden"}>
+                <button
+                  onClick={() => setMobileMenuOpen(true)}
+                  className={`button-hover-effect bg-white px-5 py-2 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
+                >
+                  Filter
+                  <img src="/assets/filter.svg" alt="" className={"h-4 ml-1"} />
+                </button>
+              </div>
+
+              <ul className={"flex flex-wrap custom-gap"}>
+                {values.search && (
+                  <li>
+                    <FilterButton
+                      label={values.search}
+                      onClick={() =>
+                        setValues({
+                          ...values,
+                          search: "",
+                        })
+                      }
+                    />
+                  </li>
+                )}
+
+                {values?.type?.map((type, index) => (
+                  <li key={type + index}>
+                    <FilterButton
+                      label={type}
+                      onClick={() =>
+                        setValues({
+                          ...values,
+                          type: [
+                            ...values.type.filter((item) => item !== type),
+                          ],
+                        })
+                      }
+                    />
+                  </li>
+                ))}
+
+                {values?.year
+                  ?.sort((a, b) => parseFloat(a) - parseFloat(b))
+                  ?.reverse()
+                  ?.map((year, index) => (
+                    <li key={year + index}>
+                      <FilterButton
+                        label={year}
+                        onClick={() =>
+                          setValues({
+                            ...values,
+                            year: [
+                              ...values.year.filter((item) => item !== year),
+                            ],
+                          })
+                        }
+                      />
+                    </li>
+                  ))}
+              </ul>
+
               <div
-                key={index}
-                className={`mx-5 my-1 hover:cursor-pointer hover:font-bold hover:text-red ${
-                  filters.type === title.filter_type
-                    ? "text-red font-bold"
-                    : "text-black"
-                }`}
-                onClick={() =>
-                  setFilters({ ...filters, type: title.filter_type })
+                className={
+                  "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 justify-items-center gap-10 mt-10"
                 }
               >
-                {title.title}
+                {collections
+                  ?.filter((item) => filterCollections(item, values))
+                  .map((collection, index) => (
+                    /*{collections?.map((collection, index) => (*/
+                    <div key={index} className={"w-full max-w-md"}>
+                      {collection?.attributes?.image?.data && (
+                        <div
+                          className={` h-80 relative mb-6 ${
+                            collection.attributes.is_published ===
+                            IsPublished.published
+                              ? "group cursor-pointer"
+                              : ""
+                          }`}
+                        >
+                          <Image
+                            src={getStrapiUrl(
+                              collection?.attributes.image?.data.attributes?.url
+                            )}
+                            layout="fill"
+                            objectFit="cover"
+                            className={
+                              "transform transition-transform duration-300 group-hover:scale-[115%]"
+                            }
+                          />
+                          <div
+                            className={`absolute top-0 left-0 h-full w-full z-20 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 ${
+                              collection.attributes.is_published ==
+                              IsPublished.unpublished
+                                ? "hidden"
+                                : "block"
+                            }`}
+                            style={{
+                              backgroundColor: "rgba(0, 0, 0, 0.80)",
+                            }}
+                          >
+                            <Button
+                              label={data?.button_hover_text}
+                              link={`/kolekcie/${collection.attributes.slug}`}
+                              className={"hover:bg-red-hover uppercase"}
+                            ></Button>
+                          </div>
+                        </div>
+                      )}
+
+                      {collection?.attributes.date && (
+                        <h5
+                          className={
+                            "cut-corner bg-red inline-block text-sm font-bold text-white py-2 pl-4 pr-6"
+                          }
+                        >
+                          {Intl.DateTimeFormat("sk", {
+                            day: "numeric",
+                            month: "numeric",
+                            year: "numeric",
+                          }).format(new Date(collection?.attributes?.date))}
+                        </h5>
+                      )}
+
+                      {collection.attributes.is_published ===
+                      IsPublished.published ? (
+                        <Link href={`/kolekcie/${collection.attributes.slug}`}>
+                          <h5 className="mb-4 hover:text-red font-bold md:text-2xl cursor-pointer hover:underline underline-offset-2 transition-colors mt-4">
+                            {collection.attributes?.title}
+                          </h5>
+                        </Link>
+                      ) : (
+                        <h5 className="mb-4 font-bold md:text-2xl mt-4">
+                          {collection.attributes?.title}
+                        </h5>
+                      )}
+                    </div>
+                  ))}
               </div>
-            )
-          )}
-        </div>
-
-        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 justify-items-center mt-16 gap-10 pb-20">
-          {collections?.filter(filterCollections).map((collection, index) => (
-            <div key={index} className={"w-full max-w-md"}>
-              {collection?.attributes?.image?.data && (
-                <div
-                  className={` h-80 relative ${
-                    collection.attributes.is_published === IsPublished.published
-                      ? "group cursor-pointer"
-                      : ""
-                  }`}
-                >
-                  <Image
-                    src={getStrapiUrl(
-                      collection?.attributes.image?.data.attributes?.url
-                    )}
-                    layout="fill"
-                    objectFit="cover"
-                    className={
-                      "transform transition-transform duration-300 group-hover:scale-[115%]"
-                    }
-                  />
-                  <div
-                    className={`absolute top-0 left-0 h-full w-full z-20 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 ${
-                      collection.attributes.is_published ==
-                      IsPublished.unpublished
-                        ? "hidden"
-                        : "block"
-                    }`}
-                    style={{
-                      backgroundColor: "rgba(0, 0, 0, 0.80)",
-                    }}
-                  >
-                    <Button
-                      label={data?.button_hover_text}
-                      link={`/kolekcie/${collection.attributes.slug}`}
-                      className={"hover:bg-red uppercase"}
-                    ></Button>
-                  </div>
-                </div>
-              )}
-
-              {collection.attributes.is_published === IsPublished.published ? (
-                <Link href={`/kolekcie/${collection.attributes.slug}`}>
-                  <h5 className="mt-5 mb-4 text-red hover:text-red-hover font-bold md:text-2xl cursor-pointer hover:underline underline-offset-2 transition-colors">
-                    {collection.attributes?.title}
-                  </h5>
-                </Link>
-              ) : (
-                <h5 className="mt-5 mb-4 text-red font-bold md:text-2xl">
-                  {collection.attributes?.title}
-                </h5>
-              )}
-
-              {collection?.attributes.date && (
-                <div>
-                  <p className="font-bold mb-1 text-lg">
-                    {data?.date_of_release}
-                  </p>
-                  <h5>
-                    {Intl.DateTimeFormat("sk", {
-                      day: "numeric",
-                      month: "numeric",
-                      year: "numeric",
-                    }).format(new Date(collection?.attributes?.date))}
-                  </h5>
-                </div>
-              )}
-            </div>
-          ))}
-        </section>
-      </Container>
+            </section>
+          </Container>
+        )}
+      </Formik>
     </Layout>
   );
 }

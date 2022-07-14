@@ -14,14 +14,19 @@ interface Props {
   arrow?: boolean;
 }
 
-export default function Button({ label, link, arrow, className }: Props) {
+export default function Button({
+  label,
+  link,
+  arrow,
+  className,
+  onClick,
+}: Props) {
   return (
     <Link href={link ?? ""}>
       <a className="flex justify-center">
         <button
-          className={
-            "button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
-          }
+          onClick={onClick}
+          className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className}`}
         >
           {label}
           {arrow && <div className="arrow h-3 w-3 ml-3" />}
