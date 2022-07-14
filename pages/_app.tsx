@@ -7,6 +7,7 @@ import "@/styles/splide.css";
 import "@/styles/menu.css";
 import "@/styles/backgrounds.css";
 import "@/styles/utils.css";
+import "@/styles/filterCheckBox.css";
 import { useEffect } from "react";
 import { Router } from "next/router";
 import { isProduction } from "@/lib/utils";

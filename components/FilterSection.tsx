@@ -29,7 +29,7 @@ export default function FilterSection({ data, name }: Props) {
               <label
                 htmlFor={`${item?.filter_type}_${item?.title}`}
                 className={
-                  "w-full max-w-[250px] xl:max-w-none md:w-full flex justify-between text-xl md:text-base cursor-pointer hover:text-red transition-all"
+                  "label-container-filter w-full max-w-[250px] xl:max-w-none md:w-full flex justify-between text-xl md:text-base cursor-pointer hover:text-red transition-all"
                 }
               >
                 {item?.title}
@@ -37,10 +37,15 @@ export default function FilterSection({ data, name }: Props) {
                 <Field
                   type="checkbox"
                   id={`${item?.filter_type}_${item?.title}`}
-                  className={"accent-red cursor-pointer"}
+                  className={"accent-red cursor-pointer hidden"}
                   name={name}
                   value={item?.title}
                 />
+                <div
+                  className={
+                    "checkmark-filter w-4 h-4 inline-block order-2 border border-gray cursor-pointer rounded"
+                  }
+                ></div>
               </label>
             </li>
           ))}
