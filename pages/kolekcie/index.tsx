@@ -12,9 +12,9 @@ import React, { useEffect, useState } from "react";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import Link from "next/link";
-import FilterSection from "@/components/FilterSection";
 import { Field, Formik } from "formik";
 import FilterButton from "@/components/FilterButton";
+import FilterSection from "@/components/FilterSection";
 
 interface Props {
   data: CollectionInterface;
