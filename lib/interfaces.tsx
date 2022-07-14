@@ -50,6 +50,12 @@ interface TitleType {
   filter_type: FilterType;
 }
 
+export interface Competition {
+  attributes: {
+    competition: string;
+  };
+}
+
 export interface Contact {
   title: string;
   content: string;
@@ -173,6 +179,13 @@ export interface Collections {
     info_title: string;
     collection_type: CollectionType;
     checklist: { data: StrapiImage };
+    competition: {
+      data: {
+        attributes: {
+          competition: string;
+        };
+      };
+    };
   };
 }
 
@@ -200,6 +213,7 @@ export interface CollectionInterface {
   button_hover_text: string;
   filer_search_text: string;
   filter_search_placeholder: string;
+  competition_filter_title: string;
 }
 
 interface SEO {

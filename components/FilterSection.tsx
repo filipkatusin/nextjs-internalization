@@ -2,44 +2,40 @@ import { FilterType } from "@/lib/interfaces";
 import { Field } from "formik";
 
 type Props = {
+  title: string;
   data: {
-    title: string;
-    title_type: {
-      title: string;
-      filter_type: FilterType;
-    }[];
-  };
+    label: string;
+    value: string;
+  }[];
   name: string;
 };
 
-export default function FilterSection({ data, name }: Props) {
+export default function FilterSection({ data, name, title }: Props) {
   return (
     <div>
-      <h6 className={"font-bold text-2xl text-2xl md:text-lg mb-1"}>
-        {data?.title}
-      </h6>
+      <h6 className={"font-bold text-2xl text-2xl md:text-lg mb-1"}>{title}</h6>
       <ul>
         <div
           role="group"
           aria-labelledby="checkbox-group"
           className={"space-y-1 md:space-y-0"}
         >
-          {data?.title_type?.map((item, index) => (
+          {data?.map((item, index) => (
             <li key={index}>
               <label
-                htmlFor={`${item?.filter_type}_${item?.title}`}
+                htmlFor={`${item?.value}_${item?.label}`}
                 className={
                   "label-container-filter w-full max-w-[250px] xl:max-w-none md:w-full flex justify-between text-xl md:text-base cursor-pointer hover:text-red transition-all"
                 }
               >
-                {item?.title}
+                {item?.label}
 
                 <Field
                   type="checkbox"
-                  id={`${item?.filter_type}_${item?.title}`}
+                  id={`${item?.value}_${item?.label}`}
                   className={"accent-red cursor-pointer hidden"}
                   name={name}
-                  value={item?.title}
+                  value={item?.label}
                 />
                 <div
                   className={

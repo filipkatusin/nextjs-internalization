@@ -166,6 +166,10 @@ export async function getCollectionBySlug(): Promise<Collections[]> {
   return data?.attributes;
 }
 
+export async function getCompetitions(localization: string) {
+  return await fetchAPI(`competitions?locale=${localization}`);
+}
+
 export async function getNews(
   localization: string,
   slug?: string

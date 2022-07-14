@@ -1,9 +1,10 @@
 import Layout from "@/components/Layout";
 import Container from "@/components/Container";
-import { getCollectionPage, getCollections } from "@/lib/api";
+import { getCollectionPage, getCollections, getCompetitions } from "@/lib/api";
 import {
   CollectionInterface,
   Collections,
+  Competition,
   IsPublished,
 } from "@/lib/interfaces";
 import Heading from "@/components/Heading";
@@ -19,21 +20,28 @@ import FilterSection from "@/components/FilterSection";
 interface Props {
   data: CollectionInterface;
   collections: Collections[];
+  competitions: Competition[];
 }
 
 interface InitialValues {
   search: string;
   type: string[];
   year: string[];
+  competition: string[];
 }
 
 const initialValues: InitialValues = {
   search: "",
   type: [],
   year: [],
+  competition: [],
 };
 
-export default function CollectionPage({ data, collections }: Props) {
+export default function CollectionPage({
+  data,
+  collections,
+  competitions,
+}: Props) {
   const [mobileFilterOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [typeTitle, setTypeTitle] = useState({});
 
@@ -79,6 +87,17 @@ export default function CollectionPage({ data, collections }: Props) {
           );
   };
 
+  const checkCompetition = (
+    collection: Collections,
+    filterValues: InitialValues
+  ) => {
+    return filterValues?.competition.length === 0
+      ? true
+      : filterValues?.competition?.includes(
+          collection?.attributes?.competition?.data?.attributes?.competition
+        );
+  };
+
   const filterCollections = (
     collection: Collections,
     values: InitialValues
@@ -86,7 +105,8 @@ export default function CollectionPage({ data, collections }: Props) {
     return (
       checkYear(collection, values) &&
       checkType(collection, values) &&
-      checkSearch(collection, values)
+      checkSearch(collection, values) &&
+      checkCompetition(collection, values)
     );
   };
 
@@ -97,7 +117,7 @@ export default function CollectionPage({ data, collections }: Props) {
         {({ values, setValues }) => (
           <Container className={"flex items-start"}>
             <aside
-              className={`mr-4 md:mr-12 xl:mr-20 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
+              className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
                 mobileFilterOpen ? "left-0" : "-left-[100%]"
               } md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all`}
             >
@@ -129,15 +149,38 @@ export default function CollectionPage({ data, collections }: Props) {
               </div>
 
               <FilterSection
-                data={data?.filter_type?.data?.attributes}
+                title={data?.filter_type?.data?.attributes?.title}
+                data={data?.filter_type?.data?.attributes?.title_type?.map(
+                  (type) => {
+                    return { label: type?.title, value: type?.filter_type };
+                  }
+                )}
                 name={"type"}
               />
 
               <div className={"bg-gray-footer h-[1px] w-full my-4"} />
 
               <FilterSection
-                data={data?.filter_year?.data?.attributes}
+                title={data?.filter_year?.data?.attributes?.title}
+                data={data?.filter_year?.data?.attributes?.title_type?.map(
+                  (year) => {
+                    return { label: year?.title, value: year?.filter_type };
+                  }
+                )}
                 name={"year"}
+              />
+
+              <div className={"bg-gray-footer h-[1px] w-full my-4"} />
+
+              <FilterSection
+                title={data?.competition_filter_title}
+                data={competitions?.map((item) => {
+                  return {
+                    label: item?.attributes?.competition,
+                    value: item?.attributes?.competition,
+                  };
+                })}
+                name={"competition"}
               />
             </aside>
 
@@ -201,6 +244,24 @@ export default function CollectionPage({ data, collections }: Props) {
                       />
                     </li>
                   ))}
+
+                {values?.competition?.map((competition, index) => (
+                  <li key={competition + index}>
+                    <FilterButton
+                      label={competition}
+                      onClick={() =>
+                        setValues({
+                          ...values,
+                          competition: [
+                            ...values.competition.filter(
+                              (item) => item !== competition
+                            ),
+                          ],
+                        })
+                      }
+                    />
+                  </li>
+                ))}
               </ul>
 
               <div
@@ -211,7 +272,6 @@ export default function CollectionPage({ data, collections }: Props) {
                 {collections
                   ?.filter((item) => filterCollections(item, values))
                   .map((collection, index) => (
-                    /*{collections?.map((collection, index) => (*/
                     <div key={index} className={"w-full max-w-md"}>
                       {collection?.attributes?.image?.data && (
                         <div
@@ -232,23 +292,26 @@ export default function CollectionPage({ data, collections }: Props) {
                               "transform transition-transform duration-300 group-hover:scale-[115%]"
                             }
                           />
-                          <div
-                            className={`absolute top-0 left-0 h-full w-full z-20 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 ${
-                              collection.attributes.is_published ==
-                              IsPublished.unpublished
-                                ? "hidden"
-                                : "block"
-                            }`}
-                            style={{
-                              backgroundColor: "rgba(0, 0, 0, 0.80)",
-                            }}
+                          <Link
+                            href={`/kolekcie/${collection.attributes.slug}`}
                           >
-                            <Button
-                              label={data?.button_hover_text}
-                              link={`/kolekcie/${collection.attributes.slug}`}
-                              className={"hover:bg-red-hover uppercase"}
-                            ></Button>
-                          </div>
+                            <div
+                              className={`absolute top-0 left-0 h-full w-full z-20 flex items-center justify-center transition-all duration-200 opacity-0 group-hover:opacity-100 ${
+                                collection.attributes.is_published ==
+                                IsPublished.unpublished
+                                  ? "hidden"
+                                  : "block"
+                              }`}
+                              style={{
+                                backgroundColor: "rgba(0, 0, 0, 0.80)",
+                              }}
+                            >
+                              <Button
+                                label={data?.button_hover_text}
+                                className={"hover:bg-red-hover uppercase"}
+                              ></Button>
+                            </div>
+                          </Link>
                         </div>
                       )}
 
@@ -292,6 +355,7 @@ export default function CollectionPage({ data, collections }: Props) {
 export async function getStaticProps({ locale }) {
   const data = ((await getCollectionPage(locale)) || []) as CollectionInterface;
   const collections = ((await getCollections(locale)) || []) as Collections[];
+  const competitions = (await getCompetitions(locale)) || [];
 
   data?.filter_year?.data?.attributes?.title_type?.sort(function (a, b) {
     return b.title?.localeCompare(a.title);
@@ -307,6 +371,7 @@ export async function getStaticProps({ locale }) {
     props: {
       data,
       collections,
+      competitions,
     },
   };
 }
