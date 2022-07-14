@@ -48,8 +48,6 @@ export default function CollectionPage({ data, collections }: Props) {
     setTypeTitle(result);
   }, []);
 
-  console.log(typeTitle);
-
   const checkYear = (collection: Collections, values: InitialValues) => {
     return values.year.length === 0
       ? true
@@ -64,11 +62,32 @@ export default function CollectionPage({ data, collections }: Props) {
       : values.type.includes(typeTitle[collection.attributes.collection_type]);
   };
 
+  const checkSearch = (
+    collection: Collections,
+    filterValues: InitialValues
+  ) => {
+    return filterValues.search.length === 0
+      ? true
+      : filterValues?.search
+          ?.toLowerCase()
+          ?.split(" ")
+          ?.every((word) =>
+            collection?.attributes?.title
+              ?.toLowerCase()
+              ?.split(" ")
+              .find((title) => title.startsWith(word))
+          );
+  };
+
   const filterCollections = (
     collection: Collections,
     values: InitialValues
   ) => {
-    return checkYear(collection, values) && checkType(collection, values);
+    return (
+      checkYear(collection, values) &&
+      checkType(collection, values) &&
+      checkSearch(collection, values)
+    );
   };
 
   return (
@@ -78,7 +97,7 @@ export default function CollectionPage({ data, collections }: Props) {
         {({ values, setValues }) => (
           <Container className={"flex items-start"}>
             <aside
-              className={`mr-4 md:mr-12 xl:mr-20 fixed md:relative sm:block z-[200] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
+              className={`mr-4 md:mr-12 xl:mr-20 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
                 mobileFilterOpen ? "left-0" : "-left-[100%]"
               } md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all`}
             >
@@ -104,7 +123,7 @@ export default function CollectionPage({ data, collections }: Props) {
                   name="search"
                   placeholder={data?.filter_search_placeholder}
                   className={
-                    "w-full border-2 border-black px-4 py-2 font-bold capitalize placeholder:font-bold focus:outline-none"
+                    "w-full border-2 border-black px-4 py-2 font-bold placeholder:font-bold focus:outline-none"
                   }
                 />
               </div>
@@ -186,7 +205,7 @@ export default function CollectionPage({ data, collections }: Props) {
 
               <div
                 className={
-                  "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 justify-items-center gap-10 mt-10"
+                  "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 justify-items-center gap-10 mt-10"
                 }
               >
                 {collections
