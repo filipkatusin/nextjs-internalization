@@ -14,6 +14,7 @@ import Button from "@/components/Button";
 import Link from "next/link";
 import FilterSection from "@/components/FilterSection";
 import { Field, Formik } from "formik";
+import FilterButton from "@/components/FilterButton";
 
 interface Props {
   data: CollectionInterface;
@@ -123,11 +124,6 @@ export default function CollectionPage({ data, collections }: Props) {
 
             <section className="flex-1 pb-20">
               <div className={"flex justify-start mb-6 md:hidden"}>
-                {/*<Button*/}
-                {/*  label={"Filter"}*/}
-                {/*  className={"py-2"}*/}
-                {/*  onClick={() => setMobileMenuOpen(true)}*/}
-                {/*/>*/}
                 <button
                   onClick={() => setMobileMenuOpen(true)}
                   className={`button-hover-effect bg-white px-5 py-2 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
@@ -140,59 +136,31 @@ export default function CollectionPage({ data, collections }: Props) {
               <ul className={"flex flex-wrap custom-gap"}>
                 {values.search && (
                   <li>
-                    <button
-                      className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
-                    >
-                      {values.search}
-                      <img
-                        src="/assets/close.svg"
-                        alt=""
-                        className={"ml-2 h-4 cursor-pointer group-hover:hidden"}
-                      />
-                      <img
-                        src="/assets/close-white.svg"
-                        alt=""
-                        className={
-                          "ml-2 h-4 cursor-pointer hidden group-hover:block"
-                        }
-                        onClick={() =>
-                          setValues({
-                            ...values,
-                            search: "",
-                          })
-                        }
-                      />
-                    </button>
+                    <FilterButton
+                      label={values.search}
+                      onClick={() =>
+                        setValues({
+                          ...values,
+                          search: "",
+                        })
+                      }
+                    />
                   </li>
                 )}
 
                 {values?.type?.map((type, index) => (
                   <li key={type + index}>
-                    <button
-                      className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
-                    >
-                      {type}
-                      <img
-                        src="/assets/close.svg"
-                        alt=""
-                        className={"ml-2 h-4 cursor-pointer group-hover:hidden"}
-                      />
-                      <img
-                        src="/assets/close-white.svg"
-                        alt=""
-                        className={
-                          "ml-2 h-4 cursor-pointer hidden group-hover:block"
-                        }
-                        onClick={() =>
-                          setValues({
-                            ...values,
-                            type: [
-                              ...values.type.filter((item) => item !== type),
-                            ],
-                          })
-                        }
-                      />
-                    </button>
+                    <FilterButton
+                      label={type}
+                      onClick={() =>
+                        setValues({
+                          ...values,
+                          type: [
+                            ...values.type.filter((item) => item !== type),
+                          ],
+                        })
+                      }
+                    />
                   </li>
                 ))}
 
@@ -200,22 +168,9 @@ export default function CollectionPage({ data, collections }: Props) {
                   ?.sort((a, b) => parseFloat(a) - parseFloat(b))
                   ?.reverse()
                   ?.map((year, index) => (
-                    <li
-                      key={year + index}
-                      className={`bg-white px-5 py-3 flex justify-center items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
-                    >
-                      {year}
-                      <img
-                        src="/assets/close.svg"
-                        alt=""
-                        className={"ml-2 h-4 cursor-pointer group-hover:hidden"}
-                      />
-                      <img
-                        src="/assets/close-white.svg"
-                        alt=""
-                        className={
-                          "ml-2 h-4 cursor-pointer hidden group-hover:block"
-                        }
+                    <li key={year + index}>
+                      <FilterButton
+                        label={year}
                         onClick={() =>
                           setValues({
                             ...values,
