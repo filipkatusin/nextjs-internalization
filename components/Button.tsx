@@ -21,9 +21,9 @@ export default function Button({
   className,
   onClick,
 }: Props) {
-  return (
+  return link ? (
     <Link href={link ?? ""}>
-      <a className="flex justify-center">
+      <a className="flex ">
         <button
           onClick={onClick}
           className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className}`}
@@ -33,5 +33,15 @@ export default function Button({
         </button>
       </a>
     </Link>
+  ) : (
+    <a className="flex ">
+      <button
+        onClick={onClick}
+        className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className}`}
+      >
+        {label}
+        {arrow && <div className="arrow h-3 w-3 ml-3" />}
+      </button>
+    </a>
   );
 }

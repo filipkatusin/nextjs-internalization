@@ -2,9 +2,13 @@ import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { getNewPage, getNews } from "@/lib/api";
 import { NewPage, NewsSlug } from "@/lib/interfaces";
+import Container from "@/components/Container";
+import Button from "@/components/Button";
+import React, { useState } from "react";
+import { useRouter } from "next/router";
+import NewsSection from "@/components/NewsSection";
 import Link from "next/link";
 import Image from "next/image";
-import Container from "@/components/Container";
 
 interface Props {
   news: NewsSlug[];
@@ -12,38 +16,85 @@ interface Props {
 }
 
 export default function NewsPage({ news, newPage }: Props) {
+  const router = useRouter();
+  const newsLink = router.locale == "sk" ? "novinky" : "news";
+  const [newsNumber, setNewsNumber] = useState(6);
+
   return (
     <Layout>
       <Heading label={newPage.title} />
-      <Container className="grid sm:grid-cols-2 xl:grid-cols-3 gap-10 mb-10">
-        {news.map((one, index) => (
+      <Container>
+        {news?.slice(0, 1).map((novinka, index) => (
           <Link
+            as={`/${newsLink}/${novinka?.attributes?.slug}`}
+            href={`/${newsLink}/[slug]`}
             key={index}
-            as={`/novinky/${one?.attributes?.slug}`}
-            href="/novinky/[slug]"
           >
-            <a className="relative transition-all md:opacity-60 hover:opacity-100 hover:scale-105 duration-500">
-              {one.attributes?.image?.data && (
-                <div className="h-[250px] sm:h-[350px] md:h-[400px] relative">
+            <a
+              className="flex flex-col md:flex-row"
+              style={{ backgroundColor: "#292929" }}
+            >
+              {novinka.attributes?.image.data && (
+                <div className="md:w-1/2 h-80 md:h-[600px] relative">
                   <Image
-                    src={one?.attributes?.image?.data?.attributes.url}
+                    src={novinka?.attributes?.image?.data?.attributes.url}
                     layout={"fill"}
                     objectFit="cover"
                   />
                 </div>
               )}
-              <div className="font-bold my-3">
-                {Intl.DateTimeFormat("sk", {
-                  day: "numeric",
-                  month: "numeric",
-                  year: "numeric",
-                }).format(new Date(one.attributes.date))}
+              <div className="md:w-1/2 px-14 py-10 md:py-20 justify-around flex flex-col space-y-5">
+                <div>
+                  <div
+                    className="px-3 py-1 date-corner inline-block"
+                    style={{
+                      color: novinka.attributes.date_color,
+                      backgroundColor: novinka.attributes.date_background_color,
+                    }}
+                  >
+                    {Intl.DateTimeFormat("sk", {
+                      day: "numeric",
+                      month: "numeric",
+                      year: "numeric",
+                    }).format(new Date(novinka.attributes.date))}
+                  </div>
+                </div>
+
+                <h2 className="text-white leading-snug w-3/4">
+                  {novinka.attributes.title}
+                </h2>
+                <article
+                  className="text-white opacity-60"
+                  dangerouslySetInnerHTML={{
+                    __html: novinka?.attributes?.og_content,
+                  }}
+                />
+                {newPage?.button_slug_title && (
+                  <Button
+                    className="-ml-1"
+                    label={newPage?.button_slug_title}
+                    arrow={true}
+                    link={`${newsLink}/${novinka.attributes.slug}`}
+                  />
+                )}
               </div>
-              <h4 style={{ color: "#ff0000" }}>{one.attributes.title}</h4>
             </a>
           </Link>
         ))}
       </Container>
+      <Container className="grid md:grid-cols-2 xl:grid-cols-3 my-10 md:my-20 gap-10 z-10">
+        {news?.slice(1, newsNumber).map((novinka, index) => (
+          <NewsSection novinka={novinka} key={index} newsLink={newsLink} />
+        ))}
+      </Container>
+      {newPage?.button_title && (
+        <div className="flex justify-center my-10">
+          <Button
+            onClick={() => setNewsNumber(newsNumber + 6)}
+            label={newPage?.button_title}
+          />
+        </div>
+      )}
     </Layout>
   );
 }

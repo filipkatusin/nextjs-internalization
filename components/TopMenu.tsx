@@ -130,17 +130,13 @@ export default function TopMenu() {
             className={`bg-[#F8F8F8] border-b-[1px] border-[#EDEDED] relative z-30`}
           >
             <Container className={`menu-gray-div flex relative z-30 gap-4`}>
-              <div
-                className={`absolute -top-10 left-0 w-12 h-[96px] md:w-14 md:h-[100px] bg-[#EE2D3A] z-40`}
-              ></div>
-
               <Link href={"/"}>
-                <a className={`w-12 h-12 md:w-14 md:h-14 z-50`}>
+                <a className={`w-14 h-14 z-50 absolute -top-2 left-0`}>
                   <img src={`/assets/logo.svg`} alt={""} />
                 </a>
               </Link>
 
-              <div className={`grow`}>
+              <div className={`grow ml-16`}>
                 <Link href={"/"}>
                   <a>
                     <img

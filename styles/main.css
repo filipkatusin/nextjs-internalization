@@ -149,3 +149,20 @@ h5 {
         background-image: url("../public/icons/right-arrow.svg") !important;
     }
 }
+
+.splide-slide-main-page-button {
+    .arrow {
+        background-position: center;
+        background-repeat: no-repeat;
+        background-image: url("../public/icons/right-arrow.svg");
+    }
+    border: 2px solid white;
+}
+
+.splide-slide-main-page:hover .splide-slide-main-page-button {
+   .arrow {
+        background-image: url("../public/icons/right-arrow-white.svg") !important;
+    }
+    background-color: black;
+    color: white;
+}

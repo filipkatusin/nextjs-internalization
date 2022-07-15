@@ -87,11 +87,6 @@ interface CardAmountOption {
   customDesignPrice: string;
 }
 
-interface DesignOption {
-  title: string;
-  images: { data: StrapiImage[] };
-}
-
 interface Form {
   name: string;
   mail: string;
@@ -168,7 +163,8 @@ export interface News {
 
 export interface NewPage {
   title: string;
-  seo: SEO;
+  button_title: string;
+  button_slug_title: string;
 }
 
 export interface CollectionInterface {
@@ -178,11 +174,6 @@ export interface CollectionInterface {
   button_hover_text: string;
   filer_search_text: string;
   filter_search_placeholder: string;
-}
-
-export interface CollectionsFilters {
-  year: string;
-  type: string;
 }
 
 interface SEO {
@@ -212,12 +203,13 @@ export interface IFooter {
   rights: string;
   contact: FooterContact;
   section: FooterSection[];
-  newslatter: Newslatter;
+  newslatter: Newsletter;
+  card_production_section: CardProductionSection;
 }
 
 export interface FooterContact {
   title: string;
-  title_value: Title_value[];
+  title_value: TitleLink[];
 }
 
 export interface FooterSection {
@@ -232,12 +224,7 @@ export interface CardProductionSection {
   };
 }
 
-export interface Title_value {
-  title: string;
-  value: string;
-}
-
-export interface Newslatter {
+export interface Newsletter {
   title: string;
   input_placeholder: string;
   button_text: string;
@@ -273,7 +260,6 @@ export interface MainPage {
   collections: CollectionsRelation;
   news: NewsRelation;
   products: ProductsRelation;
-  card_production_section: CardProductionSection;
   social_networks: {
     title: string;
     social_network_icon: ImageLink[];
@@ -322,6 +308,7 @@ export interface NewsSlug {
     date_color: string;
     date_background_color: string;
     slug: string;
+    og_content: string;
   };
 }
 

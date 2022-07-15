@@ -1,5 +1,5 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { getMainPage, getPlannedCollections } from "@/lib/api";
+import { getCollections, getMainPage, getPlannedCollections } from "@/lib/api";
 import { IsPublished, MainPage, PlannedCollections } from "@/lib/interfaces";
 import Image from "next/image";
 import Container from "@/components/Container";
@@ -12,13 +12,19 @@ import Button from "@/components/Button";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import { useRouter } from "next/router";
 import ImageDiv from "@/components/ImageDiv";
+import React from "react";
 
 interface Props {
   main: MainPage;
   planned_collections: PlannedCollections;
+  collection_images: string[];
 }
 
-export default function HomePage({ main, planned_collections }: Props) {
+export default function HomePage({
+  main,
+  planned_collections,
+  collection_images,
+}: Props) {
   const router = useRouter();
   const colLink = router.locale == "sk" ? "kolekcie" : "collections";
   const newsLink = router.locale == "sk" ? "novinky" : "news";
@@ -53,64 +59,67 @@ export default function HomePage({ main, planned_collections }: Props) {
               ? { left: "20%", right: "20%" }
               : { left: "0%", right: "0%" },
         }}
-        className="splide-main-page"
+        className="splide-main-page mb-20"
       >
         {main?.collections?.data.map((collection, index) => (
-          <SplideSlide key={index}>
-            <div className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px]">
-              <Image
-                src={collection?.attributes?.image?.data?.attributes?.url}
-                layout={"fill"}
-                objectFit="cover"
-                priority
-              />
-              <div
-                style={{
-                  background:
-                    "linear-gradient(360deg, #191919 -8.52%, rgba(25, 25, 25, 0) 100%)",
-                }}
-                className="absolute top-0 left-0 w-full h-full z-90"
-              />
-              <h5
-                style={{
-                  color: collection?.attributes?.title_color,
-                  backgroundColor:
-                    collection?.attributes?.title_background_color,
-                }}
-                className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden"
-              >
-                <TextEllipsis
-                  lines={2}
-                  tag={"div"}
-                  ellipsisChars={"..."}
-                  tagClass={"className"}
-                  debounceTimeoutOnResize={200}
+          <SplideSlide
+            key={index}
+            className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] splide-slide-main-page"
+          >
+            <Link
+              rel="prefetch"
+              as={`/${colLink}/${collection?.attributes?.slug}`}
+              href={`/${colLink}/[slug]`}
+            >
+              <a>
+                <Image
+                  src={collection?.attributes?.image?.data?.attributes?.url}
+                  layout={"fill"}
+                  objectFit="cover"
+                  priority
+                />
+                <div
+                  style={{
+                    background:
+                      "linear-gradient(360deg, #191919 -8.52%, rgba(25, 25, 25, 0) 100%)",
+                  }}
+                  className={`absolute top-0 left-0 w-full h-full z-10 transition-all hover:opacity-60 
+                }`}
+                />
+                <h5
+                  style={{
+                    color: collection?.attributes?.title_color,
+                    backgroundColor:
+                      collection?.attributes?.title_background_color,
+                  }}
+                  className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden z-20 pointer-events-none"
                 >
-                  {collection?.attributes?.title}
-                </TextEllipsis>
-              </h5>
-              <div className="absolute bottom-5 right-2 md:left-10 z-50">
-                <Link
-                  as={`/${colLink}/${collection?.attributes?.slug}`}
-                  href={`/${colLink}/[slug]`}
-                >
-                  <a className="mt-8">
-                    <button className="border border-white text-white px-5 py-3 flex justify-center  items-center">
-                      {main.collection_button}
-                      <img
-                        className="h-3 w-3 ml-3"
-                        src={"/icons/right-arrow-white.svg"}
-                        alt={""}
-                      />
+                  <TextEllipsis
+                    lines={2}
+                    tag={"div"}
+                    ellipsisChars={"..."}
+                    tagClass={"className"}
+                    debounceTimeoutOnResize={200}
+                  >
+                    {collection?.attributes?.title}
+                  </TextEllipsis>
+                </h5>
+                <div className="absolute bottom-5 right-2 md:left-10 z-20 pointer-events-none">
+                  <a className="flex">
+                    <button
+                      className={` splide-slide-main-page-button bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors`}
+                    >
+                      {main?.collection_button}
+                      <div className="arrow h-3 w-3 ml-3" />
                     </button>
                   </a>
-                </Link>
-              </div>
-            </div>
+                </div>
+              </a>
+            </Link>
           </SplideSlide>
         ))}
       </Splide>
-      <Container className="grid sm:grid-cols-3 gap-14 mt-20 md:mt-32">
+      {/*<Container className="grid sm:grid-cols-3 gap-14 mt-20 md:mt-32">
         {main?.link_section?.map((link, index) => (
           <section className="text-center" key={index}>
             <div className="h-[200px] relative">
@@ -135,11 +144,13 @@ export default function HomePage({ main, planned_collections }: Props) {
             </Link>
           </section>
         ))}
-      </Container>
+      </Container>*/}
 
-      <Container className="my-20 md:my-40">
+      {/*
+      <Container className="my-20 ">
         <div className="border-[0.1px] border-gray flex opacity-20 " />
       </Container>
+*/}
 
       <Container>
         <h2
@@ -171,23 +182,24 @@ export default function HomePage({ main, planned_collections }: Props) {
                 )}
                 <div className={"space-y-1"}>
                   <h6 className={"font-bold"}>
-                    {collection.attributes?.title}
+                    {collection?.attributes?.title}
                   </h6>
-                  {collection.attributes?.date && (
+                  {collection?.attributes?.date && (
                     <p className={"text-gray"}>
                       {`${planned_collections?.planned_date_text}: `}
                       {new Intl.DateTimeFormat("sk-SK").format(
-                        new Date(collection.attributes?.date)
+                        new Date(collection?.attributes?.date)
                       )}
                     </p>
                   )}
                 </div>
               </div>
-              {collection.attributes.is_published === IsPublished.published ? (
+              {collection?.attributes?.is_published ===
+              IsPublished?.published ? (
                 <Button
                   label={planned_collections?.published_collection_button_text}
                   arrow={true}
-                  link={`kolekcie/${collection.attributes.slug}`}
+                  link={`kolekcie/${collection?.attributes?.slug}`}
                 />
               ) : (
                 <p className={"text-gray"}>
@@ -203,7 +215,7 @@ export default function HomePage({ main, planned_collections }: Props) {
         <div className="border-[0.1px] border-gray flex opacity-20 " />
       </Container>
       <Container>
-        <h2 className="font-bold mb-5">{main.product_section?.title}</h2>
+        <h2 className="font-bold mb-5">{main?.product_section?.title}</h2>
       </Container>
       <Splide
         options={{
@@ -232,17 +244,17 @@ export default function HomePage({ main, planned_collections }: Props) {
         }}
         className="splide-products container-products"
       >
-        {main.products?.data.map((product, index) => (
+        {main?.products?.data.map((product, index) => (
           <SplideSlide key={index}>
             <div className="h-[420px] relative">
               <Image
-                src={product.attributes.image.data.attributes.url}
+                src={product?.attributes?.image?.data?.attributes?.url}
                 layout={"fill"}
                 objectFit="contain"
                 priority
               />
             </div>
-            <h5 className="text-center px-10">{product.attributes.title}</h5>
+            <h5 className="text-center px-10">{product?.attributes?.title}</h5>
           </SplideSlide>
         ))}
       </Splide>
@@ -266,7 +278,7 @@ export default function HomePage({ main, planned_collections }: Props) {
           />
         </div>
         <h2 className="text-center text-white z-10 pt-10 md:pt-32">
-          {main.news_section?.title}
+          {main?.news_section?.title}
         </h2>
         <Container className="grid xl:grid-cols-3 my-10 md:my-20 gap-1 z-10">
           {main?.news?.data?.map((news, index) => (
@@ -324,7 +336,7 @@ export default function HomePage({ main, planned_collections }: Props) {
         </div>
       </section>
       <Container className="flex flex-col text-center justify-center mb-20 mt-16 md:mb-32 md:mt-24">
-        <div className="bg-[#F7F7F7] mb-16 flex md:mx-10 flex-col lg:flex-row pb-12 lg:pb-0 justify-between">
+        <div className="bg-[#F7F7F7] mb-16 flex md:mx-10 flex-col lg:flex-row lg:pb-0 justify-between">
           <div className="flex flex-col items-start basis-2/5 p-12">
             {main && (
               <img
@@ -352,17 +364,17 @@ export default function HomePage({ main, planned_collections }: Props) {
             </Link>
           </div>
           <div className="flex items-center lg:justify-start justify-center space-x-8 overflow-hidden max-w-[680px]">
-            {main?.live_section?.images?.data.map((image, index) => (
+            {main?.live_section?.images?.data?.map((image, index) => (
               <img
                 key={index}
-                src={image.attributes.url}
+                src={image?.attributes?.url}
                 alt={""}
                 className={`h-60 md:h-80`}
               />
             ))}
           </div>
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-center mt-10">
           <img
             className="w-20 h-20"
             src={main?.about_section?.logo?.data?.attributes?.url}
@@ -375,12 +387,48 @@ export default function HomePage({ main, planned_collections }: Props) {
             __html: main?.about_section?.content ?? "",
           }}
         />
-        <Button
-          label={main?.about_section?.button_title}
-          link={main?.about_section?.button_link}
-        />
+        <div className="flex justify-center">
+          <Button
+            label={main?.about_section?.button_title}
+            link={main?.about_section?.button_link}
+          />
+        </div>
       </Container>
-
+      <Splide
+        options={{
+          speed: 1500,
+          perPage: 1,
+          type: "loop",
+          pauseOnFocus: true,
+          pauseOnHover: true,
+          autoplay: true,
+          interval: 5000,
+          pagination: false,
+          gap: 30,
+          dragMinThreshold: {
+            touch: 10,
+            mouse: 10,
+          },
+          padding: 0,
+        }}
+        className="gallery-splide bg-[#232221] mb-20"
+      >
+        {collection_images
+          ?.map((imageUrl) => ({ imageUrl, sort: Math.random() }))
+          .sort((a, b) => a.sort - b.sort)
+          .slice(0, 6)
+          .map(({ imageUrl }, index) => (
+            <SplideSlide key={index}>
+              <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
+                <img
+                  src={imageUrl}
+                  alt={""}
+                  className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
+                />
+              </div>
+            </SplideSlide>
+          ))}
+      </Splide>
       <Container className={"flex flex-col items-center mb-20 md:mb-28"}>
         <h2
           className={
@@ -412,117 +460,60 @@ export default function HomePage({ main, planned_collections }: Props) {
         <div className={"flex flex-col sm:flex-row w-full items-center"}>
           <ImageDiv
             imageUrl={
-              main?.social_networks?.social_network_image[0]?.image?.data
+              main?.social_networks?.social_network_image?.[0]?.image?.data
                 ?.attributes?.url
             }
-            link={main?.social_networks?.social_network_image[0]?.link}
+            link={main?.social_networks?.social_network_image?.[0]?.link}
             className={"background-image flex-2 w-1/3 aspect-square m-1 md:m-2"}
           ></ImageDiv>
           <div className={"flex-5 w-full"}>
             <div className={"flex w-full items-end"}>
               <ImageDiv
                 imageUrl={
-                  main?.social_networks?.social_network_image[1]?.image?.data
+                  main?.social_networks?.social_network_image?.[1]?.image?.data
                     ?.attributes?.url
                 }
-                link={main?.social_networks?.social_network_image[1]?.link}
+                link={main?.social_networks?.social_network_image?.[1]?.link}
                 className={"flex-5 aspect-video  m-1 md:m-2"}
               ></ImageDiv>
               <ImageDiv
                 imageUrl={
-                  main?.social_networks?.social_network_image[2]?.image?.data
+                  main?.social_networks?.social_network_image?.[2]?.image?.data
                     ?.attributes?.url
                 }
-                link={main?.social_networks?.social_network_image[2]?.link}
+                link={main?.social_networks?.social_network_image?.[2]?.link}
                 className={"flex-2 aspect-square  m-1 md:m-2"}
               ></ImageDiv>
             </div>
             <div className={"flex w-full items-start"}>
               <ImageDiv
                 imageUrl={
-                  main?.social_networks?.social_network_image[3]?.image?.data
+                  main?.social_networks?.social_network_image?.[3]?.image?.data
                     ?.attributes?.url
                 }
-                link={main?.social_networks?.social_network_image[3]?.link}
+                link={main?.social_networks?.social_network_image?.[3]?.link}
                 className={"flex-2 aspect-square  m-1 md:m-2"}
               ></ImageDiv>
               <ImageDiv
                 imageUrl={
-                  main?.social_networks?.social_network_image[4]?.image?.data
+                  main?.social_networks?.social_network_image?.[4]?.image?.data
                     ?.attributes?.url
                 }
-                link={main?.social_networks?.social_network_image[4]?.link}
+                link={main?.social_networks?.social_network_image?.[4]?.link}
                 className={"flex-5 aspect-video  m-1 md:m-2"}
               ></ImageDiv>
             </div>
           </div>
           <ImageDiv
             imageUrl={
-              main?.social_networks?.social_network_image[5]?.image?.data
+              main?.social_networks?.social_network_image?.[5]?.image?.data
                 ?.attributes?.url
             }
-            link={main?.social_networks?.social_network_image[5]?.link}
+            link={main?.social_networks?.social_network_image?.[5]?.link}
             className={"flex-2 w-1/3 aspect-square m-1 md:m-2"}
           ></ImageDiv>
         </div>
       </Container>
-
-      <Splide
-        options={{
-          speed: 1500,
-          perPage: 1,
-          type: "loop",
-          pauseOnFocus: true,
-          pauseOnHover: true,
-          autoplay: true,
-          interval: 5000,
-          pagination: false,
-          gap: 30,
-          dragMinThreshold: {
-            touch: 10,
-            mouse: 10,
-          },
-          padding: 0,
-        }}
-        className="gallery-splide bg-[#232221]"
-      >
-        {main?.gallery_section?.images?.data?.map((image, index) => (
-          <SplideSlide key={index}>
-            <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
-              <img
-                src={image.attributes.url}
-                alt={""}
-                className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
-              />
-            </div>
-          </SplideSlide>
-        ))}
-      </Splide>
-      <section className={"border-top-bottom"}>
-        <Container
-          className={
-            "text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 space-y-8 lg:space-y-0"
-          }
-        >
-          <h3 className={"text-2xl md:text-3xl"}>
-            {main?.card_production_section?.title}
-          </h3>
-          <div
-            className={
-              "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
-            }
-          >
-            {main?.card_production_section?.logo?.data?.map((data, index) => (
-              <img
-                key={index}
-                src={getStrapiUrl(data.attributes.url)}
-                alt="company logo"
-                className={"h-12 sm:h-14 md:h-16"}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
     </Layout>
   );
 }
@@ -530,8 +521,14 @@ export default function HomePage({ main, planned_collections }: Props) {
 export async function getStaticProps({ locale }) {
   const main = (await getMainPage(locale)) || [];
   const planned_collections = (await getPlannedCollections(locale)) || [];
+  const collections = (await getCollections(locale)) || [];
+  const collection_images = [];
+
+  Object.values(collections).forEach((collection) => {
+    collection_images.push(collection?.attributes.image?.data?.attributes?.url);
+  });
 
   return {
-    props: { main, planned_collections },
+    props: { main, planned_collections, collection_images },
   };
 }
