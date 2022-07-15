@@ -18,11 +18,11 @@ interface Props {
 export default function NewsPage({ news, newPage }: Props) {
   const router = useRouter();
   const newsLink = router.locale == "sk" ? "novinky" : "news";
-  const [newsNumber, setNewsNumber] = useState(6);
+  const [newsNumber, setNewsNumber] = useState(7);
 
   return (
     <Layout>
-      <Heading label={newPage.title} />
+      <Heading label={newPage?.title} />
       <Container>
         {news?.slice(0, 1).map((novinka, index) => (
           <Link
@@ -34,12 +34,13 @@ export default function NewsPage({ news, newPage }: Props) {
               className="flex flex-col md:flex-row"
               style={{ backgroundColor: "#292929" }}
             >
-              {novinka.attributes?.image.data && (
+              {novinka.attributes?.image?.data && (
                 <div className="md:w-1/2 h-80 md:h-[600px] relative">
                   <Image
-                    src={novinka?.attributes?.image?.data?.attributes.url}
+                    src={novinka?.attributes?.image?.data?.attributes?.url}
                     layout={"fill"}
                     objectFit="cover"
+                    priority
                   />
                 </div>
               )}
@@ -56,12 +57,12 @@ export default function NewsPage({ news, newPage }: Props) {
                       day: "numeric",
                       month: "numeric",
                       year: "numeric",
-                    }).format(new Date(novinka.attributes.date))}
+                    }).format(new Date(novinka?.attributes?.date))}
                   </div>
                 </div>
 
-                <h2 className="text-white leading-snug w-3/4">
-                  {novinka.attributes.title}
+                <h2 className="text-white leading-snug lg:w-3/4">
+                  {novinka?.attributes?.title}
                 </h2>
                 <article
                   className="text-white opacity-60"
@@ -74,7 +75,7 @@ export default function NewsPage({ news, newPage }: Props) {
                     className="-ml-1"
                     label={newPage?.button_slug_title}
                     arrow={true}
-                    link={`${newsLink}/${novinka.attributes.slug}`}
+                    link={`${newsLink}/${novinka?.attributes?.slug}`}
                   />
                 )}
               </div>
