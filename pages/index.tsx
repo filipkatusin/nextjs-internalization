@@ -219,47 +219,47 @@ export default function HomePage({
       <Container>
         <h2 className="font-bold mb-5">{main?.product_section?.title}</h2>
       </Container>
-      <Splide
-        options={{
-          speed: 1500,
-          rewind: true,
-          type: "loop",
-          perPage: SlidesPerView(),
-          pauseOnFocus: false,
-          pauseOnHover: false,
-          autoplay: true,
-          interval: 5000,
-          pagination: false,
-          dragMinThreshold: {
-            touch: 10,
-            mouse: 10,
-          },
-          padding:
-            windowWidth > 1400
-              ? { left: "", right: "10%" }
-              : windowWidth > 1000
-              ? { left: "0%", right: "15%" }
-              : windowWidth > 600
-              ? { left: "0%", right: "20%" }
-              : { left: "0%", right: "3%" },
-          gap: 20,
-        }}
-        className="splide-products container-products"
-      >
-        {main?.products?.data.map((product, index) => (
-          <SplideSlide key={index}>
-            <div className="h-[420px] relative">
-              <Image
-                src={product?.attributes?.image?.data?.attributes?.url ?? ""}
-                layout={"fill"}
-                objectFit="contain"
-                priority
-              />
-            </div>
-            <h5 className="text-center px-10">{product?.attributes?.title}</h5>
-          </SplideSlide>
-        ))}
-      </Splide>
+      {/*<Splide*/}
+      {/*  options={{*/}
+      {/*    speed: 1500,*/}
+      {/*    rewind: true,*/}
+      {/*    type: "loop",*/}
+      {/*    perPage: SlidesPerView(),*/}
+      {/*    pauseOnFocus: false,*/}
+      {/*    pauseOnHover: false,*/}
+      {/*    autoplay: true,*/}
+      {/*    interval: 5000,*/}
+      {/*    pagination: false,*/}
+      {/*    dragMinThreshold: {*/}
+      {/*      touch: 10,*/}
+      {/*      mouse: 10,*/}
+      {/*    },*/}
+      {/*    padding:*/}
+      {/*      windowWidth > 1400*/}
+      {/*        ? { left: "", right: "10%" }*/}
+      {/*        : windowWidth > 1000*/}
+      {/*        ? { left: "0%", right: "15%" }*/}
+      {/*        : windowWidth > 600*/}
+      {/*        ? { left: "0%", right: "20%" }*/}
+      {/*        : { left: "0%", right: "3%" },*/}
+      {/*    gap: 20,*/}
+      {/*  }}*/}
+      {/*  className="splide-products container-products"*/}
+      {/*>*/}
+      {/*  {main?.products?.data.map((product, index) => (*/}
+      {/*    <SplideSlide key={index}>*/}
+      {/*      <div className="h-[420px] relative">*/}
+      {/*        <Image*/}
+      {/*          src={product?.attributes?.image?.data?.attributes?.url ?? ""}*/}
+      {/*          layout={"fill"}*/}
+      {/*          objectFit="contain"*/}
+      {/*          priority*/}
+      {/*        />*/}
+      {/*      </div>*/}
+      {/*      <h5 className="text-center px-10">{product?.attributes?.title}</h5>*/}
+      {/*    </SplideSlide>*/}
+      {/*  ))}*/}
+      {/*</Splide>*/}
       <Container className="mt-10 flex justify-center sm:justify-start">
         <Button
           label={main?.product_section?.button_title}
