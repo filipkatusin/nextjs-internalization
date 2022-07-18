@@ -9,17 +9,20 @@ interface Props {
 }
 
 export default function CollectionPageSlug({ collection }: Props) {
+  console.log(collection);
   return (
     <Layout>
       <Container>
         <div
           className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:w-2/3 lg:w-1/2 md:my-16`}
         >
-          <div
-            className={`collections-corner py-1 px-2 text-white bg-[#EE2D3A]`}
-          >
-            {collection?.attributes?.kolekcia}
-          </div>
+          <img
+            src={
+              collection?.attributes?.manufacturer_logo?.data?.attributes?.url
+            }
+            alt={""}
+            className={`h-14 w-14 -mb-4 md:w-20 md:h-20`}
+          />
           <h1 className={`text-center lea leading-tight mt-2 md:mt-6`}>
             {collection ? collection?.attributes?.title : "Loading"}
           </h1>
@@ -48,9 +51,12 @@ export default function CollectionPageSlug({ collection }: Props) {
                 </a>
               </Link>
             )}
-            {/*TODO: file link*/}
-            {collection?.attributes?.shop_link && (
-              <Link href={collection?.attributes?.shop_link ?? ""}>
+            {collection?.attributes?.checklist && (
+              <Link
+                href={
+                  collection?.attributes?.checklist?.data?.attributes?.url ?? ""
+                }
+              >
                 <a
                   className={`menu-button-shop hover:bg-black hover:text-white`}
                 >

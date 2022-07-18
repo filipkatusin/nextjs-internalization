@@ -172,6 +172,7 @@ export interface Collections {
     checklist_button_text: string;
     info_title: string;
     collection_type: CollectionType;
+    checklist: { data: StrapiImage };
   };
 }
 
