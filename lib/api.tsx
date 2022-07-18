@@ -161,10 +161,8 @@ export async function getCollections(
   return await fetchAPI(`collections?locale=${localization}`, slug, type);
 }
 
-export async function getCollectionBySlug(
-  localization: string
-): Promise<Collections> {
-  const data = await fetchAPI(`collections?locale=${localization}`);
+export async function getCollectionBySlug(): Promise<Collections[]> {
+  const data = await fetchAPI(`collections?locale=all`);
   return data?.attributes;
 }
 

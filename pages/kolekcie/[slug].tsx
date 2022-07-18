@@ -51,7 +51,7 @@ export default function CollectionPageSlug({ collection }: Props) {
                 </a>
               </Link>
             )}
-            {collection?.attributes?.checklist && (
+            {collection?.attributes?.checklist?.data?.attributes?.url && (
               <Link
                 href={
                   collection?.attributes?.checklist?.data?.attributes?.url ?? ""
