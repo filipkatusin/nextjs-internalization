@@ -5,12 +5,14 @@ import Container from "@/components/Container";
 import Heading from "@/components/Heading";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { useRouter } from "next/router";
 
 interface Props {
   contact: Contact;
 }
 
 export default function ContactPage({ contact }: Props) {
+  const { locale } = useRouter();
   return (
     <Layout title={contact.title}>
       <Heading label={contact.title} />
@@ -29,12 +31,22 @@ export default function ContactPage({ contact }: Props) {
               data: {},
             }}
             validationSchema={Yup.object({
-              name: Yup.string().required("Required field"),
+              name: Yup.string().required(
+                locale == "en" ? "Required field" : "Povinné pole"
+              ),
               mail: Yup.string()
-                .email("Invalid email address")
-                .required("Required field"),
-              phone: Yup.string().required("Required field"),
-              message: Yup.string().required("Required field"),
+                .email(
+                  locale == "en"
+                    ? "Invalid email address"
+                    : "Neplatná mailová adresa"
+                )
+                .required(locale == "en" ? "Required field" : "Povinné pole"),
+              phone: Yup.string().required(
+                locale == "en" ? "Required field" : "Povinné pole"
+              ),
+              message: Yup.string().required(
+                locale == "en" ? "Required field" : "Povinné pole"
+              ),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setTimeout(() => {
