@@ -35,7 +35,7 @@ export default function FilterSection({ data, name, title }: Props) {
                   id={`${item?.value}_${item?.label}`}
                   className={"accent-red cursor-pointer hidden"}
                   name={name}
-                  value={item?.label}
+                  value={item?.value}
                 />
                 <div
                   className={

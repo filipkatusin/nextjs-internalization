@@ -37,7 +37,9 @@ export default function NewsPage({ news, newPage }: Props) {
               {novinka.attributes?.image?.data && (
                 <div className="md:w-1/2 h-80 md:h-[600px] relative">
                   <Image
-                    src={novinka?.attributes?.image?.data?.attributes?.url}
+                    src={
+                      novinka?.attributes?.image?.data?.attributes?.url ?? ""
+                    }
                     layout={"fill"}
                     objectFit="cover"
                     priority

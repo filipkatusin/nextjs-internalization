@@ -15,7 +15,7 @@ export default function NewsSection({ novinka, newsLink }) {
         {novinka.attributes?.image.data && (
           <div className="h-[360px]  relative">
             <Image
-              src={novinka?.attributes?.image?.data?.attributes.url}
+              src={novinka?.attributes?.image?.data?.attributes?.url ?? ""}
               layout={"fill"}
               objectFit="cover"
             />

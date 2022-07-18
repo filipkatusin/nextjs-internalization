@@ -18,3 +18,16 @@
   border-left: 18px solid #EE2D3A;
   width: 0;
 }
+
+.cut-corner-black {
+  position: relative;
+}
+
+.cut-corner-black:before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  border-top: 18px solid white;
+  border-right: 18px solid black;
+  width: 0;
+}

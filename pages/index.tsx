@@ -73,7 +73,9 @@ export default function HomePage({
             >
               <a>
                 <Image
-                  src={collection?.attributes?.image?.data?.attributes?.url}
+                  src={
+                    collection?.attributes?.image?.data?.attributes?.url ?? ""
+                  }
                   layout={"fill"}
                   objectFit="cover"
                   priority
@@ -248,7 +250,7 @@ export default function HomePage({
           <SplideSlide key={index}>
             <div className="h-[420px] relative">
               <Image
-                src={product?.attributes?.image?.data?.attributes?.url}
+                src={product?.attributes?.image?.data?.attributes?.url ?? ""}
                 layout={"fill"}
                 objectFit="contain"
                 priority

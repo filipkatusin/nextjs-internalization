@@ -30,24 +30,33 @@ const initialValues: InitialCollectionsFilterValues = {
   type: [],
   year: [],
   competition: [],
+  state: [],
 };
 
 function CollectionPage({ data, collections, competitions }: Props) {
   const [mobileFilterOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [typeTitle, setTypeTitle] = useState({});
+  const [typeState, setTypeState] = useState({});
   const router = useRouter();
   const { values, setValues, initialValues } =
     useFormikContext<InitialCollectionsFilterValues>();
 
   useEffect(() => {
     const titleTypes = data?.filter_type?.data?.attributes?.title_type;
-    const result = {};
+    const resultTitles = {};
 
     titleTypes.map((type) => {
-      result[type.filter_type] = type.title;
+      resultTitles[type.filter_type] = type.title;
     });
 
-    setTypeTitle(result);
+    const resultStates = {};
+
+    data?.filter_state?.data?.attributes.title_type.map((state) => {
+      resultStates[state?.filter_type] = state.title;
+    });
+
+    setTypeState(resultStates);
+    setTypeTitle(resultTitles);
   }, []);
 
   useEffect(() => {
@@ -57,6 +66,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
     const type = params.getAll("type");
     const year = params.getAll("year");
     const competition = params.getAll("competition");
+    const state = params.getAll("state");
 
     setValues((values) => ({
       ...values,
@@ -64,6 +74,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
       type: type ?? [],
       year: year ?? [],
       competition: competition ?? [],
+      state: state ?? [],
     }));
   }, []);
 
@@ -98,9 +109,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
   ) => {
     return filterValues.type.length === 0
       ? true
-      : filterValues.type.includes(
-          typeTitle[collection.attributes.collection_type]
-        );
+      : filterValues.type.includes(collection?.attributes?.collection_type);
   };
 
   const checkSearch = (
@@ -131,6 +140,15 @@ function CollectionPage({ data, collections, competitions }: Props) {
         );
   };
 
+  const checkState = (
+    collection: Collections,
+    filterValues: InitialCollectionsFilterValues
+  ) => {
+    return filterValues?.state?.length === 0
+      ? true
+      : filterValues?.state?.includes(collection?.attributes?.is_published);
+  };
+
   const filterCollections = (
     collection: Collections,
     filterValues: InitialCollectionsFilterValues
@@ -139,7 +157,8 @@ function CollectionPage({ data, collections, competitions }: Props) {
       checkYear(collection, filterValues) &&
       checkType(collection, filterValues) &&
       checkSearch(collection, filterValues) &&
-      checkCompetition(collection, filterValues)
+      checkCompetition(collection, filterValues) &&
+      checkState(collection, filterValues)
     );
   };
 
@@ -193,7 +212,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
             title={data?.filter_year?.data?.attributes?.title}
             data={data?.filter_year?.data?.attributes?.title_type?.map(
               (year) => {
-                return { label: year?.title, value: year?.filter_type };
+                return { label: year?.title, value: year?.title };
               }
             )}
             name={"year"}
@@ -210,6 +229,18 @@ function CollectionPage({ data, collections, competitions }: Props) {
               };
             })}
             name={"competition"}
+          />
+
+          <div className={"bg-gray-footer h-[1px] w-full my-4"} />
+          <FilterSection
+            title={data?.filter_state?.data?.attributes?.title}
+            data={data?.filter_state?.data?.attributes?.title_type?.map(
+              (state) => ({
+                label: state?.title,
+                value: state?.filter_type,
+              })
+            )}
+            name={"state"}
           />
         </Form>
 
@@ -242,7 +273,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
             {values?.type?.map((type, index) => (
               <li key={type + index}>
                 <FilterButton
-                  label={type}
+                  label={typeTitle[type]}
                   onClick={() =>
                     setValues({
                       ...values,
@@ -287,6 +318,20 @@ function CollectionPage({ data, collections, competitions }: Props) {
                 />
               </li>
             ))}
+
+            {values?.state?.map((state, index) => (
+              <li key={index}>
+                <FilterButton
+                  label={typeState[state]}
+                  onClick={() =>
+                    setValues({
+                      ...values,
+                      state: [...values.state.filter((item) => item !== state)],
+                    })
+                  }
+                />
+              </li>
+            ))}
           </ul>
 
           <div
@@ -317,6 +362,12 @@ function CollectionPage({ data, collections, competitions }: Props) {
                         className={
                           "transform transition-transform duration-300 group-hover:scale-[115%]"
                         }
+                        style={
+                          collection?.attributes?.is_published ===
+                            "unpublished" && {
+                            filter: "grayscale(80%)",
+                          }
+                        }
                       />
                       <Link href={`/kolekcie/${collection.attributes.slug}`}>
                         <div
@@ -338,20 +389,30 @@ function CollectionPage({ data, collections, competitions }: Props) {
                       </Link>
                     </div>
                   )}
+                  <div className={"flex flex-wrap justify-between"}>
+                    {collection?.attributes.date && (
+                      <h5
+                        className={
+                          "cut-corner bg-red inline-block text-sm font-bold text-white py-2 pl-4 pr-5"
+                        }
+                      >
+                        {Intl.DateTimeFormat("sk", {
+                          month: "2-digit",
+                          year: "numeric",
+                        }).format(new Date(collection?.attributes?.date))}
+                      </h5>
+                    )}
 
-                  {collection?.attributes.date && (
-                    <h5
-                      className={
-                        "cut-corner bg-red inline-block text-sm font-bold text-white py-2 pl-4 pr-6"
-                      }
-                    >
-                      {Intl.DateTimeFormat("sk", {
-                        day: "numeric",
-                        month: "numeric",
-                        year: "numeric",
-                      }).format(new Date(collection?.attributes?.date))}
-                    </h5>
-                  )}
+                    {collection?.attributes?.is_published === "unpublished" && (
+                      <h5
+                        className={
+                          "cut-corner-black bg-black inline-block text-sm font-bold text-white py-2 pl-5 pr-4 ml-auto"
+                        }
+                      >
+                        Nezverejnene
+                      </h5>
+                    )}
+                  </div>
 
                   {collection.attributes.is_published ===
                   IsPublished.published ? (

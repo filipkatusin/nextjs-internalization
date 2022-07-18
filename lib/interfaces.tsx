@@ -210,6 +210,7 @@ export interface CollectionInterface {
   date_of_release: string;
   filter_year: RelationTitles;
   filter_type: RelationTitles;
+  filter_state: RelationTitles;
   button_hover_text: string;
   filer_search_text: string;
   filter_search_placeholder: string;
@@ -221,6 +222,7 @@ export interface InitialCollectionsFilterValues {
   type: string[];
   year: string[];
   competition: string[];
+  state: string[];
 }
 
 export interface CollectionsFilters {
