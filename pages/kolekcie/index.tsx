@@ -167,9 +167,9 @@ function CollectionPage({ data, collections, competitions }: Props) {
       <Heading label={data.title} />
       <Container className={"flex items-start"}>
         <Form
-          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none ${
-            mobileFilterOpen ? "left-0" : "-left-[100%]"
-          } md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all`}
+          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform ${
+            mobileFilterOpen ? "translate-x-0" : "-translate-x-[100%]"
+          }`}
         >
           <button
             className={
@@ -409,7 +409,7 @@ function CollectionPage({ data, collections, competitions }: Props) {
                           "cut-corner-black bg-black inline-block text-sm font-bold text-white py-2 pl-5 pr-4 ml-auto"
                         }
                       >
-                        Nezverejnene
+                        {data?.unpublished_collection_text}
                       </h5>
                     )}
                   </div>
@@ -451,11 +451,20 @@ export async function getStaticProps({ locale }) {
     return b.title?.localeCompare(a.title);
   });
 
-  collections?.sort(function (a, b) {
-    return b.attributes?.date
-      ?.toString()
-      .localeCompare(a.attributes?.date?.toString());
-  });
+  collections
+    ?.sort(function (a, b) {
+      return (
+        b.attributes?.date
+          ?.toString()
+          .localeCompare(a.attributes?.date?.toString()) ||
+        a?.attributes?.title?.localeCompare(b?.attributes?.title)
+      );
+    })
+    .sort((a, b) => {
+      return a?.attributes?.is_published.localeCompare(
+        b?.attributes?.is_published
+      );
+    });
 
   return {
     props: {

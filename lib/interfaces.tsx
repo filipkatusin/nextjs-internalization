@@ -215,6 +215,7 @@ export interface CollectionInterface {
   filer_search_text: string;
   filter_search_placeholder: string;
   competition_filter_title: string;
+  unpublished_collection_text: string;
 }
 
 export interface InitialCollectionsFilterValues {
