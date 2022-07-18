@@ -8,20 +8,18 @@ interface Props {
 export default function FilterButton({ label, onClick }: Props) {
   return (
     <div
-      className={`button-hover-effect bg-white pl-4 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors hover:bg-black hover:text-white group`}
+      className={`button-hover-effect bg-white pl-4 flex justify-center  items-center border-2 border-black text-sm font-semibold transition-colors cursor-pointer hover:bg-black hover:text-white group`}
+      onClick={onClick}
     >
       {label}
-      <button className={"cursor-pointer group-hover:hidden p-3"}>
+      <button className={"group-hover:hidden p-3"}>
         <img
           src="/assets/close.svg"
           alt="remove filter icon"
           className={" h-4"}
         />
       </button>
-      <button
-        className={"cursor-pointer hidden group-hover:block p-3"}
-        onClick={onClick}
-      >
+      <button className={"hidden group-hover:block p-3"}>
         <img src="/assets/close-white.svg" alt="" className={"h-4"} />
       </button>
     </div>

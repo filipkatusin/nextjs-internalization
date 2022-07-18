@@ -294,7 +294,7 @@ export default function HomePage({
                 {news.attributes?.image.data && (
                   <div className="h-[250px] sm:h-[350px] md:h-[400px] relative">
                     <Image
-                      src={news?.attributes?.image?.data?.attributes.url}
+                      src={news?.attributes?.image?.data?.attributes?.url ?? ""}
                       layout={"fill"}
                       objectFit="cover"
                     />

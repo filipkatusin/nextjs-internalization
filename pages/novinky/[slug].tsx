@@ -14,7 +14,7 @@ export default function NewsPageSlug({ news }: Props) {
       <div className="relative w-full h-80">
         {news?.attributes?.image?.data && (
           <Image
-            src={news?.attributes?.image?.data?.attributes.url}
+            src={news?.attributes?.image?.data?.attributes.url ?? ""}
             layout="fill"
             objectFit="cover"
           />

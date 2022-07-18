@@ -216,6 +216,18 @@ export interface CollectionInterface {
   competition_filter_title: string;
 }
 
+export interface InitialCollectionsFilterValues {
+  search: string;
+  type: string[];
+  year: string[];
+  competition: string[];
+}
+
+export interface CollectionsFilters {
+  year: string;
+  type: string;
+}
+
 interface SEO {
   metaTitle: string;
   metaDescription: string;
