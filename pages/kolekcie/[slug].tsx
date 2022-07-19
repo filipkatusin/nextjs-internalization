@@ -9,7 +9,6 @@ interface Props {
 }
 
 export default function CollectionPageSlug({ collection }: Props) {
-  console.log(collection);
   return (
     <Layout>
       <Container>
