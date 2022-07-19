@@ -13,6 +13,7 @@ import { getStrapiUrl } from "@/lib/get-strapi-url";
 import { useRouter } from "next/router";
 import ImageDiv from "@/components/ImageDiv";
 import React from "react";
+import SocialNetworks from "@/components/SocialNetworks";
 
 interface Props {
   main: MainPage;
@@ -431,91 +432,7 @@ export default function HomePage({
             </SplideSlide>
           ))}
       </Splide>
-      <Container className={"flex flex-col items-center mb-20 md:mb-28"}>
-        <h2
-          className={
-            "max-w-md leading-snug text-center mb-6 md:mb-12 text-3xl md:text-4xl"
-          }
-        >
-          {main?.social_networks?.title}
-        </h2>
-        <ul
-          className={
-            "flex space-x-6 sm:space-x-10 md:space-x-16 mb-12 md:mb-16"
-          }
-        >
-          {main?.social_networks?.social_network_icon?.map((icon, index) => (
-            <li key={index}>
-              <a href={icon?.link ?? ""} target={"_blank"}>
-                <img
-                  src={getStrapiUrl(icon?.image?.data?.attributes?.url)}
-                  alt="social icon"
-                  className={
-                    "h-10 transform transition-transform hover:scale-[120%]"
-                  }
-                />
-              </a>
-            </li>
-          ))}
-        </ul>
-
-        <div className={"flex flex-col sm:flex-row w-full items-center"}>
-          <ImageDiv
-            imageUrl={
-              main?.social_networks?.social_network_image?.[0]?.image?.data
-                ?.attributes?.url
-            }
-            link={main?.social_networks?.social_network_image?.[0]?.link}
-            className={"background-image flex-2 w-1/3 aspect-square m-1 md:m-2"}
-          ></ImageDiv>
-          <div className={"flex-5 w-full"}>
-            <div className={"flex w-full items-end"}>
-              <ImageDiv
-                imageUrl={
-                  main?.social_networks?.social_network_image?.[1]?.image?.data
-                    ?.attributes?.url
-                }
-                link={main?.social_networks?.social_network_image?.[1]?.link}
-                className={"flex-5 aspect-video  m-1 md:m-2"}
-              ></ImageDiv>
-              <ImageDiv
-                imageUrl={
-                  main?.social_networks?.social_network_image?.[2]?.image?.data
-                    ?.attributes?.url
-                }
-                link={main?.social_networks?.social_network_image?.[2]?.link}
-                className={"flex-2 aspect-square  m-1 md:m-2"}
-              ></ImageDiv>
-            </div>
-            <div className={"flex w-full items-start"}>
-              <ImageDiv
-                imageUrl={
-                  main?.social_networks?.social_network_image?.[3]?.image?.data
-                    ?.attributes?.url
-                }
-                link={main?.social_networks?.social_network_image?.[3]?.link}
-                className={"flex-2 aspect-square  m-1 md:m-2"}
-              ></ImageDiv>
-              <ImageDiv
-                imageUrl={
-                  main?.social_networks?.social_network_image?.[4]?.image?.data
-                    ?.attributes?.url
-                }
-                link={main?.social_networks?.social_network_image?.[4]?.link}
-                className={"flex-5 aspect-video  m-1 md:m-2"}
-              ></ImageDiv>
-            </div>
-          </div>
-          <ImageDiv
-            imageUrl={
-              main?.social_networks?.social_network_image?.[5]?.image?.data
-                ?.attributes?.url
-            }
-            link={main?.social_networks?.social_network_image?.[5]?.link}
-            className={"flex-2 w-1/3 aspect-square m-1 md:m-2"}
-          ></ImageDiv>
-        </div>
-      </Container>
+      <SocialNetworks />
     </Layout>
   );
 }

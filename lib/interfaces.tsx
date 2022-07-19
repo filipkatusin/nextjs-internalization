@@ -272,6 +272,15 @@ export interface FooterSection {
   link: TitleLink[];
 }
 
+export interface ISocialNetworks {
+  title: string;
+  social_network_icons: ImageLink[];
+  social_network_images: {
+    link: string;
+    imageurl: string;
+  }[];
+}
+
 export interface CardProductionSection {
   title: string;
   logo: {

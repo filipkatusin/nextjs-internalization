@@ -5,6 +5,7 @@ import Container from "@/components/Container";
 import Lightbox from "react-image-lightbox";
 import { useState } from "react";
 import Heading from "@/components/Heading";
+import SocialNetworks from "@/components/SocialNetworks";
 
 interface Props {
   about: AboutUs;
@@ -70,6 +71,7 @@ export default function AboutUsPage({ about }: Props) {
           />
         )}
       </Container>
+      <SocialNetworks />
     </Layout>
   );
 }

@@ -5,6 +5,7 @@ import {
   Contact,
   Header,
   IFooter,
+  ISocialNetworks,
   MainPage,
   Menu,
   NewPage,
@@ -128,6 +129,11 @@ export async function getTitles(
 
 export async function getFooter(): Promise<IFooter> {
   const data = await fetchAPIExternalData(`footer`);
+  return data?.attributes;
+}
+
+export async function getSocialNetworks(): Promise<ISocialNetworks> {
+  const data = await fetchAPIExternalData(`social-network`);
   return data?.attributes;
 }
 
