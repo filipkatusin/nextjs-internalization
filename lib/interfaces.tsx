@@ -105,10 +105,19 @@ interface Form {
   message_placeholder: string;
 }
 
+interface TextImage {
+  text: string;
+  image: { data: StrapiImage };
+  id: number;
+}
+
 export interface AboutUs {
   title: string;
   content: string;
   images: { data: StrapiImage[] };
+  subheading: string;
+  about_general: TextImage[];
+  about_crucial_year: TextImage[];
 }
 
 export interface Titles {
