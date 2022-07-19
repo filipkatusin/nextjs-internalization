@@ -11,7 +11,7 @@ export default function ImageDiv({ imageUrl, className, link }: Props) {
   if (link) {
     return (
       <a
-        href={link}
+        href={link ?? ""}
         target={"_blank"}
         className={`background-image transform transition-transform hover:scale-105 ${className}`}
         style={{

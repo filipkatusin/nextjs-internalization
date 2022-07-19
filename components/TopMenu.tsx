@@ -21,13 +21,15 @@ export default function TopMenu() {
 
   useEffect(() => {
     const localizations: { [key: string]: Header } = {};
-    const att = header.localizations.data[0].attributes;
-    att.localizations.data.forEach((e) => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const att = header?.localizations?.data[0]?.attributes;
+    att?.localizations?.data?.forEach((e) => {
       localizations[e.attributes.locale] = e.attributes;
     });
     setHeaderData(
       {
-        [att.locale]: att,
+        [att?.locale]: att,
         ...localizations,
       }[localization]
     );
@@ -79,7 +81,7 @@ export default function TopMenu() {
                 {headerData && (
                   <img
                     alt={""}
-                    src={header[langIcon].data.attributes.url}
+                    src={header[langIcon]?.data?.attributes?.url}
                     className={`h-5 w-5`}
                   />
                 )}
@@ -185,7 +187,7 @@ export default function TopMenu() {
             <div className={`flex justify-between`}>
               <div className={`flex flex-col gap-3`}>
                 {menuData?.map((m, index) => (
-                  <Link key={index} href={m.path}>
+                  <Link key={index} href={m.path ?? ""}>
                     <a>{m.title}</a>
                   </Link>
                 ))}

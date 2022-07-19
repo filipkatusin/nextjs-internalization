@@ -1,8 +1,13 @@
 /* eslint-disable no-console */
 
-import {Header, IFooter, Menu} from "@/lib/interfaces";
+import { Header, IFooter, Menu } from "@/lib/interfaces";
 
-const { getMenu, getFooter, getHeader } = require("../../lib/api");
+const {
+  getMenu,
+  getFooter,
+  getHeader,
+  getSocialNetworks,
+} = require("../../lib/api");
 
 const fs = require("fs");
 const path = require("path");
@@ -21,7 +26,10 @@ const getData = async (basePath: string): Promise<void> => {
     const footer: IFooter = await getFooter();
     const menu: Menu[] = await getMenu();
     const header: Header = await getHeader();
-    console.log(`Fetched ${menu.length} links `);
+    const socialNetworks = await getSocialNetworks();
+    try {
+      console.log(`Fetched ${menu.length} links `);
+    } catch (e) {}
     console.log(`Fetched ${footer}`);
 
     await writeJsonFile(
@@ -38,6 +46,11 @@ const getData = async (basePath: string): Promise<void> => {
       path.join(basePath, "src/data/header.js"),
       "export const header = ",
       header || []
+    );
+    await writeJsonFile(
+      path.join(basePath, "src/data/socialNetworks.js"),
+      "export const socialNetworks = ",
+      socialNetworks || []
     );
   } catch (err) {
     console.error(err);
