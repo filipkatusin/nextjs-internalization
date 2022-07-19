@@ -46,17 +46,16 @@
 }
 
 .menu-black-div {
-     display: flex;
-     position: relative;
-     z-index: 30;
-     padding-right: 0.5rem;
-     justify-content: flex-end;
-     align-items: center;
-     height: 2.5rem;
-     gap: 1rem;
-     background: #191919;
-     color: #bfbfbf;
-
+    display: flex;
+    position: relative;
+    z-index: 30;
+    padding-right: 0.5rem;
+    justify-content: flex-end;
+    align-items: center;
+    height: 2.5rem;
+    background: #191919;
+    color: #bfbfbf;
+    @apply space-x-8;
 
 @media (min-width: 1024px) {
      padding-right: 2.5rem;

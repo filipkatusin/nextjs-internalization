@@ -132,104 +132,100 @@ export default function Footer() {
                 </div>
               )}
 
-              <div
-                className={
-                  "md:flex md:w-full md:justify-around md:flex-2 space-y-8 md:space-y-0"
-                }
-              >
-                {footerData?.section?.map((section, index) => (
-                  <div key={index} className={"text-center lg:text-left"}>
-                    <h4 className={"font-bold text-xl lg:text-lg mb-2 md:mb-4"}>
-                      {section.title}
-                    </h4>
-                    <ul className={"flex flex-col gap-y-2 md:gap-y-4"}>
-                      {section?.link?.map((item, index_2) => (
-                        <li key={index_2}>
-                          <Link href={item?.link}>
-                            <a
-                              className={
-                                "text-black lg:text-lg font-medium opacity-60 transition-opacity hover:opacity-100"
-                              }
-                            >
-                              {item?.title}
-                            </a>
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
             <div
-              className={"lg:flex-2 lg:justify-center xl:flex justify-center"}
+              className={
+                "md:flex md:w-full md:justify-around md:flex-2 space-y-8 md:space-y-0"
+              }
             >
-              <div>
-                <h5 className={"text-black text-base font-bold"}>
-                  {footerData?.newsletter?.title}
-                </h5>
-                <Formik
-                  initialValues={{ email: "", checkbox: false }}
-                  validationSchema={NewsletterSchema}
-                  validateOnMount={true}
-                  onSubmit={() => {}}
-                >
-                  {({
-                    values,
-                    handleChange,
-                    handleBlur,
-                    handleSubmit,
-                    isValid,
-                    resetForm,
-                  }) => (
-                    <form onSubmit={handleSubmit} className={` max-w-[400px]`}>
-                      <div className={"flex mt-3"}>
-                        <input
-                          type="text"
-                          name="email"
-                          onChange={handleChange}
-                          onBlur={handleBlur}
-                          value={values.email}
-                          placeholder={
-                            footerData?.newsletter?.input_placeholder
-                          }
-                          className={
-                            "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
-                          }
-                        />
-                        {!isValid || values.email.length === 0 ? (
-                          <button
-                            type={"submit"}
+              {footerData?.section?.map((section, index) => (
+                <div key={index} className={"text-center lg:text-left"}>
+                  <h4 className={"font-bold text-xl lg:text-lg mb-2 md:mb-4"}>
+                    {section.title}
+                  </h4>
+                  <ul className={"flex flex-col gap-y-2 md:gap-y-4"}>
+                    {section?.link?.map((item, index_2) => (
+                      <li key={index_2}>
+                        <Link href={item?.link ?? ""}>
+                          <a
                             className={
-                              "bg-white px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
+                              "text-black lg:text-lg font-medium opacity-60 transition-opacity hover:opacity-100"
                             }
                           >
-                            {footerData?.newsletter?.button_text}
-                          </button>
-                        ) : (
-                          <div className={"block"}>
-                            <a
-                              href={`https://sportzoo.us12.list-manage.com/subscribe?u=52766cf63df5cb0aca44149c5&id=634e7c5b75&MERGE0=${values.email}`}
-                              target={"_blank"}
-                              className={
-                                "h-full flex items-center block px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
-                              }
-                              onClick={() =>
-                                setTimeout(() => {
-                                  resetForm();
-                                }, 200)
-                              }
-                            >
-                              <button type={"button"} className={"font-bold"}>
-                                {footerData?.newsletter?.button_text}
-                              </button>
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                      <div className={"text-red-500 mt-1 text-sm md:text-base"}>
-                        <ErrorMessage name="email" />
-                      </div>
+                            {item?.title}
+                          </a>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={"lg:flex-2 lg:justify-center xl:flex justify-center"}>
+            <div>
+              <h5 className={"text-black text-base font-bold"}>
+                {footerData?.newsletter?.title}
+              </h5>
+              <Formik
+                initialValues={{ email: "", checkbox: false }}
+                validationSchema={NewsletterSchema}
+                validateOnMount={true}
+                onSubmit={() => {}}
+              >
+                {({
+                  values,
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  isValid,
+                  resetForm,
+                }) => (
+                  <form onSubmit={handleSubmit} className={` max-w-[400px]`}>
+                    <div className={"flex mt-3"}>
+                      <input
+                        type="text"
+                        name="email"
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        value={values.email}
+                        placeholder={footerData?.newsletter?.input_placeholder}
+                        className={
+                          "py-2 md:py-4 px-4 md:px-6 grow border-2 text-sm md:text-base border-black rounded-none font-semibold outline-0"
+                        }
+                      />
+                      {!isValid || values.email.length === 0 ? (
+                        <button
+                          type={"submit"}
+                          className={
+                            "bg-white px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
+                          }
+                        >
+                          {footerData?.newsletter?.button_text}
+                        </button>
+                      ) : (
+                        <div className={"block"}>
+                          <a
+                            href={`https://sportzoo.us12.list-manage.com/subscribe?u=52766cf63df5cb0aca44149c5&id=634e7c5b75&MERGE0=${values.email}`}
+                            target={"_blank"}
+                            className={
+                              "h-full flex items-center block px-4 md:px-6 border-2 border-black border-l-0 text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white"
+                            }
+                            onClick={() =>
+                              setTimeout(() => {
+                                resetForm();
+                              }, 200)
+                            }
+                          >
+                            <button type={"button"} className={"font-bold"}>
+                              {footerData?.newsletter?.button_text}
+                            </button>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                    <div className={"text-red-500 mt-1 text-sm md:text-base"}>
+                      <ErrorMessage name="email" />
+                    </div>
 
                       <label
                         htmlFor="newsletterCheckbox"
@@ -266,7 +262,6 @@ export default function Footer() {
               </div>
             </div>
           </div>
-
           <p
             className={
               "text-black text-center xl:text-left lg:text-lg font-medium opacity-60 pt-8"

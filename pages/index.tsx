@@ -356,7 +356,7 @@ export default function HomePage({
                 __html: main?.live_section?.text ?? "",
               }}
             ></article>
-            <Link href={main?.live_section?.button_link}>
+            <Link href={main?.live_section?.button_link ?? ""}>
               <a className="inline-block mt-10 justify-center">
                 <button className="button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white">
                   {main?.live_section?.button_text}
