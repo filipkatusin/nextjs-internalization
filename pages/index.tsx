@@ -158,7 +158,7 @@ export default function HomePage({
       <Container>
         <h2
           className={
-            "text-center text-3xl sm:text-4xl md:text-5xl mb-6 sm:mb-10 md:mb-16"
+            "text-center text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] mb-8 sm:mb-10 md:mb-16"
           }
         >
           {planned_collections?.title}
@@ -212,6 +212,12 @@ export default function HomePage({
             </li>
           ))}
         </ul>
+        <div className={"flex justify-center mt-6 md:mt-8"}>
+          <Button
+            label={planned_collections?.show_more_button_text}
+            link={"kolekcie?plan=planned"}
+          />
+        </div>
       </Container>
 
       <Container className="my-20 md:my-40">
