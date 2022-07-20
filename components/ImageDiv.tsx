@@ -7,7 +7,6 @@ interface Props {
 }
 
 export default function ImageDiv({ imageUrl, className, link }: Props) {
-  console.log();
   if (link) {
     return (
       <a

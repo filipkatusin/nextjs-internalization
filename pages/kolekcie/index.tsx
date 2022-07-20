@@ -211,8 +211,6 @@ function CollectionPage({
     );
   };
 
-  console.log(collections[0]);
-
   return (
     <Layout>
       <Heading label={data.title} />
