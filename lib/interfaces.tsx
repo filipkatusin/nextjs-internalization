@@ -130,12 +130,7 @@ export interface RelationTitles {
   data: {
     attributes: {
       title;
-      title_link: TitleLink[];
       title_type: TitleType[];
-      value: {
-        text: string;
-      }[];
-      type: string;
     };
   };
 }
@@ -220,11 +215,13 @@ export interface CollectionInterface {
   filter_year: RelationTitles;
   filter_type: RelationTitles;
   filter_state: RelationTitles;
+  filter_planned: RelationTitles;
   button_hover_text: string;
   filer_search_text: string;
   filter_search_placeholder: string;
   competition_filter_title: string;
   unpublished_collection_text: string;
+  planned_collection_text: string;
 }
 
 export interface InitialCollectionsFilterValues {
@@ -233,6 +230,7 @@ export interface InitialCollectionsFilterValues {
   year: string[];
   competition: string[];
   state: string[];
+  plan: string[];
 }
 
 export interface CollectionsFilters {

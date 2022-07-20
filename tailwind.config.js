@@ -27,7 +27,7 @@ module.exports = {
         11: "11 11 0%",
       },
       colors: {
-        // blue: "#1fb6ff",
+        blue: "#2D40EE",
         purple: "#7e5bef",
         pink: "#ff49db",
         orange: "#ff7849",
