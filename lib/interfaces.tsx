@@ -346,6 +346,7 @@ export interface PlannedCollections {
   collections: {
     data: Collections[];
   };
+  show_more_button_text: string;
 }
 
 interface CollectionsRelation {

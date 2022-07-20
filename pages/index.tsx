@@ -213,7 +213,10 @@ export default function HomePage({
           ))}
         </ul>
         <div className={"flex justify-center mt-6 md:mt-8"}>
-          <Button label={"Zobrazit viacej"} link={"kolekcie?plan=planned"} />
+          <Button
+            label={planned_collections?.show_more_button_text}
+            link={"kolekcie?plan=planned"}
+          />
         </div>
       </Container>
 
