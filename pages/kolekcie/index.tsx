@@ -211,12 +211,14 @@ function CollectionPage({
     );
   };
 
+  console.log(collections[0]);
+
   return (
     <Layout>
       <Heading label={data.title} />
       <Container className={"flex items-start"}>
         <Form
-          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform ${
+          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform overflow-y-scroll ${
             mobileFilterOpen
               ? "translate-x-0"
               : "-translate-x-[100%] md:translate-x-0"
@@ -442,23 +444,18 @@ function CollectionPage({
                         : ""
                     }
                   >
-                    <a
-                      className={`card-with-tooltip w-full max-w-md relative ${
-                        collection?.attributes?.is_published ===
-                        IsPublished.published
-                          ? "cursor-pointer"
-                          : "cursor-default"
-                      }`}
-                    >
+                    <a className={`card-with-tooltip w-full max-w-md relative`}>
+                      <div className="absolute top-2 right-2 z-40 h-11 w-11 bg-white p-1 pointer-events-none">
+                        <img
+                          src={getStrapiUrl(
+                            collection?.attributes?.manufacturer_logo?.data
+                              ?.attributes?.url
+                          )}
+                          alt=""
+                        />
+                      </div>
                       {collection?.attributes?.image?.data && (
-                        <div
-                          className={` h-80 relative ${
-                            collection.attributes.is_published ===
-                            IsPublished.published
-                              ? "group"
-                              : ""
-                          }`}
-                        >
+                        <div className={` h-80 relative group`}>
                           <Image
                             src={getStrapiUrl(
                               collection?.attributes.image?.data.attributes
@@ -528,6 +525,16 @@ function CollectionPage({
                       <p className={"text-white text-center"}>
                         {data?.unpublished_collection_text}
                       </p>
+                    </div>
+
+                    <div className="absolute top-2 right-2 z-40 h-11 w-11 bg-white p-1 pointer-events-none">
+                      <img
+                        src={getStrapiUrl(
+                          collection?.attributes?.manufacturer_logo?.data
+                            ?.attributes?.url
+                        )}
+                        alt=""
+                      />
                     </div>
 
                     {collection?.attributes?.image?.data && (
