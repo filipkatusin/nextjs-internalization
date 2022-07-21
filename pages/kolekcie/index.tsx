@@ -236,7 +236,9 @@ function CollectionPage({
           </button>
           <h4 className={"mb-4 md:text-2xl"}>Filter</h4>
           <div className={"mb-6"}>
-            <h5 className={"mb-1 md:text-base"}>{data?.filer_search_text}</h5>
+            <h5 className={"mb-1 text-2xl md:text-lg"}>
+              {data?.filter_search_text}
+            </h5>
             <Field
               type="text"
               name="search"

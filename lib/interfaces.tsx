@@ -217,7 +217,7 @@ export interface CollectionInterface {
   filter_state: RelationTitles;
   filter_planned: RelationTitles;
   button_hover_text: string;
-  filer_search_text: string;
+  filter_search_text: string;
   filter_search_placeholder: string;
   competition_filter_title: string;
   unpublished_collection_text: string;

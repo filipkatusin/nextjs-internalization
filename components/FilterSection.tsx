@@ -13,7 +13,7 @@ type Props = {
 export default function FilterSection({ data, name, title }: Props) {
   return (
     <div>
-      <h6 className={"font-bold text-2xl text-2xl md:text-lg mb-1"}>{title}</h6>
+      <h6 className={"font-bold text-2xl md:text-lg mb-1"}>{title}</h6>
       <ul>
         <div
           role="group"
