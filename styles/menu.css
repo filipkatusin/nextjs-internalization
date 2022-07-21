@@ -55,7 +55,6 @@
     height: 2.5rem;
     background: #191919;
     color: #bfbfbf;
-    @apply space-x-8;
 
 @media (min-width: 1024px) {
      padding-right: 2.5rem;

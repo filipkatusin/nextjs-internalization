@@ -409,7 +409,12 @@ interface HeaderComponent {
 }
 
 export interface Header {
-  socials: HeaderComponent[];
+  socials: {
+    link: string;
+    image: {
+      data: StrapiImage;
+    };
+  }[];
   button_shop: HeaderComponent;
   button_my_card: HeaderComponent;
   sk_icon: { data: { attributes: { url: string } } };

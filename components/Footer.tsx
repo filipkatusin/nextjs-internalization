@@ -229,7 +229,7 @@ export default function Footer() {
                           </div>
                         )}
                       </div>
-                      <div className={"text-red-500 mt-1 text-sm md:text-base"}>
+                      <div className={"text-red mt-1 text-sm md:text-base"}>
                         <ErrorMessage name="email" />
                       </div>
 
@@ -256,9 +256,7 @@ export default function Footer() {
                             {footerData?.newsletter?.approval_text}
                           </p>
                         </div>
-                        <div
-                          className={"text-red-500 mt-1 text-sm md:text-base"}
-                        >
+                        <div className={"text-red mt-1 text-sm md:text-base"}>
                           <ErrorMessage name="checkbox" />
                         </div>
                       </label>
