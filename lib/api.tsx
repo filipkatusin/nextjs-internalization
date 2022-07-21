@@ -4,6 +4,7 @@ import {
   Collections,
   Contact,
   FaqPage,
+  GeneralCondition,
   Header,
   IFooter,
   ISocialNetworks,
@@ -145,6 +146,13 @@ export async function getContactPage(localization: string): Promise<Contact> {
 
 export async function getFaqPage(localization: string): Promise<FaqPage> {
   const data = await fetchAPI(`faq?locale=${localization}`);
+  return data?.attributes;
+}
+
+export async function getGeneralConditionsPage(
+  localization: string
+): Promise<GeneralCondition> {
+  const data = await fetchAPI(`general-condition?locale=${localization}`);
   return data?.attributes;
 }
 

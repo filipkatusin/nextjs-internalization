@@ -49,3 +49,41 @@
 .svg-black path {
   fill: black !important;
 }
+
+.general-conditions h1 {
+  font-size: 2.3rem;
+}
+
+.general-conditions h2 {
+  font-size: 1.7rem;
+}
+
+.general-conditions h1, .general-conditions h2 {
+  margin-bottom: 1.7rem;
+  margin-top: 6rem;
+  position: relative;
+}
+
+.general-conditions h1:before, .general-conditions h2:before {
+  content: "";
+  position: absolute;
+  top: -3rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: #EDEDED;
+}
+
+.general-conditions h1:first-child:before, .general-conditions h2:first-child:before {
+  display: none;
+}
+
+.general-conditions li {
+  list-style: initial;
+  margin-left: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.general-conditions li:last-child {
+  margin-bottom: 0;
+}
