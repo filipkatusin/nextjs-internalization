@@ -3,6 +3,7 @@ import {
   CollectionInterface,
   Collections,
   Contact,
+  FaqPage,
   Header,
   IFooter,
   ISocialNetworks,
@@ -139,6 +140,11 @@ export async function getSocialNetworks(): Promise<ISocialNetworks> {
 
 export async function getContactPage(localization: string): Promise<Contact> {
   const data = await fetchAPI(`contact?locale=${localization}`);
+  return data?.attributes;
+}
+
+export async function getFaqPage(localization: string): Promise<FaqPage> {
+  const data = await fetchAPI(`faq?locale=${localization}`);
   return data?.attributes;
 }
 

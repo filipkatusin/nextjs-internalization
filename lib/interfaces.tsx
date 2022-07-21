@@ -420,3 +420,10 @@ export interface Header {
   sk_icon: { data: { attributes: { url: string } } };
   en_icon: { data: { attributes: { url: string } } };
 }
+
+export interface FaqPage {
+  title: string;
+  questions: TitleContent[];
+  help_text: TitleContent;
+  contact_text_button: string;
+}

@@ -45,3 +45,7 @@
 .card-with-tooltip:hover .tooltip {
   opacity: 1;
 }
+
+.svg-black path {
+  fill: black !important;
+}
