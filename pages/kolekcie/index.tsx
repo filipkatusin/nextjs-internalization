@@ -216,7 +216,7 @@ function CollectionPage({
       <Heading label={data.title} />
       <Container className={"flex items-start"}>
         <Form
-          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform overflow-y-scroll ${
+          className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[200] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto drop-shadow-xl md:drop-shadow-none md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform overflow-y-auto ${
             mobileFilterOpen
               ? "translate-x-0"
               : "-translate-x-[100%] md:translate-x-0"

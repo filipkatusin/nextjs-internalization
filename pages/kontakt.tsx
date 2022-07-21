@@ -50,26 +50,23 @@ export default function ContactPage({ contact }: Props) {
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               setTimeout(() => {
-                //console.log(values);
-                alert(`Message: ${values.message}`);
                 createFormSubmission(values).then((response) => {
-                  console.log(response);
+                  resetForm();
+                  setSubmitting(false);
                 });
-                resetForm();
-                setSubmitting(false);
-              }, 400);
+              }, 200);
             }}
           >
             <Form className="kontakt-form font-semibold">
               <div className="form-grid">
                 <label htmlFor="name">
-                  {contact.contact_form.name} <span>*</span>
+                  {contact?.contact_form?.name} <span>*</span>
                 </label>
                 <div className="flex flex-col">
                   <Field
                     name="name"
                     type="text"
-                    placeholder={contact.contact_form.name_placeholder}
+                    placeholder={contact?.contact_form?.name_placeholder}
                     className="field"
                   />
                   <ErrorMessage name="name" />
@@ -77,13 +74,13 @@ export default function ContactPage({ contact }: Props) {
               </div>
               <div className="form-grid">
                 <label htmlFor="mail">
-                  {contact.contact_form.mail} <span>*</span>
+                  {contact?.contact_form?.mail} <span>*</span>
                 </label>
                 <div className="flex flex-col">
                   <Field
                     name="mail"
                     type="email"
-                    placeholder={contact.contact_form.mail_placeholder}
+                    placeholder={contact?.contact_form?.mail_placeholder}
                     className="field"
                   />
                   <ErrorMessage name="mail" />
@@ -91,13 +88,13 @@ export default function ContactPage({ contact }: Props) {
               </div>
               <div className="form-grid">
                 <label htmlFor="phone">
-                  {contact.contact_form.phone} <span>*</span>
+                  {contact?.contact_form?.phone} <span>*</span>
                 </label>
                 <div className="flex flex-col">
                   <Field
                     name="phone"
                     type="text"
-                    placeholder={contact.contact_form.phone_placeholder}
+                    placeholder={contact?.contact_form?.phone_placeholder}
                     className="field"
                   />
                   <ErrorMessage name="phone" />
@@ -105,7 +102,7 @@ export default function ContactPage({ contact }: Props) {
               </div>
               <div className="form-non-grid">
                 <label htmlFor="message">
-                  {contact.contact_form.message} <span>*</span>
+                  {contact?.contact_form?.message} <span>*</span>
                 </label>
                 <Field
                   name="message"
@@ -113,7 +110,7 @@ export default function ContactPage({ contact }: Props) {
                   component="textarea"
                   rows={5}
                   className="field"
-                  placeholder={contact.contact_form.message_placeholder}
+                  placeholder={contact?.contact_form?.message_placeholder}
                 />
                 <ErrorMessage name="message" />
               </div>
@@ -122,7 +119,7 @@ export default function ContactPage({ contact }: Props) {
                   className="send hover:bg-[#a8222b] rounded place-self-center"
                   type="submit"
                 >
-                  {contact.contact_form.button_text}
+                  {contact?.contact_form?.button_text}
                 </button>
               </div>
             </Form>

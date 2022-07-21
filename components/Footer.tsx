@@ -18,6 +18,8 @@ export default function Footer() {
 
   useEffect(() => {
     const localizations: { [key: string]: any } = {};
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     const att = footer?.localizations?.data[0]?.attributes;
     att?.localizations?.data?.forEach((e) => {
       localizations[e.attributes.locale] = e.attributes;
