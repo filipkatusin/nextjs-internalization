@@ -74,7 +74,7 @@ function CollectionPage({
     setTypeState(resultStates);
     setTypeTitle(resultTitles);
     setTypePlan(resultPlans);
-  }, []);
+  }, [router.locale]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
