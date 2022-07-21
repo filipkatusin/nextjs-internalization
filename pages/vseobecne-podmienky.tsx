@@ -1,19 +1,14 @@
 import Layout from "@/components/Layout";
-import { FaqPage, GeneralCondition } from "@/lib/interfaces";
+import { GeneralCondition } from "@/lib/interfaces";
 import React from "react";
 import Heading from "@/components/Heading";
 import Container from "@/components/Container";
-import { getFaqPage, getGeneralConditionsPage } from "@/lib/api";
-import { Disclosure } from "@headlessui/react";
-import ArrowIcon from "@/components/ArrowIcon";
-import Button from "@/components/Button";
-
+import { getGeneralConditionsPage } from "@/lib/api";
 interface Props {
   data: GeneralCondition;
 }
 
 const GeneralConditionsPage: React.FC<Props> = ({ data }) => {
-  console.log(data);
   return (
     <Layout title={data?.title}>
       <Heading label={data?.title} />
