@@ -87,3 +87,7 @@
 .rich-text li:last-child {
   margin-bottom: 0;
 }
+
+.right-shadow {
+  box-shadow: 10px 0px 48px 0px rgba(0,0,0,0.3);
+}
