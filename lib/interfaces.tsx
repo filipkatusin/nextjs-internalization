@@ -213,6 +213,7 @@ export interface NewPage {
   title: string;
   button_title: string;
   button_slug_title: string;
+  slug_more_news_text: string;
 }
 
 export interface CollectionInterface {
@@ -377,6 +378,11 @@ export interface NewsSlug {
     date_background_color: string;
     slug: string;
     og_content: string;
+    card_text: string;
+    author_name: string;
+    author_image: {
+      data: StrapiImage;
+    };
   };
 }
 

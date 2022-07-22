@@ -37,6 +37,7 @@ module.exports = {
         gray: "#8492a6",
         "gray-footer": "#F8F8F8",
         black: "#191919",
+        "black-2": "#292929",
         red: "#EE2D3A",
         "red-hover": "#be2630",
       },

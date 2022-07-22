@@ -194,7 +194,7 @@ export async function getNews(
   localization: string,
   slug?: string
 ): Promise<NewsSlug[]> {
-  return await fetchAPI(`news?locale=${localization}`, slug);
+  return await fetchAPI(`news?locale=${localization}&sort=date:desc`, slug);
 }
 
 export async function getNewsBySlug(): Promise<NewsSlug[]> {

@@ -489,10 +489,10 @@ function CollectionPage({
                         >
                           {collection?.attributes.date && (
                             <h5
-                              className={`cut-corner inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
+                              className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
                                 checkPlannedCollection(collection)
-                                  ? "bg-blue cut-corner-blue"
-                                  : "bg-red cut-corner-red"
+                                  ? "bg-blue"
+                                  : "bg-red"
                               }`}
                             >
                               {Intl.DateTimeFormat("sk", {
@@ -583,10 +583,10 @@ function CollectionPage({
                       >
                         {collection?.attributes.date && (
                           <h5
-                            className={`cut-corner inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
+                            className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
                               checkPlannedCollection(collection)
-                                ? "bg-blue cut-corner-blue"
-                                : "bg-red cut-corner-red"
+                                ? "bg-blue"
+                                : "bg-red"
                             }`}
                           >
                             {Intl.DateTimeFormat("sk", {

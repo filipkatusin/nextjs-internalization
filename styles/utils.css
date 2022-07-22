@@ -14,16 +14,16 @@
   content: '';
   position: absolute;
   top: 0; right: 0;
-  border-top: 18px solid white;
+  border-left: 16px solid transparent;
   width: 0;
 }
 
-.cut-corner-red:before {
-  border-left: 18px solid #EE2D3A;
+.cut-corner-white:before {
+  border-top: 16px solid white;
 }
 
-.cut-corner-blue:before {
-  border-left: 18px solid #2D40EE;
+.cut-corner-dark:before {
+  border-top: 16px solid #292929;
 }
 
 .bottom-triangle:before {
@@ -50,21 +50,21 @@
   fill: black !important;
 }
 
-.general-conditions h1 {
+.rich-text h1 {
   font-size: 2.3rem;
 }
 
-.general-conditions h2 {
+.rich-text h2 {
   font-size: 1.7rem;
 }
 
-.general-conditions h1, .general-conditions h2 {
+.rich-text h1, .rich-text h2 {
   margin-bottom: 1.7rem;
   margin-top: 6rem;
   position: relative;
 }
 
-.general-conditions h1:before, .general-conditions h2:before {
+.rich-text h1:before, .rich-text h2:before {
   content: "";
   position: absolute;
   top: -3rem;
@@ -74,16 +74,16 @@
   background-color: #EDEDED;
 }
 
-.general-conditions h1:first-child:before, .general-conditions h2:first-child:before {
+.rich-text h1:first-child:before, .rich-text h2:first-child:before {
   display: none;
 }
 
-.general-conditions li {
+.rich-text li {
   list-style: initial;
   margin-left: 2rem;
   margin-bottom: 1.2rem;
 }
 
-.general-conditions li:last-child {
+.rich-text li:last-child {
   margin-bottom: 0;
 }
