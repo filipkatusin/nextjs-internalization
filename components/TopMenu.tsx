@@ -65,7 +65,7 @@ export default function TopMenu() {
         <div className={`bg-[#191919] relative z-30`}>
           <Container className={`menu-black-div space-x-4 md:space-x-[20px]`}>
             <ul className={"flex space-x-4 md:space-x-[20px]"}>
-              {headerData.socials?.map((socialIcon, index) => (
+              {headerData?.socials?.map((socialIcon, index) => (
                 <Link key={index} href={socialIcon?.link ?? ""}>
                   <a className={`w-6 h-6`} target={"_blank"}>
                     <img

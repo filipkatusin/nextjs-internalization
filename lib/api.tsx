@@ -222,12 +222,12 @@ export async function getHeader(): Promise<Header> {
   return data?.attributes;
 }
 export async function createFormSubmission(formValues) {
-  //console.log("values", formValues);
   const data = {
     data: {
       name: formValues.name,
       mail: formValues.mail,
       phone: formValues.phone,
+      message_type: formValues.message_type,
       message: formValues.message,
     },
   };

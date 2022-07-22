@@ -60,11 +60,11 @@ export default function Footer() {
 
   const NewsletterSchema = Yup.object().shape({
     email: Yup.string()
-      .email(errorMessages[footerData.locale]?.email.valid)
-      .required(errorMessages[footerData.locale]?.email.required),
+      .email(errorMessages[footerData?.locale]?.email.valid)
+      .required(errorMessages[footerData?.locale]?.email.required),
     checkbox: Yup.boolean()
-      .isTrue(errorMessages[footerData.locale]?.checkbox.required)
-      .required(errorMessages[footerData.locale]?.checkbox.required),
+      .isTrue(errorMessages[footerData?.locale]?.checkbox.required)
+      .required(errorMessages[footerData?.locale]?.checkbox.required),
   });
 
   return (
