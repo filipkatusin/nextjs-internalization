@@ -55,10 +55,7 @@ export default function Button({
         {label}
         {/*{arrow && <div className="arrow h-3 w-3 ml-3" />}*/}
         {arrow && (
-          <ArrowIcon
-            color={arrowColor ?? "black"}
-            className={"ml-2 fill-red"}
-          />
+          <ArrowIcon color={arrowColor ?? "black"} className={"ml-2"} />
         )}
       </button>
     </a>
