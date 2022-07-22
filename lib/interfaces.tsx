@@ -427,3 +427,8 @@ export interface FaqPage {
   help_text: TitleContent;
   contact_text_button: string;
 }
+
+export interface GeneralCondition {
+  title: string;
+  conditions: string;
+}
