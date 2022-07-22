@@ -23,11 +23,13 @@ export default function Button({
   arrowColor,
   className,
   onClick,
+  type,
 }: Props) {
   return link ? (
     <Link href={link ?? ""}>
       <a className="flex ">
         <button
+          type={type}
           onClick={onClick}
           className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className} ${
             arrow ? "pr-3" : ""
@@ -44,6 +46,7 @@ export default function Button({
   ) : (
     <a className="flex ">
       <button
+        type={type}
         onClick={onClick}
         className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className} ${
           arrow ? "pr-3" : ""

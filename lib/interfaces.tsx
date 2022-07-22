@@ -58,7 +58,8 @@ export interface Competition {
 
 export interface Contact {
   title: string;
-  content: string;
+  contact_data: string;
+  billing_data: string;
   contact_form: Form;
 }
 
@@ -94,6 +95,7 @@ interface CardAmountOption {
 }
 
 interface Form {
+  title: string;
   name: string;
   mail: string;
   phone: string;
@@ -103,6 +105,10 @@ interface Form {
   mail_placeholder: string;
   phone_placeholder: string;
   message_placeholder: string;
+  message_type: {
+    text: string;
+  }[];
+  message_type_placeholder: string;
 }
 
 interface TextImage {
