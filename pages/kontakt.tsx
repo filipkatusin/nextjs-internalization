@@ -217,7 +217,7 @@ export default function ContactPage({ contact }: Props) {
                 <div className="form-non-grid">
                   <Button
                     label={contact?.contact_form?.button_text}
-                    className="bg-red px-5 py-4 mt-2 text-white font-bold border-none"
+                    className="bg-red px-5 py-4 mt-2 text-white border-none font-bold"
                     arrow={true}
                     arrowColor={"white"}
                   />
