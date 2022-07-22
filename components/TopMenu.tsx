@@ -6,11 +6,13 @@ import Container from "@/components/Container";
 import { Header } from "@/lib/interfaces";
 import { useRouter } from "next/router";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
+import SearchEngine from "@/components/SearchEngine";
 
 export default function TopMenu() {
   const router = useRouter();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openSearchBar, setOpenSearchBar] = useState(false);
   const [langDropdown, setLangDropdown] = useState(false);
   const [headerData, setHeaderData] = useState<any>({});
   const [menuData, setMenuData] = useState<any>([]);
@@ -166,23 +168,27 @@ export default function TopMenu() {
                 onClick={() => setMenuOpen((prev) => !prev)}
               />
             </div>
-            <div className={`hidden lg:flex space-x-4`}>
+
+            {openSearchBar && (
+              <div
+                className={
+                  "absolute top-5 right-10 transition ease-in duration-300 w-[250px] mr-[30px]"
+                }
+              >
+                <SearchEngine />
+              </div>
+            )}
+            <div
+              onClick={() =>
+                setOpenSearchBar((openSearchBar) => !openSearchBar)
+              }
+              className={`hidden lg:flex space-x-4 cursor-pointer z-90`}
+            >
               <img
                 src={`/assets/magnifyingGlass.svg`}
                 alt={""}
                 className={`menu-icon justify-self-end`}
               />
-              {/*<div className={`menu-icon relative justify-self-end`}>*/}
-              {/*  <img*/}
-              {/*    src={`/assets/shoppingBag.svg`}*/}
-              {/*    alt={""}*/}
-              {/*    className={`menu-icon absolute`}*/}
-              {/*  />*/}
-              {/*  <div className={`menu-cart-number`}>*/}
-              {/*    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />*/}
-              {/*    <div className={``}>0</div>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
             </div>
           </Container>
         </div>

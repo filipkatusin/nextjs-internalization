@@ -5,15 +5,19 @@
     padding-right: 0.5rem;
 
 
-@media (min-width: 1024px) {
-    padding-right: 2.5rem;
+    @media (min-width: 1024px) {
+        padding-right: 2.5rem;
+    }
+
 }
 
+.ais-SearchBox-resetIcon, .ais-SearchBox-submitIcon{
+    display: none;
 }
 
 .menu-icon {
-     height: 1.5rem;
-     width: 1.5rem;
+ height: 1.5rem;
+ width: 1.5rem;
 }
 
 .menu-cart-number {

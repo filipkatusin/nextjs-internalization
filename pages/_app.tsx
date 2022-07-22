@@ -5,6 +5,8 @@ import "@/styles/borders.css";
 import "@/styles/formCheckBox.css";
 import "@/styles/splide.css";
 import "@/styles/menu.css";
+import "@/styles/SearchBar.css";
+import "reactjs-popup/dist/index.css";
 import "@/styles/backgrounds.css";
 import "@/styles/utils.css";
 import "@/styles/filterCheckBox.css";
