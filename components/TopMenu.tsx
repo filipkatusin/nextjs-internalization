@@ -172,17 +172,17 @@ export default function TopMenu() {
                 alt={""}
                 className={`menu-icon justify-self-end`}
               />
-              <div className={`menu-icon relative justify-self-end`}>
-                <img
-                  src={`/assets/shoppingBag.svg`}
-                  alt={""}
-                  className={`menu-icon absolute`}
-                />
-                <div className={`menu-cart-number`}>
-                  <img src={`/assets/Ellipse.svg`} alt={""} className={``} />
-                  <div className={``}>0</div>
-                </div>
-              </div>
+              {/*<div className={`menu-icon relative justify-self-end`}>*/}
+              {/*  <img*/}
+              {/*    src={`/assets/shoppingBag.svg`}*/}
+              {/*    alt={""}*/}
+              {/*    className={`menu-icon absolute`}*/}
+              {/*  />*/}
+              {/*  <div className={`menu-cart-number`}>*/}
+              {/*    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />*/}
+              {/*    <div className={``}>0</div>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
           </Container>
         </div>
@@ -208,17 +208,17 @@ export default function TopMenu() {
                 alt={""}
                 className={`menu-icon justify-self-end`}
               />
-              <div className={`menu-icon relative justify-self-end`}>
-                <img
-                  src={`/assets/shoppingBag.svg`}
-                  alt={""}
-                  className={`menu-icon absolute`}
-                />
-                <div className={`menu-cart-number`}>
-                  <img src={`/assets/Ellipse.svg`} alt={""} className={``} />
-                  <div>0</div>
-                </div>
-              </div>
+              {/*<div className={`menu-icon relative justify-self-end`}>*/}
+              {/*  <img*/}
+              {/*    src={`/assets/shoppingBag.svg`}*/}
+              {/*    alt={""}*/}
+              {/*    className={`menu-icon absolute`}*/}
+              {/*  />*/}
+              {/*  <div className={`menu-cart-number`}>*/}
+              {/*    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />*/}
+              {/*    <div>0</div>*/}
+              {/*  </div>*/}
+              {/*</div>*/}
             </div>
           </div>
           <div className={`flex mt-4 justify-end space-x-4`}>
@@ -229,20 +229,20 @@ export default function TopMenu() {
                 </a>
               </Link>
             )}
-            {headerData && (
-              <Link href={headerData.button_my_card?.link ?? ""}>
-                <a className={`menu-button-card hover:bg-[#a8222b]`}>
-                  <span className={`inline-block align-middle`}>
-                    {headerData.button_my_card?.name}
-                  </span>
-                  <img
-                    src={`/assets/chevron-down.svg`}
-                    alt={""}
-                    className={`inline-block ml-4`}
-                  />
-                </a>
-              </Link>
-            )}
+            {/*{headerData && (*/}
+            {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
+            {/*    <a className={`menu-button-card hover:bg-[#a8222b]`}>*/}
+            {/*      <span className={`inline-block align-middle`}>*/}
+            {/*        {headerData.button_my_card?.name}*/}
+            {/*      </span>*/}
+            {/*      <img*/}
+            {/*        src={`/assets/chevron-down.svg`}*/}
+            {/*        alt={""}*/}
+            {/*        className={`inline-block ml-4`}*/}
+            {/*      />*/}
+            {/*    </a>*/}
+            {/*  </Link>*/}
+            {/*)}*/}
           </div>
         </Container>
       </div>
@@ -270,22 +270,22 @@ export default function TopMenu() {
                 </a>
               </Link>
             )}
-            {headerData && (
-              <Link href={headerData.button_my_card?.link ?? ""}>
-                <a
-                  className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
-                >
-                  <span className={`inline-block align-middle`}>
-                    {headerData.button_my_card?.name}
-                  </span>
-                  <img
-                    src={`/assets/chevron-down.svg`}
-                    alt={""}
-                    className={`inline-block ml-4`}
-                  />
-                </a>
-              </Link>
-            )}
+            {/*{headerData && (*/}
+            {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
+            {/*    <a*/}
+            {/*      className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}*/}
+            {/*    >*/}
+            {/*      <span className={`inline-block align-middle`}>*/}
+            {/*        {headerData.button_my_card?.name}*/}
+            {/*      </span>*/}
+            {/*      <img*/}
+            {/*        src={`/assets/chevron-down.svg`}*/}
+            {/*        alt={""}*/}
+            {/*        className={`inline-block ml-4`}*/}
+            {/*      />*/}
+            {/*    </a>*/}
+            {/*  </Link>*/}
+            {/*)}*/}
           </div>
         </Container>
       </div>
