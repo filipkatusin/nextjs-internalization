@@ -15,7 +15,7 @@ const GeneralConditionsPage: React.FC<Props> = ({ data }) => {
       <Container className={"mb-12 md:pb-20"}>
         <article
           dangerouslySetInnerHTML={{ __html: data?.conditions }}
-          className={"general-conditions max-w-[700px] mx-auto"}
+          className={"rich-text max-w-[700px] mx-auto"}
         />
       </Container>
     </Layout>
