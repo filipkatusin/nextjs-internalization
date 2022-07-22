@@ -47,9 +47,7 @@ const FaqPage: React.FC<Props> = ({ data }) => {
             </Disclosure>
           ))}
         </ul>
-        <div
-          className={"text-center flex flex-col items-center mt-12 md:mt-20"}
-        >
+        <div className={"text-center flex flex-col items-center mt-20"}>
           <h2
             className={
               "text-3xl sm:text-4xl md:text-5xl leading-tight mb-2 md:mb-4"
@@ -58,7 +56,7 @@ const FaqPage: React.FC<Props> = ({ data }) => {
             {data?.help_text?.title}
           </h2>
           <article
-            className={"max-w-[450px] mb-4 md:mb-8"}
+            className={"max-w-[450px] mb-8"}
             dangerouslySetInnerHTML={{ __html: data?.help_text?.content }}
           />
           <Button
