@@ -5,15 +5,14 @@ import Image from "next/image";
 import Container from "@/components/Container";
 import Link from "next/link";
 import useWindowDimensions from "@/components/useWindowDimensions";
-import SlidesPerView from "@/components/SlidesPerView";
 import Layout from "@/components/Layout";
 import TextEllipsis from "react-text-ellipsis";
 import Button from "@/components/Button";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import { useRouter } from "next/router";
-import ImageDiv from "@/components/ImageDiv";
 import React from "react";
 import SocialNetworks from "@/components/SocialNetworks";
+import SlidesPerView from "@/components/SlidesPerView";
 
 interface Props {
   main: MainPage;
@@ -108,14 +107,14 @@ export default function HomePage({
                   </TextEllipsis>
                 </h5>
                 <div className="absolute bottom-5 right-2 md:left-10 z-20 pointer-events-none">
-                  <a className="flex">
+                  <div className="flex">
                     <button
                       className={` splide-slide-main-page-button bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors`}
                     >
                       {main?.collection_button}
                       <div className="arrow h-3 w-3 ml-3" />
                     </button>
-                  </a>
+                  </div>
                 </div>
               </a>
             </Link>
@@ -226,47 +225,49 @@ export default function HomePage({
       <Container>
         <h2 className="font-bold mb-5">{main?.product_section?.title}</h2>
       </Container>
-      {/*<Splide*/}
-      {/*  options={{*/}
-      {/*    speed: 1500,*/}
-      {/*    rewind: true,*/}
-      {/*    type: "loop",*/}
-      {/*    perPage: SlidesPerView(),*/}
-      {/*    pauseOnFocus: false,*/}
-      {/*    pauseOnHover: false,*/}
-      {/*    autoplay: true,*/}
-      {/*    interval: 5000,*/}
-      {/*    pagination: false,*/}
-      {/*    dragMinThreshold: {*/}
-      {/*      touch: 10,*/}
-      {/*      mouse: 10,*/}
-      {/*    },*/}
-      {/*    padding:*/}
-      {/*      windowWidth > 1400*/}
-      {/*        ? { left: "", right: "10%" }*/}
-      {/*        : windowWidth > 1000*/}
-      {/*        ? { left: "0%", right: "15%" }*/}
-      {/*        : windowWidth > 600*/}
-      {/*        ? { left: "0%", right: "20%" }*/}
-      {/*        : { left: "0%", right: "3%" },*/}
-      {/*    gap: 20,*/}
-      {/*  }}*/}
-      {/*  className="splide-products container-products"*/}
-      {/*>*/}
-      {/*  {main?.products?.data.map((product, index) => (*/}
-      {/*    <SplideSlide key={index}>*/}
-      {/*      <div className="h-[420px] relative">*/}
-      {/*        <Image*/}
-      {/*          src={product?.attributes?.image?.data?.attributes?.url ?? ""}*/}
-      {/*          layout={"fill"}*/}
-      {/*          objectFit="contain"*/}
-      {/*          priority*/}
-      {/*        />*/}
-      {/*      </div>*/}
-      {/*      <h5 className="text-center px-10">{product?.attributes?.title}</h5>*/}
-      {/*    </SplideSlide>*/}
-      {/*  ))}*/}
-      {/*</Splide>*/}
+      <Splide
+        options={{
+          speed: 1500,
+          rewind: true,
+          type: "loop",
+          perPage: SlidesPerView(),
+          pauseOnFocus: false,
+          pauseOnHover: false,
+          autoplay: true,
+          interval: 5000,
+          pagination: false,
+          dragMinThreshold: {
+            touch: 10,
+            mouse: 10,
+          },
+          padding:
+            windowWidth > 1400
+              ? { left: "", right: "12%" }
+              : windowWidth > 1000
+              ? { left: "0%", right: "15%" }
+              : windowWidth > 600
+              ? { left: "0%", right: "20%" }
+              : { left: "0%", right: "3%" },
+          gap: 20,
+        }}
+        className="splide-products container-products"
+      >
+        {main?.products?.data.map((product, index) => (
+          <SplideSlide key={index}>
+            <img src={product?.attributes?.image} alt="" />
+            <h5 className=" px-10">{product?.attributes?.title}</h5>
+            <div
+              className="px-4 py-1 price-corner inline-block mx-10 mt-4"
+              style={{
+                color: "white",
+                backgroundColor: "black",
+              }}
+            >
+              {product?.attributes?.price} €
+            </div>
+          </SplideSlide>
+        ))}
+      </Splide>
       <Container className="mt-10 flex justify-center sm:justify-start">
         <Button
           label={main?.product_section?.button_title}
@@ -274,7 +275,7 @@ export default function HomePage({
         />
       </Container>
       <section
-        className="flex flex-col   mt-40  relative"
+        className="flex flex-col mt-40 relative"
         style={{ backgroundColor: "#191919" }}
       >
         <div className=" pointer-events-none absolute w-full h-full flex">
@@ -325,9 +326,16 @@ export default function HomePage({
                       }).format(new Date(news.attributes.date))}
                     </div>
                   </div>
-                  <div className="text-white text-2xl font mt-5 mb-10 w-2/3">
+                  <div className="text-white text-2xl font mt-5 mb-5 md:w-2/3">
                     {news.attributes.title}
                   </div>
+                  <article
+                    style={{ opacity: "0.6" }}
+                    className="text-white pb-10 md:w-3/4"
+                    dangerouslySetInnerHTML={{
+                      __html: news.attributes.card_text ?? "",
+                    }}
+                  />
                 </div>
               </a>
             </Link>
@@ -346,7 +354,7 @@ export default function HomePage({
       </section>
       <Container className="flex flex-col text-center justify-center mb-20 mt-16 md:mb-32 md:mt-24">
         <div className="bg-[#F7F7F7] mb-16 flex md:mx-10 flex-col lg:flex-row lg:pb-0 justify-between">
-          <div className="flex flex-col items-start basis-2/5 p-12">
+          <div className="flex flex-col items-start basis-2/5 p-6 md:p-12">
             {main && (
               <img
                 src={main?.live_section?.logo?.data?.attributes?.url}

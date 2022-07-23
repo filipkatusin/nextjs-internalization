@@ -1,11 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import React from "react";
-import { NewsSlug } from "@/lib/interfaces";
+import { News } from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 
 interface Props {
-  novinka: NewsSlug;
+  novinka: News;
   newsLink: string;
 }
 

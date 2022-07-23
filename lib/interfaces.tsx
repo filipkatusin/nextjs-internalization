@@ -187,7 +187,7 @@ export interface Collections {
     shop_button_text: string;
     checklist_button_text: string;
     info_title: string;
-    collection_type: CollectionType;
+    collection_type: string;
     checklist: { data: StrapiImage };
     competition: {
       data: {
@@ -200,13 +200,21 @@ export interface Collections {
 }
 
 export interface News {
-  title: string;
-  content: string;
-  image: { data: StrapiImage };
-  date: Date;
-  date_color: string;
-  date_background_color: string;
-  slug: string;
+  attributes: {
+    title: string;
+    content: string;
+    image: { data: StrapiImage };
+    date: Date;
+    date_color: string;
+    date_background_color: string;
+    slug: string;
+    og_content: string;
+    card_text: string;
+    author_name: string;
+    author_image: {
+      data: StrapiImage;
+    };
+  };
 }
 
 export interface NewPage {
@@ -361,43 +369,21 @@ interface CollectionsRelation {
 }
 
 interface NewsRelation {
-  data: NewRelation[];
-}
-
-interface NewRelation {
-  attributes: News;
-}
-
-export interface NewsSlug {
-  attributes: {
-    title: string;
-    content: string;
-    image: { data: StrapiImage };
-    date: Date;
-    date_color: string;
-    date_background_color: string;
-    slug: string;
-    og_content: string;
-    card_text: string;
-    author_name: string;
-    author_image: {
-      data: StrapiImage;
-    };
-  };
+  data: News[];
 }
 
 interface ProductsRelation {
-  data: ProductRelation[];
-}
-
-interface ProductRelation {
-  attributes: Products;
+  data: Products[];
 }
 
 export interface Products {
-  title: string;
-  image: { data: StrapiImage };
-  slug: string;
+  attributes: {
+    title: string;
+    image: string;
+    eshop_url: string;
+    price: number;
+    slug: string;
+  };
 }
 
 interface LinkSection {

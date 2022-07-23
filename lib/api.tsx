@@ -11,8 +11,7 @@ import {
   MainPage,
   Menu,
   NewPage,
-  NewsSlug,
-  Titles,
+  News,
 } from "@/lib/interfaces";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
@@ -121,14 +120,6 @@ export async function getMenu(): Promise<Menu[][]> {
   return await fetchAPIMenu();
 }
 
-export async function getTitles(
-  type: string,
-  localization: string
-): Promise<Titles> {
-  const data = await fetchAPI(`titles?locale=${localization}`, "", type);
-  return data?.[0]?.attributes;
-}
-
 export async function getFooter(): Promise<IFooter> {
   const data = await fetchAPIExternalData(`footer`);
   return data?.attributes;
@@ -153,11 +144,6 @@ export async function getGeneralConditionsPage(
   localization: string
 ): Promise<GeneralCondition> {
   const data = await fetchAPI(`general-condition?locale=${localization}`);
-  return data?.attributes;
-}
-
-export async function getMyCardPage(localization: string): Promise<any> {
-  const data = await fetchAPI(`my-card?locale=${localization}`);
   return data?.attributes;
 }
 
@@ -193,11 +179,11 @@ export async function getCompetitions(localization: string) {
 export async function getNews(
   localization: string,
   slug?: string
-): Promise<NewsSlug[]> {
+): Promise<News[]> {
   return await fetchAPI(`news?locale=${localization}&sort=date:desc`, slug);
 }
 
-export async function getNewsBySlug(): Promise<NewsSlug[]> {
+export async function getNewsBySlug(): Promise<News[]> {
   const data = await fetchAPI(`news?locale=all`);
   return data?.attributes;
 }

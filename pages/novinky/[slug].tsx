@@ -1,16 +1,16 @@
 import Layout from "@/components/Layout";
 import Container from "@/components/Container";
 import Image from "next/image";
+import { News, NewPage } from "@/lib/interfaces";
 import { getNewPage, getNews, getNewsBySlug } from "@/lib/api";
-import { NewPage, NewsSlug } from "@/lib/interfaces";
 import NewsTopBanner from "@/components/NewsTopBanner";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import { useRouter } from "next/router";
 import NewsSection from "@/components/NewsSection";
 
 interface Props {
-  news: NewsSlug;
-  nextNews: NewsSlug[];
+  news: News;
+  nextNews: News[];
   newsPage: NewPage;
 }
 
@@ -94,8 +94,8 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
                 "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8"
               }
             >
-              {nextNews?.map((item, indx) => (
-                <NewsSection novinka={item} newsLink={newsLink} />
+              {nextNews?.map((item, index) => (
+                <NewsSection key={index} novinka={item} newsLink={newsLink} />
               ))}
             </div>
           </Container>
@@ -107,7 +107,7 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
 
 export async function getStaticProps({ locale, params }) {
   const data = await getNews(locale, params.slug);
-  const news = ((await getNews(locale)) as NewsSlug[]) || [];
+  const news = (await getNews(locale)) || [];
   const newsPage = (await getNewPage(locale)) || [];
 
   const threeNews = news

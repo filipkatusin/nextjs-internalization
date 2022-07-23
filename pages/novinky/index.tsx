@@ -1,7 +1,7 @@
 import Layout from "@/components/Layout";
 import Heading from "@/components/Heading";
 import { getNewPage, getNews } from "@/lib/api";
-import { NewPage, NewsSlug } from "@/lib/interfaces";
+import { NewPage, News } from "@/lib/interfaces";
 import Container from "@/components/Container";
 import Button from "@/components/Button";
 import React, { useState } from "react";
@@ -12,7 +12,7 @@ import NewsTopBanner from "@/components/NewsTopBanner";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 
 interface Props {
-  news: NewsSlug[];
+  news: News[];
   newPage: NewPage;
 }
 

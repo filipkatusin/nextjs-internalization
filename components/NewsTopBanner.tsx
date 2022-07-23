@@ -1,10 +1,6 @@
-import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/Button";
 import Container from "@/components/Container";
 import React from "react";
-import { NewsSlug } from "@/lib/interfaces";
-import { useRouter } from "next/router";
 
 interface Props {
   imageLink?: string;
@@ -23,6 +19,7 @@ const NewsTopBanner: React.FC<Props> = ({
   date,
   dateColor,
   content,
+  newsSlug,
   className,
   children,
 }) => {
