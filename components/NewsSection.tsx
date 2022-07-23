@@ -31,7 +31,7 @@ export default function NewsSection({ novinka, newsLink }: Props) {
             />
           </div>
         )}
-        <div className="px-10 mt-10 pb-10 ">
+        <div className="px-6 md:px-10 mt-10 pb-10 ">
           <div className="flex ">
             <div
               className="px-3 py-1 text-sm text-white font-bold date-corner"
@@ -46,7 +46,7 @@ export default function NewsSection({ novinka, newsLink }: Props) {
               }).format(new Date(novinka.attributes.date))}
             </div>
           </div>
-          <div className="text-2xl text-white font mt-5 mb-4 w-3/4 group-hover:underline transition-colors">
+          <div className="text-2xl text-white font mt-5 mb-4 md:w-3/4 group-hover:underline transition-colors">
             {novinka.attributes.title}
           </div>
           <p className={"text-white opacity-60"}>

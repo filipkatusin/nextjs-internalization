@@ -33,8 +33,8 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
             imageLink={getStrapiUrl(
               news?.attributes?.image?.data?.attributes?.url
             )}
+            dateBackgroundColor={news?.attributes?.date_background_color}
             dateColor={news?.attributes?.date_color}
-            newsSlug={news?.attributes?.slug}
             content={news?.attributes?.card_text}
           >
             <div className={"flex items-center space-x-4"}>

@@ -7,8 +7,8 @@ interface Props {
   date: Date;
   title: string;
   dateColor?: string;
+  dateBackgroundColor?: string;
   content?: string;
-  newsSlug?: string;
   className?: string;
   children?: any;
 }
@@ -19,7 +19,7 @@ const NewsTopBanner: React.FC<Props> = ({
   date,
   dateColor,
   content,
-  newsSlug,
+  dateBackgroundColor,
   className,
   children,
 }) => {
@@ -40,12 +40,13 @@ const NewsTopBanner: React.FC<Props> = ({
             />
           </div>
         )}
-        <div className="md:w-1/2 px-14 py-10 md:py-16 justify-around flex flex-col space-y-5">
+        <div className="md:w-1/2 px-6 md:px-14 py-10 md:py-16 justify-around flex flex-col space-y-5">
           <div>
             <div
-              className="px-3 py-1 cut-corner cut-corner-dark text-sm inline-block text-white font-bold"
+              className="px-3 py-1 date-corner text-sm inline-block text-white font-bold"
               style={{
-                backgroundColor: dateColor,
+                backgroundColor: dateBackgroundColor,
+                color: dateColor,
               }}
             >
               {date &&
