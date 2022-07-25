@@ -447,6 +447,7 @@ function CollectionPage({
                     <a className={`card-with-tooltip w-full max-w-md relative`}>
                       <div className="absolute top-2 right-2 z-40 h-11 w-11 bg-white p-1 pointer-events-none">
                         <img
+                          className={"w-full h-full"}
                           src={getStrapiUrl(
                             collection?.attributes?.manufacturer_logo?.data
                               ?.attributes?.url
@@ -489,7 +490,7 @@ function CollectionPage({
                         >
                           {collection?.attributes.date && (
                             <h5
-                              className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
+                              className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-[6px] px-3 ${
                                 checkPlannedCollection(collection)
                                   ? "bg-blue"
                                   : "bg-red"
@@ -529,6 +530,7 @@ function CollectionPage({
 
                     <div className="absolute top-2 right-2 z-40 h-11 w-11 bg-white p-1 pointer-events-none">
                       <img
+                        className={"w-full h-full"}
                         src={getStrapiUrl(
                           collection?.attributes?.manufacturer_logo?.data
                             ?.attributes?.url
@@ -583,7 +585,7 @@ function CollectionPage({
                       >
                         {collection?.attributes.date && (
                           <h5
-                            className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-2 pl-4 pr-5 ${
+                            className={`cut-corner cut-corner-white inline-block text-sm font-bold text-white py-[6px] px-3 ${
                               checkPlannedCollection(collection)
                                 ? "bg-blue"
                                 : "bg-red"

@@ -63,7 +63,7 @@ export default function TopMenu() {
 
   return (
     <>
-      <div className={`sticky top-0 lg:relative z-[150]`}>
+      <div className={`sticky top-0 lg:relative z-[15000]`}>
         <div className={`bg-[#191919] relative z-30`}>
           <Container className={`menu-black-div space-x-4 md:space-x-[20px]`}>
             <ul className={"flex space-x-4 md:space-x-[20px]"}>

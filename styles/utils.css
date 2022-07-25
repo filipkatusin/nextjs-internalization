@@ -14,16 +14,16 @@
   content: '';
   position: absolute;
   top: 0; right: 0;
-  border-left: 16px solid transparent;
+  border-left: 12px solid transparent;
   width: 0;
 }
 
 .cut-corner-white:before {
-  border-top: 16px solid white;
+  border-top: 12px solid white;
 }
 
 .cut-corner-dark:before {
-  border-top: 16px solid #292929;
+  border-top: 12px solid #292929;
 }
 
 .bottom-triangle:before {

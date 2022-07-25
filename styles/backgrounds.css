@@ -3,3 +3,29 @@
     background-size: cover;
     background-position: center;
 }
+
+.background-gray-gradient {
+    position: relative;
+}
+
+.background-gray-gradient:after {
+    position: absolute;
+    content: "";
+    inset: 0;
+    background: rgb(255,255,255);
+    background: linear-gradient(180deg, rgba(248, 248, 248, 0) 0%, #F8F8F8 100%);
+    z-index: 1000;
+}
+
+.background-white-gradient {
+    position: relative;
+}
+
+.background-white-gradient:after {
+    position: absolute;
+    content: "";
+    inset: 0;
+    background: rgb(255,255,255);
+    z-index: 1000;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 400px, #FFFFFF 100%);
+}
