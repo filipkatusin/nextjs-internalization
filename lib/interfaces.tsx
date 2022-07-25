@@ -157,7 +157,8 @@ export interface Collections {
     title_color: string;
     title_background_color: string;
     image: { data: StrapiImage };
-    date: Date;
+    date: string;
+    date_full: boolean;
     slug: string;
     manufacturer_logo: {
       data: StrapiImage;

@@ -51,9 +51,10 @@ function CollectionPage({
   const [typeTitle, setTypeTitle] = useState({});
   const [typeState, setTypeState] = useState({});
   const [typePlan, setTypePlan] = useState({});
-  const router = useRouter();
   const { values, setValues } =
     useFormikContext<InitialCollectionsFilterValues>();
+  const router = useRouter();
+  const locale = router.locale;
 
   useEffect(() => {
     const resultTitles = {};
@@ -496,10 +497,23 @@ function CollectionPage({
                                   : "bg-red"
                               }`}
                             >
-                              {Intl.DateTimeFormat("sk", {
-                                month: "2-digit",
-                                year: "numeric",
-                              }).format(new Date(collection?.attributes?.date))}
+                              {collection?.attributes?.date_full
+                                ? Intl.DateTimeFormat(locale, {
+                                    day: "2-digit",
+                                    month: "2-digit",
+                                    year: "numeric",
+                                  })
+                                    .format(
+                                      new Date(collection?.attributes?.date)
+                                    )
+                                    ?.replace(". ", "/")
+                                    .replace(". ", "/")
+                                : Intl.DateTimeFormat(locale, {
+                                    month: "2-digit",
+                                    year: "numeric",
+                                  }).format(
+                                    new Date(collection?.attributes?.date)
+                                  )}
                             </h5>
                           )}
 
@@ -517,7 +531,10 @@ function CollectionPage({
                     </a>
                   </Link>
                 ) : (
-                  <div className="card-with-tooltip w-full max-w-md relative">
+                  <div
+                    className="card-with-tooltip w-full max-w-md relative"
+                    key={index}
+                  >
                     <div
                       className={
                         "bottom-triangle tooltip bg-black p-3 absolute rounded-md left-0 right-0 z-40 transform -translate-y-[120%] pointer-events-none"
@@ -591,10 +608,23 @@ function CollectionPage({
                                 : "bg-red"
                             }`}
                           >
-                            {Intl.DateTimeFormat("sk", {
-                              month: "2-digit",
-                              year: "numeric",
-                            }).format(new Date(collection?.attributes?.date))}
+                            {collection?.attributes?.date_full
+                              ? Intl.DateTimeFormat(locale, {
+                                  day: "2-digit",
+                                  month: "2-digit",
+                                  year: "numeric",
+                                })
+                                  .format(
+                                    new Date(collection?.attributes?.date)
+                                  )
+                                  ?.replace(". ", "/")
+                                  .replace(". ", "/")
+                              : Intl.DateTimeFormat(locale, {
+                                  month: "2-digit",
+                                  year: "numeric",
+                                }).format(
+                                  new Date(collection?.attributes?.date)
+                                )}
                           </h5>
                         )}
 
@@ -630,9 +660,8 @@ export async function getStaticProps({ locale }) {
   const data = ((await getCollectionPage(locale)) || []) as CollectionInterface;
   const collections = ((await getCollections(locale)) || []) as Collections[];
   const competitions = (await getCompetitions(locale)) || [];
-  const plannedCollections = (await getPlannedCollections(
-    locale
-  )) as PlannedCollections;
+  const plannedCollections =
+    ((await getPlannedCollections(locale)) as PlannedCollections) || [];
 
   data?.filter_year?.data?.attributes?.title_type?.sort(function (a, b) {
     return b.title?.localeCompare(a.title);
