@@ -135,104 +135,110 @@ export default function CollectionPageSlug({
         )}
 
         {collectionPage?.slug_gallery_title &&
-          collection?.attributes?.gallery_images && (
+          collection?.attributes?.gallery_images?.data?.length > 0 && (
             <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
           )}
 
-        <div className={"flex flex-col py-12 md:py-20"}>
-          <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
-            {collectionPage?.slug_gallery_title}
-          </h2>
+        {collection?.attributes?.gallery_images?.data?.length > 0 && (
+          <div className={"flex flex-col py-12 md:py-20"}>
+            <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
+              {collectionPage?.slug_gallery_title}
+            </h2>
 
-          <div
-            className={`overflow-hidden z-50 ${
-              !galleryIsOpen && galleryHeight >= 800
-                ? "max-h-[800px] background-white-gradient"
-                : "max-h-fit"
-            }`}
-            ref={galleryRef}
-          >
-            <StackGrid
-              columnWidth={300}
-              gutterWidth={10}
-              gutterHeight={10}
-              onLayout={() => {
-                setTimeout(() => {
-                  setGalleryHeight(galleryRef?.current?.clientHeight);
-                }, 200);
-              }}
+            <div
+              className={`overflow-hidden z-50 ${
+                !galleryIsOpen && galleryHeight >= 800
+                  ? "max-h-[800px] background-white-gradient"
+                  : "max-h-fit"
+              }`}
+              ref={galleryRef}
             >
-              {collection?.attributes?.gallery_images?.data?.map(
-                (image, index) => (
-                  <img
+              <StackGrid
+                columnWidth={300}
+                gutterWidth={10}
+                gutterHeight={10}
+                onLayout={() => {
+                  setTimeout(() => {
+                    setGalleryHeight(galleryRef?.current?.clientHeight);
+                  }, 200);
+                }}
+              >
+                {collection?.attributes?.gallery_images?.data?.map(
+                  (image, index) => (
+                    <img
+                      key={index}
+                      src={getStrapiUrl(image?.attributes?.url)}
+                      alt="gallery item"
+                      loading={"lazy"}
+                    />
+                  )
+                )}
+              </StackGrid>
+            </div>
+
+            {galleryHeight >= 800 && (
+              <Button
+                label={
+                  galleryIsOpen
+                    ? collectionPage?.slug_button_text_hide
+                    : collectionPage?.slug_button_text_show
+                }
+                className={"mt-8 md:mt-10 mx-auto"}
+                onClick={() => setGalleryIsOpen((prev) => !prev)}
+              />
+            )}
+          </div>
+        )}
+
+        {collection?.attributes?.info_section.info_section_item &&
+          collection?.attributes?.info_section.info_section_item.length > 0 && (
+            <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
+          )}
+
+        {collection?.attributes?.info_section.info_section_item.length > 0 && (
+          <div className={"flex flex-col items-center py-12 md:py-20"}>
+            <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
+              {collectionPage?.slug_info_title}
+            </h2>
+            <ul
+              ref={infoRef}
+              className={`bg-gray-footer w-full max-w-[940px] px-8 py-6 overflow-hidden transition-all ${
+                !infoIsOpen && infoRef?.current?.clientHeight >= 450
+                  ? "max-h-[450px] background-gray-gradient"
+                  : "max-h-fit"
+              }`}
+            >
+              {collection?.attributes?.info_section?.info_section_item?.map(
+                (item, index) => (
+                  <li
                     key={index}
-                    src={getStrapiUrl(image?.attributes?.url)}
-                    alt="gallery item"
-                    loading={"lazy"}
-                  />
+                    className={
+                      "flex flex-col md:flex-row py-2 md:py-4 border-b border-neutral-200 last-of-type:border-none"
+                    }
+                  >
+                    <h4 className={"text-lg md:flex-1"}>{item.title}:</h4>
+                    <article
+                      dangerouslySetInnerHTML={{ __html: item.content }}
+                      className={"text-lg md:flex-1"}
+                    />
+                  </li>
                 )
               )}
-            </StackGrid>
-          </div>
+            </ul>
 
-          {galleryHeight >= 800 && (
-            <Button
-              label={
-                galleryIsOpen
-                  ? collectionPage?.slug_button_text_hide
-                  : collectionPage?.slug_button_text_show
-              }
-              className={"mt-8 md:mt-10 mx-auto"}
-              onClick={() => setGalleryIsOpen((prev) => !prev)}
-            />
-          )}
-        </div>
-
-        {collection?.attributes?.info_section && (
-          <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
-        )}
-        <div className={"flex flex-col items-center py-12 md:py-20"}>
-          <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
-            {collectionPage?.slug_info_title}
-          </h2>
-          <ul
-            ref={infoRef}
-            className={`bg-gray-footer w-full max-w-[940px] px-8 py-6 overflow-hidden transition-all ${
-              !infoIsOpen && infoRef?.current?.clientHeight >= 450
-                ? "max-h-[450px] background-gray-gradient"
-                : "max-h-fit"
-            }`}
-          >
-            {collection?.attributes?.info_section?.info_section_item?.map(
-              (item, index) => (
-                <li
-                  key={index}
-                  className={
-                    "flex flex-col md:flex-row py-2 md:py-4 border-b border-neutral-200 last-of-type:border-none"
-                  }
-                >
-                  <h4 className={"text-lg md:flex-1"}>{item.title}:</h4>
-                  <article
-                    dangerouslySetInnerHTML={{ __html: item.content }}
-                    className={"text-lg md:flex-1"}
-                  />
-                </li>
-              )
+            {infoRef?.current?.clientHeight >= 450 && (
+              <Button
+                label={
+                  infoIsOpen
+                    ? collectionPage?.slug_button_text_hide
+                    : collectionPage?.slug_button_text_show
+                }
+                className={"mt-8 md:mt-10"}
+                onClick={() => setInfoIsOpen((prev) => !prev)}
+              />
             )}
-          </ul>
-
-          {infoRef?.current?.clientHeight >= 450 && (
-            <Button
-              label={
-                infoIsOpen
-                  ? collectionPage?.slug_button_text_hide
-                  : collectionPage?.slug_button_text_show
-              }
-              className={"mt-8 md:mt-10"}
-              onClick={() => setInfoIsOpen((prev) => !prev)}
-            />
-          )}
-        </div>
+          </div>
+        )}
       </Container>
     </Layout>
   );
