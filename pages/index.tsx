@@ -26,6 +26,7 @@ export default function HomePage({
   collection_images,
 }: Props) {
   const router = useRouter();
+  const locale = router.locale;
   const colLink = router.locale == "sk" ? "kolekcie" : "collections";
   const newsLink = router.locale == "sk" ? "novinky" : "news";
 
@@ -189,9 +190,19 @@ export default function HomePage({
                   {collection?.attributes?.date && (
                     <p className={"text-gray"}>
                       {`${planned_collections?.planned_date_text}: `}
-                      {new Intl.DateTimeFormat("sk-SK").format(
-                        new Date(collection?.attributes?.date)
-                      )}
+                      {collection?.attributes?.date_full
+                        ? Intl.DateTimeFormat(locale, {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                            .format(new Date(collection?.attributes?.date))
+                            ?.replace(". ", "/")
+                            .replace(". ", "/")
+                        : Intl.DateTimeFormat(locale, {
+                            month: "2-digit",
+                            year: "numeric",
+                          }).format(new Date(collection?.attributes?.date))}
                     </p>
                   )}
                 </div>
@@ -254,17 +265,26 @@ export default function HomePage({
       >
         {main?.products?.data.map((product, index) => (
           <SplideSlide key={index}>
-            <img src={product?.attributes?.image} alt="" />
-            <h5 className=" px-10">{product?.attributes?.title}</h5>
-            <div
-              className="px-4 py-1 price-corner inline-block mx-10 mt-4"
-              style={{
-                color: "white",
-                backgroundColor: "black",
-              }}
+            <a
+              className={"group"}
+              href={product?.attributes?.eshop_url}
+              target={"_blank"}
+              key={index}
             >
-              {product?.attributes?.price} €
-            </div>
+              <img src={product?.attributes?.image} alt="" />
+              <h5 className=" px-10 group-hover:underline">
+                {product?.attributes?.title}
+              </h5>
+              <div
+                className="px-4 py-1 price-corner inline-block mx-10 mt-4"
+                style={{
+                  color: "white",
+                  backgroundColor: "black",
+                }}
+              >
+                {product?.attributes?.price} €
+              </div>
+            </a>
           </SplideSlide>
         ))}
       </Splide>

@@ -157,7 +157,8 @@ export interface Collections {
     title_color: string;
     title_background_color: string;
     image: { data: StrapiImage };
-    date: Date;
+    date: string;
+    date_full: boolean;
     slug: string;
     manufacturer_logo: {
       data: StrapiImage;
@@ -172,16 +173,7 @@ export interface Collections {
     }[];
     description: string;
     info_section: {
-      start: string;
-      start_input: string;
-      sale: string;
-      sale_input: string;
-      album: string;
-      album_input: string;
-      pack: string;
-      pack_input: string;
-      content: string;
-      content_input: string;
+      info_section_item: TitleContent[];
     };
     kolekcia: string;
     shop_button_text: string;
@@ -195,6 +187,9 @@ export interface Collections {
           competition: string;
         };
       };
+    };
+    gallery_images: {
+      data: StrapiImage[];
     };
   };
 }
@@ -237,6 +232,10 @@ export interface CollectionInterface {
   competition_filter_title: string;
   unpublished_collection_text: string;
   planned_collection_text: string;
+  slug_button_text_show: string;
+  slug_button_text_hide: string;
+  slug_gallery_title: string;
+  slug_info_title: string;
 }
 
 export interface InitialCollectionsFilterValues {

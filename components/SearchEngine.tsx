@@ -52,7 +52,7 @@ export default function SearchEngine() {
   return (
     <div>
       <InstantSearch indexName="sportzoo" searchClient={searchClient}>
-        <div className="dataResult float-right">
+        <div className="dataResult">
           <SearchBox />
           {/*<Pagination />*/}
         </div>

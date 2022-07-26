@@ -1,14 +1,32 @@
 import Container from "@/components/Container";
 import Layout from "@/components/Layout";
 import Link from "next/link";
-import { getCollectionBySlug, getCollections } from "@/lib/api";
-import { Collections } from "@/lib/interfaces";
+import {
+  getCollectionBySlug,
+  getCollectionPage,
+  getCollections,
+} from "@/lib/api";
+import { CollectionInterface, Collections } from "@/lib/interfaces";
+import { getStrapiUrl } from "@/lib/get-strapi-url";
+import Button from "@/components/Button";
+import { useEffect, useRef, useState } from "react";
+import StackGrid from "react-stack-grid";
 
 interface Props {
   collection: Collections;
+  collectionPage: CollectionInterface;
 }
 
-export default function CollectionPageSlug({ collection }: Props) {
+export default function CollectionPageSlug({
+  collection,
+  collectionPage,
+}: Props) {
+  const [infoIsOpen, setInfoIsOpen] = useState<boolean>(false);
+  const [galleryIsOpen, setGalleryIsOpen] = useState<boolean>(false);
+  const galleryRef = useRef(null);
+  const [galleryHeight, setGalleryHeight] = useState<number>(0);
+  const infoRef = useRef(null);
+
   return (
     <Layout>
       <Container>
@@ -16,9 +34,9 @@ export default function CollectionPageSlug({ collection }: Props) {
           className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:w-2/3 lg:w-1/2 md:my-16`}
         >
           <img
-            src={
+            src={getStrapiUrl(
               collection?.attributes?.manufacturer_logo?.data?.attributes?.url
-            }
+            )}
             alt={""}
             className={`h-14 w-14 -mb-4 md:w-20 md:h-20`}
           />
@@ -89,7 +107,10 @@ export default function CollectionPageSlug({ collection }: Props) {
                 />
               </div>
               <div className={`basis-1/2`}>
-                <img src={kolekcia.image.data.attributes.url} alt={""} />
+                <img
+                  src={getStrapiUrl(kolekcia.image.data.attributes.url)}
+                  alt={""}
+                />
               </div>
             </div>
           ) : (
@@ -112,76 +133,106 @@ export default function CollectionPageSlug({ collection }: Props) {
             </div>
           )
         )}
-        <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
-        <h2 className={`mt-20 text-center`}>
-          {collection?.attributes?.info_title}
-        </h2>
-        <div
-          className={`mt-10 bg-[#F8F8F8] md:w-2/3 lg:w-1/2 mx-auto grid grid-cols-2 p-4 md:p-8`}
-        >
-          <div className={`pb-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.start}
-          </div>
-          <div className={`pb-3 border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.start_input}
-          </div>
-          <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.sale}
-          </div>
-          <Link href={collection?.attributes?.shop_link ?? ""}>
-            <a>
-              <div className={`py-3 border-b-[1px] border-stone-200`}>
-                {collection?.attributes?.info_section?.sale_input}
-              </div>
-            </a>
-          </Link>
-          <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.album}
-          </div>
-          <div className={`py-3 border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.album_input}
-          </div>
-          <div className={`py-3 font-semibold border-b-[1px] border-stone-200`}>
-            {collection?.attributes?.info_section?.pack}
-          </div>
+
+        {collectionPage?.slug_gallery_title &&
+          collection?.attributes?.gallery_images && (
+            <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
+          )}
+
+        <div className={"flex flex-col py-12 md:py-20"}>
+          <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
+            {collectionPage?.slug_gallery_title}
+          </h2>
+
           <div
-            className={`py-3 border-b-[1px] border-stone-200`}
-            dangerouslySetInnerHTML={{
-              __html: collection?.attributes?.info_section?.pack_input ?? "",
-            }}
-          ></div>
-          <div className={`pt-3 font-semibold`}>
-            {collection?.attributes?.info_section?.content}
-          </div>
-          <div
-            className={`pt-3`}
-            dangerouslySetInnerHTML={{
-              __html: collection?.attributes?.info_section?.content_input ?? "",
-            }}
+            className={`overflow-hidden z-50 ${
+              !galleryIsOpen && galleryHeight >= 800
+                ? "max-h-[800px] background-white-gradient"
+                : "max-h-fit"
+            }`}
+            ref={galleryRef}
           >
-            {}
+            <StackGrid
+              columnWidth={300}
+              gutterWidth={10}
+              gutterHeight={10}
+              onLayout={() => {
+                setTimeout(() => {
+                  setGalleryHeight(galleryRef?.current?.clientHeight);
+                }, 200);
+              }}
+            >
+              {collection?.attributes?.gallery_images?.data?.map(
+                (image, index) => (
+                  <img
+                    key={index}
+                    src={getStrapiUrl(image?.attributes?.url)}
+                    alt="gallery item"
+                    loading={"lazy"}
+                  />
+                )
+              )}
+            </StackGrid>
           </div>
+
+          {galleryHeight >= 800 && (
+            <Button
+              label={
+                galleryIsOpen
+                  ? collectionPage?.slug_button_text_hide
+                  : collectionPage?.slug_button_text_show
+              }
+              className={"mt-8 md:mt-10 mx-auto"}
+              onClick={() => setGalleryIsOpen((prev) => !prev)}
+            />
+          )}
         </div>
 
-        {/*<section className="mt-20 border-top-bottom text-center flex flex-col lg:flex-row lg:justify-between items-center py-16 md:py-20 space-y-8 lg:space-y-0">
-          <h3 className={"text-2xl md:text-3xl"}>
-            {main?.card_production_section?.title}
-          </h3>
-          <div
-            className={
-              "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
-            }
+        {collection?.attributes?.info_section && (
+          <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
+        )}
+        <div className={"flex flex-col items-center py-12 md:py-20"}>
+          <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
+            {collectionPage?.slug_info_title}
+          </h2>
+          <ul
+            ref={infoRef}
+            className={`bg-gray-footer w-full max-w-[940px] px-8 py-6 overflow-hidden transition-all ${
+              !infoIsOpen && infoRef?.current?.clientHeight >= 450
+                ? "max-h-[450px] background-gray-gradient"
+                : "max-h-fit"
+            }`}
           >
-            {main?.card_production_section?.logo?.data?.map((data, index) => (
-              <img
-                key={index}
-                src={getStrapiUrl(data.attributes.url)}
-                alt="company logo"
-                className={"h-12 sm:h-14 md:h-16"}
-              />
-            ))}
-          </div>
-        </section>*/}
+            {collection?.attributes?.info_section?.info_section_item?.map(
+              (item, index) => (
+                <li
+                  key={index}
+                  className={
+                    "flex flex-col md:flex-row py-2 md:py-4 border-b border-neutral-200 last-of-type:border-none"
+                  }
+                >
+                  <h4 className={"text-lg md:flex-1"}>{item.title}:</h4>
+                  <article
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                    className={"text-lg md:flex-1"}
+                  />
+                </li>
+              )
+            )}
+          </ul>
+
+          {infoRef?.current?.clientHeight >= 450 && (
+            <Button
+              label={
+                infoIsOpen
+                  ? collectionPage?.slug_button_text_hide
+                  : collectionPage?.slug_button_text_show
+              }
+              className={"mt-8 md:mt-10"}
+              onClick={() => setInfoIsOpen((prev) => !prev)}
+            />
+          )}
+        </div>
       </Container>
     </Layout>
   );
@@ -189,12 +240,14 @@ export default function CollectionPageSlug({ collection }: Props) {
 
 export async function getStaticProps({ locale, params }) {
   const data = (await getCollections(locale, params?.slug)) || [];
+  const collectionPage = (await getCollectionPage(locale)) || [];
 
   return {
     props: {
       collection: {
         ...data[0],
       },
+      collectionPage,
     },
   };
 }

@@ -19,8 +19,9 @@ export default function TopMenu() {
   const [langIcon, setLangIcon] = useState(router.locale + "_icon");
   const [localization, setLocalization] = useState(router.locale);
 
-  const menuRef = useRef();
+  const menuRef = useRef<HTMLDivElement>();
   const langRef = useRef();
+  const menuHamburgerRef = useRef<HTMLImageElement>();
 
   useEffect(() => {
     const localizations: { [key: string]: Header } = {};
@@ -43,10 +44,17 @@ export default function TopMenu() {
 
   useEffect(() => {
     const closeDropdown = (e) => {
-      if (e.path[0] !== menuRef.current) {
+      console.log(e.path[0]);
+      if (
+        menuRef.current &&
+        !menuRef.current.contains(e.target) &&
+        menuHamburgerRef.current &&
+        !menuHamburgerRef?.current.contains(e.target)
+      ) {
         setMenuOpen(false);
       }
     };
+
     document.body.addEventListener("click", closeDropdown);
     return () => document.body.removeEventListener("click", closeDropdown);
   }, []);
@@ -63,7 +71,7 @@ export default function TopMenu() {
 
   return (
     <>
-      <div className={`sticky top-0 lg:relative z-[150]`}>
+      <div className={`sticky top-0 lg:relative z-[15000]`}>
         <div className={`bg-[#191919] relative z-30`}>
           <Container className={`menu-black-div space-x-4 md:space-x-[20px]`}>
             <ul className={"flex space-x-4 md:space-x-[20px]"}>
@@ -162,45 +170,47 @@ export default function TopMenu() {
             </Link>
             <div className={`flex lg:hidden`}>
               <img
+                className={"cursor-pointer"}
+                ref={menuHamburgerRef}
                 src={`/assets/menu.svg`}
                 alt={""}
-                ref={menuRef}
                 onClick={() => setMenuOpen((prev) => !prev)}
               />
             </div>
 
-            {openSearchBar && (
+            <div className={"flex-row absolute right-0 top-4 hidden md:flex"}>
               <div
-                className={
-                  "absolute top-5 right-10 transition ease-in duration-300 w-[250px] mr-[30px]"
-                }
+                className={`overflow-hidden transition-all ${
+                  openSearchBar ? "max-w-[300px]" : "max-w-0"
+                }`}
               >
                 <SearchEngine />
               </div>
-            )}
-            <div
-              onClick={() =>
-                setOpenSearchBar((openSearchBar) => !openSearchBar)
-              }
-              className={`hidden lg:flex space-x-4 cursor-pointer z-90`}
-            >
-              <img
-                src={`/assets/magnifyingGlass.svg`}
-                alt={""}
-                className={`menu-icon justify-self-end`}
-              />
+              <div
+                onClick={() =>
+                  setOpenSearchBar((openSearchBar) => !openSearchBar)
+                }
+                className={`hidden lg:flex space-x-4 cursor-pointer z-90 lg:ml-2 lg:pt-[3px]`}
+              >
+                <img
+                  src={`/assets/magnifyingGlass.svg`}
+                  alt={""}
+                  className={`menu-icon justify-self-end`}
+                />
+              </div>
             </div>
           </Container>
         </div>
       </div>
 
       <div
-        className={`lg:hidden fixed w-screen px-2 py-4 bg-[#F8F8F8] font-semibold ${
+        ref={menuRef}
+        className={`lg:hidden fixed w-screen px-2 py-4 bg-[#F8F8F8] font-semibold z-[100] ${
           menuOpen ? "translate-y-0 z-30" : "-translate-y-full z-0"
         } ease-in-out duration-300`}
       >
         <Container>
-          <div className={`flex justify-between`}>
+          <div className={`flex justify-between relative`}>
             <div className={`flex flex-col gap-3`}>
               {menuData?.map((m, index) => (
                 <Link key={index} href={m.path ?? ""}>
@@ -208,24 +218,47 @@ export default function TopMenu() {
                 </Link>
               ))}
             </div>
-            <div className={`space-x-4 flex`}>
-              <img
-                src={`/assets/magnifyingGlass.svg`}
-                alt={""}
-                className={`menu-icon justify-self-end`}
-              />
-              {/*<div className={`menu-icon relative justify-self-end`}>*/}
-              {/*  <img*/}
-              {/*    src={`/assets/shoppingBag.svg`}*/}
-              {/*    alt={""}*/}
-              {/*    className={`menu-icon absolute`}*/}
-              {/*  />*/}
-              {/*  <div className={`menu-cart-number`}>*/}
-              {/*    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />*/}
-              {/*    <div>0</div>*/}
-              {/*  </div>*/}
-              {/*</div>*/}
+
+            <div className={"flex absolute right-4 top-0"}>
+              <div
+                className={`overflow-hidden transition-all ${
+                  openSearchBar ? "max-w-[300px]" : "max-w-0"
+                }`}
+              >
+                <SearchEngine />
+              </div>
+              <div
+                onClick={() =>
+                  setOpenSearchBar((openSearchBar) => !openSearchBar)
+                }
+                className={`lg:flex space-x-4 cursor-pointer z-90 ml-2 pt-[3px]`}
+              >
+                <img
+                  src={`/assets/magnifyingGlass.svg`}
+                  alt={""}
+                  className={`menu-icon justify-self-end`}
+                />
+              </div>
             </div>
+
+            {/*<div className={`space-x-4 flex`}>*/}
+            {/*  <img*/}
+            {/*    src={`/assets/magnifyingGlass.svg`}*/}
+            {/*    alt={""}*/}
+            {/*    className={`menu-icon justify-self-end`}*/}
+            {/*  />*/}
+            {/*  /!*<div className={`menu-icon relative justify-self-end`}>*!/*/}
+            {/*  /!*  <img*!/*/}
+            {/*  /!*    src={`/assets/shoppingBag.svg`}*!/*/}
+            {/*  /!*    alt={""}*!/*/}
+            {/*  /!*    className={`menu-icon absolute`}*!/*/}
+            {/*  /!*  />*!/*/}
+            {/*  /!*  <div className={`menu-cart-number`}>*!/*/}
+            {/*  /!*    <img src={`/assets/Ellipse.svg`} alt={""} className={``} />*!/*/}
+            {/*  /!*    <div>0</div>*!/*/}
+            {/*  /!*  </div>*!/*/}
+            {/*  /!*</div>*!/*/}
+            {/*</div>*/}
           </div>
           <div className={`flex mt-4 justify-end space-x-4`}>
             {headerData && (
