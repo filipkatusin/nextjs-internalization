@@ -26,6 +26,7 @@ export default function HomePage({
   collection_images,
 }: Props) {
   const router = useRouter();
+  const locale = router.locale;
   const colLink = router.locale == "sk" ? "kolekcie" : "collections";
   const newsLink = router.locale == "sk" ? "novinky" : "news";
 
@@ -189,9 +190,19 @@ export default function HomePage({
                   {collection?.attributes?.date && (
                     <p className={"text-gray"}>
                       {`${planned_collections?.planned_date_text}: `}
-                      {new Intl.DateTimeFormat("sk-SK").format(
-                        new Date(collection?.attributes?.date)
-                      )}
+                      {collection?.attributes?.date_full
+                        ? Intl.DateTimeFormat(locale, {
+                            day: "2-digit",
+                            month: "2-digit",
+                            year: "numeric",
+                          })
+                            .format(new Date(collection?.attributes?.date))
+                            ?.replace(". ", "/")
+                            .replace(". ", "/")
+                        : Intl.DateTimeFormat(locale, {
+                            month: "2-digit",
+                            year: "numeric",
+                          }).format(new Date(collection?.attributes?.date))}
                     </p>
                   )}
                 </div>
