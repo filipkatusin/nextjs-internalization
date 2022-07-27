@@ -244,65 +244,68 @@ export default function CollectionPageSlug({
       </Container>
 
       {collection?.attributes?.products?.data?.length > 0 && (
-        <div className={"py-12 md:py-20"}>
-          <Container>
-            <h2 className="font-bold mb-5">
-              {collectionPage?.slug_products_title}
-            </h2>
-          </Container>
-          <Splide
-            options={{
-              speed: 1500,
-              rewind: true,
-              type: "loop",
-              perPage: SlidesPerView(),
-              pauseOnFocus: false,
-              pauseOnHover: false,
-              autoplay: true,
-              interval: 5000,
-              pagination: false,
-              dragMinThreshold: {
-                touch: 10,
-                mouse: 10,
-              },
-              padding:
-                windowWidth > 1400
-                  ? { left: "", right: "12%" }
-                  : windowWidth > 1000
-                  ? { left: "0%", right: "15%" }
-                  : windowWidth > 600
-                  ? { left: "0%", right: "20%" }
-                  : { left: "0%", right: "3%" },
-              gap: 20,
-            }}
-            className="splide-products container-products"
-          >
-            {collection?.attributes?.products?.data?.map((product, index) => (
-              <SplideSlide key={index}>
-                <a
-                  className={"group"}
-                  href={product?.attributes?.eshop_url}
-                  target={"_blank"}
-                  key={index}
-                >
-                  <img src={product?.attributes?.image} alt="" />
-                  <h5 className=" px-10 group-hover:underline">
-                    {product?.attributes?.title}
-                  </h5>
-                  <div
-                    className="px-4 py-1 price-corner inline-block mx-10 mt-4"
-                    style={{
-                      color: "white",
-                      backgroundColor: "black",
-                    }}
+        <>
+          <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
+          <div className={"py-12 md:py-20"}>
+            <Container>
+              <h2 className="text-center mb-24 sm:mb-14 text-4xl sm:text-5xl">
+                {collectionPage?.slug_products_title}
+              </h2>
+            </Container>
+            <Splide
+              options={{
+                speed: 1500,
+                rewind: true,
+                type: "loop",
+                perPage: SlidesPerView(),
+                pauseOnFocus: false,
+                pauseOnHover: false,
+                autoplay: true,
+                interval: 5000,
+                pagination: false,
+                dragMinThreshold: {
+                  touch: 10,
+                  mouse: 10,
+                },
+                padding:
+                  windowWidth > 1400
+                    ? { left: "", right: "12%" }
+                    : windowWidth > 1000
+                    ? { left: "0%", right: "15%" }
+                    : windowWidth > 600
+                    ? { left: "0%", right: "20%" }
+                    : { left: "0%", right: "3%" },
+                gap: 20,
+              }}
+              className="splide-products container-productsd"
+            >
+              {collection?.attributes?.products?.data?.map((product, index) => (
+                <SplideSlide key={index}>
+                  <a
+                    className={"group"}
+                    href={product?.attributes?.eshop_url}
+                    target={"_blank"}
+                    key={index}
                   >
-                    {product?.attributes?.price} €
-                  </div>
-                </a>
-              </SplideSlide>
-            ))}
-          </Splide>
-        </div>
+                    <img src={product?.attributes?.image} alt="" />
+                    <h5 className=" px-10 group-hover:underline">
+                      {product?.attributes?.title}
+                    </h5>
+                    <div
+                      className="px-4 py-1 price-corner inline-block mx-10 mt-4"
+                      style={{
+                        color: "white",
+                        backgroundColor: "black",
+                      }}
+                    >
+                      {product?.attributes?.price} €
+                    </div>
+                  </a>
+                </SplideSlide>
+              ))}
+            </Splide>
+          </div>
+        </>
       )}
 
       <Container>
