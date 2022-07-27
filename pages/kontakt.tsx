@@ -9,7 +9,6 @@ import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import SocialNetworks from "@/components/SocialNetworks";
-import { Fragment } from "react";
 import { Transition } from "@headlessui/react";
 import ArrowIcon from "@/components/ArrowIcon";
 
@@ -42,7 +41,7 @@ export default function ContactPage({ contact }: Props) {
               phone: "",
               message: "",
               message_type: contact?.contact_form?.message_type
-                ? contact?.contact_form?.message_type[0].text
+                ? contact?.contact_form?.message_type?.[0]?.text
                 : "",
             }}
             validationSchema={Yup.object({

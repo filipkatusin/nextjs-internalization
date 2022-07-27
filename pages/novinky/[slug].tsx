@@ -47,6 +47,7 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
                   }
                   width={50}
                   height={50}
+                  className={"rounded-full"}
                 />
               )}
               <p className={"text-white font-bold"}>
@@ -74,6 +75,7 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
                     }
                     width={60}
                     height={60}
+                    className={"rounded-full"}
                   />
                 )}
                 <p className={"text-black font-bold text-lg"}>

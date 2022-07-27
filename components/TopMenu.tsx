@@ -44,7 +44,6 @@ export default function TopMenu() {
 
   useEffect(() => {
     const closeDropdown = (e) => {
-      console.log(e.path[0]);
       if (
         menuRef.current &&
         !menuRef.current.contains(e.target) &&
@@ -71,7 +70,7 @@ export default function TopMenu() {
 
   return (
     <>
-      <div className={`sticky top-0 lg:relative z-[15000]`}>
+      <div className={`sticky top-0 lg:relative z-[500]`}>
         <div className={`bg-[#191919] relative z-30`}>
           <Container className={`menu-black-div space-x-4 md:space-x-[20px]`}>
             <ul className={"flex space-x-4 md:space-x-[20px]"}>

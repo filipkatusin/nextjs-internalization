@@ -24,6 +24,8 @@ import Image from "next/image";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import Link from "next/link";
+import ScrollLock from "react-scrolllock";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   data: CollectionInterface;
@@ -216,6 +218,7 @@ function CollectionPage({
     <Layout>
       <Heading label={data.title} />
       <Container className={"flex items-start"}>
+        {mobileFilterOpen && <ScrollLock />}
         <Form
           className={`mr-4 md:mr-12 xl:mr-20 md:pb-16 fixed md:relative sm:block z-[1000000] md:z-[1] bg-white w-[90%] md:w-[200px] lg:w-[240px] xl:w-[270px] h-full md:h-auto md:left-auto top-0 md:top-auto px-10 md:px-0 py-20 md:py-0 transition-all left-0 transform overflow-y-auto shadow-xl md:shadow-none ${
             mobileFilterOpen
@@ -497,23 +500,11 @@ function CollectionPage({
                                   : "bg-red"
                               }`}
                             >
-                              {collection?.attributes?.date_full
-                                ? Intl.DateTimeFormat(locale, {
-                                    day: "2-digit",
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  })
-                                    .format(
-                                      new Date(collection?.attributes?.date)
-                                    )
-                                    ?.replace(". ", "/")
-                                    .replace(". ", "/")
-                                : Intl.DateTimeFormat(locale, {
-                                    month: "2-digit",
-                                    year: "numeric",
-                                  }).format(
-                                    new Date(collection?.attributes?.date)
-                                  )}
+                              {formatDate(
+                                collection?.attributes?.date,
+                                collection?.attributes?.date_full,
+                                locale
+                              )}
                             </h5>
                           )}
 
@@ -608,23 +599,11 @@ function CollectionPage({
                                 : "bg-red"
                             }`}
                           >
-                            {collection?.attributes?.date_full
-                              ? Intl.DateTimeFormat(locale, {
-                                  day: "2-digit",
-                                  month: "2-digit",
-                                  year: "numeric",
-                                })
-                                  .format(
-                                    new Date(collection?.attributes?.date)
-                                  )
-                                  ?.replace(". ", "/")
-                                  .replace(". ", "/")
-                              : Intl.DateTimeFormat(locale, {
-                                  month: "2-digit",
-                                  year: "numeric",
-                                }).format(
-                                  new Date(collection?.attributes?.date)
-                                )}
+                            {formatDate(
+                              collection?.attributes?.date,
+                              collection?.attributes?.date_full,
+                              locale
+                            )}
                           </h5>
                         )}
 

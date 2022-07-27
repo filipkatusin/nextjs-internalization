@@ -13,6 +13,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import SocialNetworks from "@/components/SocialNetworks";
 import SlidesPerView from "@/components/SlidesPerView";
+import { formatDate } from "@/lib/utils";
 
 interface Props {
   main: MainPage;
@@ -190,19 +191,11 @@ export default function HomePage({
                   {collection?.attributes?.date && (
                     <p className={"text-gray"}>
                       {`${planned_collections?.planned_date_text}: `}
-                      {collection?.attributes?.date_full
-                        ? Intl.DateTimeFormat(locale, {
-                            day: "2-digit",
-                            month: "2-digit",
-                            year: "numeric",
-                          })
-                            .format(new Date(collection?.attributes?.date))
-                            ?.replace(". ", "/")
-                            .replace(". ", "/")
-                        : Intl.DateTimeFormat(locale, {
-                            month: "2-digit",
-                            year: "numeric",
-                          }).format(new Date(collection?.attributes?.date))}
+                      {formatDate(
+                        collection?.attributes?.date,
+                        collection?.attributes?.date_full,
+                        locale
+                      )}
                     </p>
                   )}
                 </div>

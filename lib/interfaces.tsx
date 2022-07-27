@@ -191,6 +191,9 @@ export interface Collections {
     gallery_images: {
       data: StrapiImage[];
     };
+    products: {
+      data: Products[];
+    };
   };
 }
 
@@ -236,6 +239,7 @@ export interface CollectionInterface {
   slug_button_text_hide: string;
   slug_gallery_title: string;
   slug_info_title: string;
+  slug_products_title: string;
 }
 
 export interface InitialCollectionsFilterValues {

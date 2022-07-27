@@ -9,8 +9,13 @@ import {
 import { CollectionInterface, Collections } from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
-import { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import StackGrid from "react-stack-grid";
+import Lightbox from "react-image-lightbox";
+import ScrollLock from "react-scrolllock";
+import { Splide, SplideSlide } from "@splidejs/react-splide";
+import SlidesPerView from "@/components/SlidesPerView";
+import useWindowDimensions from "@/components/useWindowDimensions";
 
 interface Props {
   collection: Collections;
@@ -26,6 +31,15 @@ export default function CollectionPageSlug({
   const galleryRef = useRef(null);
   const [galleryHeight, setGalleryHeight] = useState<number>(0);
   const infoRef = useRef(null);
+  const [lightBoxIsOpen, setLightBoxIsOpen] = useState<boolean>(false);
+  const [lightBoxIndex, setLightBoxIndex] = useState<number>(0);
+  const images = collection?.attributes?.gallery_images?.data;
+
+  let windowWidth = 0;
+  if (typeof window !== "undefined") {
+    const size = useWindowDimensions();
+    windowWidth = size.width;
+  }
 
   return (
     <Layout>
@@ -140,53 +154,153 @@ export default function CollectionPageSlug({
           )}
 
         {collection?.attributes?.gallery_images?.data?.length > 0 && (
-          <div className={"flex flex-col py-12 md:py-20"}>
-            <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
-              {collectionPage?.slug_gallery_title}
-            </h2>
+          <>
+            <div className={"flex flex-col py-12 md:py-20"}>
+              <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
+                {collectionPage?.slug_gallery_title}
+              </h2>
 
-            <div
-              className={`overflow-hidden z-50 ${
-                !galleryIsOpen && galleryHeight >= 800
-                  ? "max-h-[800px] background-white-gradient"
-                  : "max-h-fit"
-              }`}
-              ref={galleryRef}
-            >
-              <StackGrid
-                columnWidth={300}
-                gutterWidth={10}
-                gutterHeight={10}
-                onLayout={() => {
-                  setTimeout(() => {
-                    setGalleryHeight(galleryRef?.current?.clientHeight);
-                  }, 200);
-                }}
+              <div
+                className={`overflow-hidden z-50 ${
+                  !galleryIsOpen && galleryHeight >= 800
+                    ? "max-h-[800px] background-white-gradient"
+                    : "max-h-fit"
+                }`}
+                ref={galleryRef}
               >
-                {collection?.attributes?.gallery_images?.data?.map(
-                  (image, index) => (
-                    <img
-                      key={index}
-                      src={getStrapiUrl(image?.attributes?.url)}
-                      alt="gallery item"
-                      loading={"lazy"}
-                    />
-                  )
-                )}
-              </StackGrid>
-            </div>
+                <StackGrid
+                  columnWidth={300}
+                  gutterWidth={10}
+                  gutterHeight={10}
+                  onLayout={() => {
+                    setTimeout(() => {
+                      setGalleryHeight(galleryRef?.current?.clientHeight);
+                    }, 200);
+                  }}
+                >
+                  {collection?.attributes?.gallery_images?.data?.map(
+                    (image, index) => (
+                      <img
+                        className={
+                          "cursor-pointer hover:scale-105 transform transition-transform"
+                        }
+                        key={index}
+                        src={getStrapiUrl(image?.attributes?.url)}
+                        alt="gallery item"
+                        loading={"lazy"}
+                        onClick={() => {
+                          setLightBoxIsOpen(true);
+                          setLightBoxIndex(index);
+                        }}
+                      />
+                    )
+                  )}
+                </StackGrid>
+              </div>
 
-            {galleryHeight >= 800 && (
-              <Button
-                label={
-                  galleryIsOpen
-                    ? collectionPage?.slug_button_text_hide
-                    : collectionPage?.slug_button_text_show
-                }
-                className={"mt-8 md:mt-10 mx-auto"}
-                onClick={() => setGalleryIsOpen((prev) => !prev)}
-              />
+              {galleryHeight >= 800 && (
+                <Button
+                  label={
+                    galleryIsOpen
+                      ? collectionPage?.slug_button_text_hide
+                      : collectionPage?.slug_button_text_show
+                  }
+                  className={"mt-8 md:mt-10 mx-auto"}
+                  onClick={() => setGalleryIsOpen((prev) => !prev)}
+                />
+              )}
+            </div>
+            {lightBoxIsOpen && (
+              <>
+                <Lightbox
+                  mainSrc={getStrapiUrl(
+                    collection?.attributes?.gallery_images?.data?.[
+                      lightBoxIndex
+                    ]?.attributes?.url
+                  )}
+                  nextSrc={getStrapiUrl(
+                    images?.[(lightBoxIndex + 1) % images?.length]
+                  )}
+                  prevSrc={getStrapiUrl(
+                    images[(lightBoxIndex + images.length - 1) % images.length]
+                  )}
+                  onMovePrevRequest={() =>
+                    setLightBoxIndex(
+                      (lightBoxIndex + images.length - 1) % images.length
+                    )
+                  }
+                  onMoveNextRequest={() =>
+                    setLightBoxIndex((lightBoxIndex + 1) % images.length)
+                  }
+                  onCloseRequest={() => setLightBoxIsOpen(false)}
+                  enableZoom={false}
+                  clickOutsideToClose={true}
+                />
+                <ScrollLock />
+              </>
             )}
+          </>
+        )}
+
+        {collection?.attributes?.products?.data?.length > 0 && (
+          <div className={"py-12 md:py-20"}>
+            <Container>
+              <h2 className="font-bold mb-5">
+                {collectionPage?.slug_products_title}
+              </h2>
+            </Container>
+            <Splide
+              options={{
+                speed: 1500,
+                rewind: true,
+                type: "loop",
+                perPage: SlidesPerView(),
+                pauseOnFocus: false,
+                pauseOnHover: false,
+                autoplay: true,
+                interval: 5000,
+                pagination: false,
+                dragMinThreshold: {
+                  touch: 10,
+                  mouse: 10,
+                },
+                padding:
+                  windowWidth > 1400
+                    ? { left: "", right: "12%" }
+                    : windowWidth > 1000
+                    ? { left: "0%", right: "15%" }
+                    : windowWidth > 600
+                    ? { left: "0%", right: "20%" }
+                    : { left: "0%", right: "3%" },
+                gap: 20,
+              }}
+              className="splide-products container-products"
+            >
+              {collection?.attributes?.products?.data?.map((product, index) => (
+                <SplideSlide key={index}>
+                  <a
+                    className={"group"}
+                    href={product?.attributes?.eshop_url}
+                    target={"_blank"}
+                    key={index}
+                  >
+                    <img src={product?.attributes?.image} alt="" />
+                    <h5 className=" px-10 group-hover:underline">
+                      {product?.attributes?.title}
+                    </h5>
+                    <div
+                      className="px-4 py-1 price-corner inline-block mx-10 mt-4"
+                      style={{
+                        color: "white",
+                        backgroundColor: "black",
+                      }}
+                    >
+                      {product?.attributes?.price} €
+                    </div>
+                  </a>
+                </SplideSlide>
+              ))}
+            </Splide>
           </div>
         )}
 
