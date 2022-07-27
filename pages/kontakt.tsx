@@ -11,6 +11,8 @@ import Button from "@/components/Button";
 import SocialNetworks from "@/components/SocialNetworks";
 import { Transition } from "@headlessui/react";
 import ArrowIcon from "@/components/ArrowIcon";
+import CustomSelect from "@/components/CustomSelect";
+import { useEffect, useState } from "react";
 
 interface Props {
   contact: Contact;
@@ -18,6 +20,7 @@ interface Props {
 
 export default function ContactPage({ contact }: Props) {
   const { locale } = useRouter();
+
   return (
     <Layout title={contact.title}>
       <Heading label={contact.title} />
@@ -40,9 +43,7 @@ export default function ContactPage({ contact }: Props) {
               mail: "",
               phone: "",
               message: "",
-              message_type: contact?.contact_form?.message_type
-                ? contact?.contact_form?.message_type?.[0]?.text
-                : "",
+              message_type: contact?.contact_form?.message_type?.[0]?.text,
             }}
             validationSchema={Yup.object({
               name: Yup.string().required(
@@ -133,66 +134,18 @@ export default function ContactPage({ contact }: Props) {
                     {contact?.contact_form?.message_type_placeholder}{" "}
                     <span>*</span>
                   </label>
-
-                  <div className="flex flex-col relative">
-                    <Listbox
-                      value={values.message_type}
-                      name={"message_type"}
-                      onChange={(value: string) => {
-                        setValues((values) => ({
-                          ...values,
-                          message_type: value,
-                        }));
-                      }}
-                    >
-                      <Listbox.Button
-                        className={
-                          "field select-button flex justify-between text-left relative"
-                        }
-                      >
-                        {values.message_type}
-                        <ArrowIcon
-                          color={"black"}
-                          className={
-                            "arrow transform transition-transform rotate-90"
-                          }
-                        />
-                      </Listbox.Button>
-                      <Transition
-                        as={"div"}
-                        leave="transition ease-in-out duration-100"
-                        leaveFrom="opacity-100"
-                        leaveTo="opacity-0"
-                        className={"relative"}
-                      >
-                        <Listbox.Options
-                          className={"border-2 border-black w-full absolute"}
-                        >
-                          {contact?.contact_form?.message_type?.map(
-                            (type, index) => (
-                              <Listbox.Option key={index} value={type?.text}>
-                                {({ active, selected }) => (
-                                  <li
-                                    className={`py-2 px-4 bg-white hover:bg-black hover:text-white cursor-pointer ${
-                                      values.message_type === type.text
-                                        ? "bg-red text-white"
-                                        : "bg-white"
-                                    } ${
-                                      active
-                                        ? "bg-black text-white"
-                                        : "bg-white"
-                                    }`}
-                                  >
-                                    {type?.text}
-                                  </li>
-                                )}
-                              </Listbox.Option>
-                            )
-                          )}
-                        </Listbox.Options>
-                      </Transition>
-                    </Listbox>
-                  </div>
+                  <CustomSelect
+                    selectedValue={values?.message_type}
+                    setValue={(value) => {
+                      setValues((values) => ({
+                        ...values,
+                        message_type: value,
+                      }));
+                    }}
+                    values={contact?.contact_form?.message_type?.map(
+                      (type) => type?.text
+                    )}
+                  />
                 </div>
 
                 <div className="form-grid">
