@@ -60,7 +60,7 @@ export default function TopMenu() {
 
   useEffect(() => {
     const closeDropdown = (e) => {
-      if (e.path[1] !== langRef.current) {
+      if (e?.path?.[1] !== langRef.current) {
         setLangDropdown(false);
       }
     };
