@@ -90,8 +90,8 @@ export default function CollectionPageSlug({
           </div>
         </div>
         <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
-        {collection?.attributes?.kolekcia_section?.map((kolekcia) =>
-          kolekcia.id % 2 == 0 ? (
+        {collection?.attributes?.kolekcia_section?.map((kolekcia, index) =>
+          index % 2 == 0 ? (
             <div
               key={kolekcia.id}
               className={
