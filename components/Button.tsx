@@ -14,6 +14,8 @@ interface Props {
   border?: string;
   arrow?: boolean;
   arrowColor?: string;
+  arrowColorHover?: string;
+  disabled?: boolean;
 }
 
 export default function Button({
@@ -21,24 +23,35 @@ export default function Button({
   link,
   arrow,
   arrowColor,
+  arrowColorHover,
   className,
   onClick,
   type,
+  disabled,
 }: Props) {
   return link ? (
     <Link href={link ?? ""}>
-      <a className="flex ">
+      <a className="inline-block">
         <button
+          disabled={disabled}
           type={type}
           onClick={onClick}
-          className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className} ${
+          className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white group ${className} ${
             arrow ? "pr-3" : ""
           }`}
         >
           {label}
-          {/*{arrow && <div className="arrow h-3 w-3 ml-3" />}*/}
           {arrow && (
-            <ArrowIcon color={arrowColor ?? "black"} className={"ml-2"} />
+            <ArrowIcon
+              color={arrowColor ?? "black"}
+              className={"ml-2 group-hover:hidden"}
+            />
+          )}
+          {arrow && (
+            <ArrowIcon
+              color={arrowColorHover}
+              className={"ml-2 hidden group-hover:block"}
+            />
           )}
         </button>
       </a>
@@ -46,16 +59,24 @@ export default function Button({
   ) : (
     <a className="flex ">
       <button
+        disabled={disabled}
         type={type}
         onClick={onClick}
-        className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white ${className} ${
+        className={`button-hover-effect bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors hover:bg-black hover:text-white group ${className} ${
           arrow ? "pr-3" : ""
         }`}
       >
         {label}
         {/*{arrow && <div className="arrow h-3 w-3 ml-3" />}*/}
         {arrow && (
-          <ArrowIcon color={arrowColor ?? "black"} className={"ml-2"} />
+          <ArrowIcon color={arrowColor} className={"ml-2 group-hover:hidden"} />
+        )}
+
+        {arrow && (
+          <ArrowIcon
+            color={arrowColorHover}
+            className={"ml-2 hidden group-hover:block"}
+          />
         )}
       </button>
     </a>

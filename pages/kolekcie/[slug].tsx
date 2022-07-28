@@ -64,43 +64,28 @@ export default function CollectionPageSlug({
             }}
           />
           <div
-            className={`flex flex-col md:flex-row space-y-4 md:mt-4 md:space-y-0 md:space-x-4`}
+            className={`flex flex-col md:flex-row items-center space-y-4 md:mt-4 md:space-y-0 md:space-x-4`}
           >
             {collection?.attributes?.shop_link && (
-              <Link href={collection?.attributes?.shop_link ?? ""}>
-                <a
-                  className={`menu-button-card hover:bg-[#a8222b] hover:text-white`}
-                >
-                  <span className={`inline-block align-middle`}>
-                    {collection?.attributes?.shop_button_text}
-                  </span>
-                  <img
-                    src={`/assets/chevron-down.svg`}
-                    alt={""}
-                    className={`inline-block ml-4`}
-                  />
-                </a>
-              </Link>
+              <Button
+                label={collection?.attributes?.shop_button_text}
+                link={collection?.attributes?.shop_link ?? ""}
+                arrow={true}
+                arrowColor={"white"}
+                arrowColorHover={"black"}
+                className={
+                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black"
+                }
+              />
             )}
             {collection?.attributes?.checklist?.data?.attributes?.url && (
-              <Link
-                href={
+              <Button
+                label={collection?.attributes?.checklist_button_text}
+                link={
                   collection?.attributes?.checklist?.data?.attributes?.url ?? ""
                 }
-              >
-                <a
-                  className={`menu-button-shop hover:bg-black hover:text-white`}
-                >
-                  <span className={`inline-block align-middle`}>
-                    {collection?.attributes?.checklist_button_text}
-                  </span>
-                  <img
-                    src={`/icons/right-arrow.svg`}
-                    alt={""}
-                    className={`inline-block ml-4`}
-                  />
-                </a>
-              </Link>
+                arrow={true}
+              />
             )}
           </div>
         </div>
