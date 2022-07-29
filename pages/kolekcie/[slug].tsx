@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import {
   getCollectionBySlug,
   getCollectionPage,
@@ -10,12 +9,12 @@ import { CollectionInterface, Collections } from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import React, { useRef, useState } from "react";
-import StackGrid from "react-stack-grid";
 import Lightbox from "react-image-lightbox";
 import ScrollLock from "react-scrolllock";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import SlidesPerView from "@/components/SlidesPerView";
 import useWindowDimensions from "@/components/useWindowDimensions";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 interface Props {
   collection: Collections;
@@ -40,6 +39,8 @@ export default function CollectionPageSlug({
     const size = useWindowDimensions();
     windowWidth = size.width;
   }
+
+  console.log(galleryRef?.current?.clientHeight);
 
   return (
     <Layout>
@@ -107,7 +108,9 @@ export default function CollectionPageSlug({
               </div>
               <div className={`basis-1/2`}>
                 <img
-                  src={getStrapiUrl(kolekcia.image.data.attributes.url)}
+                  src={
+                    getStrapiUrl(kolekcia?.image?.data?.attributes?.url) ?? ""
+                  }
                   alt={""}
                 />
               </div>
@@ -140,61 +143,66 @@ export default function CollectionPageSlug({
 
         {collection?.attributes?.gallery_images?.data?.length > 0 && (
           <>
-            <div className={"flex flex-col py-12 md:py-20"}>
-              <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
-                {collectionPage?.slug_gallery_title}
-              </h2>
-
-              <div
-                className={`overflow-hidden z-50 ${
-                  !galleryIsOpen && galleryHeight >= 800
-                    ? "max-h-[800px] background-white-gradient"
-                    : "max-h-fit"
-                }`}
-                ref={galleryRef}
-              >
-                <StackGrid
-                  columnWidth={300}
-                  gutterWidth={10}
-                  gutterHeight={10}
-                  onLayout={() => {
-                    setTimeout(() => {
-                      setGalleryHeight(galleryRef?.current?.clientHeight);
-                    }, 200);
-                  }}
+            <Container>
+              <div className={"flex flex-col py-12 md:py-20"}>
+                <h2
+                  className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}
                 >
-                  {collection?.attributes?.gallery_images?.data?.map(
-                    (image, index) => (
-                      <img
-                        className={
-                          "cursor-pointer hover:scale-105 transform transition-transform"
-                        }
-                        key={index}
-                        src={getStrapiUrl(image?.attributes?.url)}
-                        alt="gallery item"
-                        loading={"lazy"}
-                        onClick={() => {
-                          setLightBoxIsOpen(true);
-                          setLightBoxIndex(index);
-                        }}
-                      />
-                    )
-                  )}
-                </StackGrid>
-              </div>
+                  {collectionPage?.slug_gallery_title}
+                </h2>
 
-              {galleryHeight >= 800 && (
-                <Button
-                  label={
-                    galleryIsOpen
-                      ? collectionPage?.slug_button_text_hide
-                      : collectionPage?.slug_button_text_show
-                  }
-                  className={"mt-8 md:mt-10 mx-auto"}
-                  onClick={() => setGalleryIsOpen((prev) => !prev)}
-                />
-              )}
-            </div>
+                <div
+                  className={`overflow-hidden z-50 ${
+                    !galleryIsOpen && galleryRef?.current?.clientHeight >= 800
+                      ? "max-h-[800px] background-white-gradient"
+                      : "max-h-fit"
+                  }`}
+                  ref={galleryRef}
+                >
+                  <ResponsiveMasonry
+                    columnsCountBreakPoints={{
+                      350: 1,
+                      600: 2,
+                      900: 3,
+                      1300: 4,
+                    }}
+                  >
+                    <Masonry gutter={"15px"}>
+                      {collection?.attributes?.gallery_images?.data?.map(
+                        (image, index) => (
+                          <img
+                            className={
+                              "cursor-pointer hover:scale-105 transform transition-transform"
+                            }
+                            key={index}
+                            src={getStrapiUrl(image?.attributes?.url)}
+                            alt="gallery item"
+                            loading={"lazy"}
+                            onClick={() => {
+                              setLightBoxIsOpen(true);
+                              setLightBoxIndex(index);
+                            }}
+                          />
+                        )
+                      )}
+                    </Masonry>
+                  </ResponsiveMasonry>
+                </div>
+
+                {galleryRef?.current?.clientHeight >= 800 && (
+                  <Button
+                    label={
+                      galleryIsOpen
+                        ? collectionPage?.slug_button_text_hide
+                        : collectionPage?.slug_button_text_show
+                    }
+                    className={"mt-8 md:mt-10 mx-auto"}
+                    onClick={() => setGalleryIsOpen((prev) => !prev)}
+                  />
+                )}
+              </div>
+            </Container>
+
             {lightBoxIsOpen && (
               <>
                 <Lightbox
@@ -294,12 +302,12 @@ export default function CollectionPageSlug({
       )}
 
       <Container>
-        {collection?.attributes?.info_section.info_section_item &&
+        {collection?.attributes?.info_section?.info_section_item &&
           collection?.attributes?.info_section.info_section_item.length > 0 && (
             <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
           )}
 
-        {collection?.attributes?.info_section.info_section_item.length > 0 && (
+        {collection?.attributes?.info_section?.info_section_item.length > 0 && (
           <div className={"flex flex-col items-center py-12 md:py-20"}>
             <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
               {collectionPage?.slug_info_title}
