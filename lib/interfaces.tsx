@@ -276,15 +276,18 @@ interface MetaSocial {
 }
 
 export interface IFooter {
-  logo_title: string;
-  logo: { data: StrapiImage };
-  icons_link: ImageLink[];
-  logo_link: ImageLink[];
-  rights: string;
-  contact: FooterContact;
-  section: FooterSection[];
-  newslatter: Newsletter;
-  card_production_section: CardProductionSection;
+  logo_title?: string;
+  logo?: { data?: StrapiImage };
+  icons_link?: ImageLink[];
+  logo_link?: ImageLink[];
+  rights?: string;
+  contact?: FooterContact;
+  section?: FooterSection[];
+  newslatter?: Newsletter;
+  card_production_title?: string;
+  card_production_images?: {
+    data?: StrapiImage[];
+  };
 }
 
 export interface FooterContact {

@@ -76,23 +76,41 @@ export default function Footer() {
           }
         >
           <h3 className={"text-2xl md:text-3xl"}>
-            {footerData?.card_production_section?.title}
+            {footerData?.card_production_title}
           </h3>
           <div
             className={
               "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
             }
           >
-            {footerData?.card_production_section?.logo?.data?.map(
-              (data, index) => (
-                <img
-                  key={index}
-                  src={getStrapiUrl(data.attributes.url)}
-                  alt="company logo"
-                  className={"h-12 sm:h-14 md:h-16"}
-                />
-              )
-            )}
+            {footerData?.card_production_images?.map((data, index) => {
+              if (data?.image?.data?.attributes?.url) {
+                return (
+                  <a
+                    key={index}
+                    href={data?.link}
+                    target={"_blank"}
+                    className={"cursor-pointer hover:scale-[110%] transition"}
+                  >
+                    <img
+                      key={index}
+                      src={getStrapiUrl(data?.image?.data?.attributes?.url)}
+                      alt="company logo"
+                      className={"h-12 sm:h-14 md:h-16"}
+                    />
+                  </a>
+                );
+              } else {
+                return (
+                  <img
+                    key={index}
+                    src={getStrapiUrl(data?.image?.data?.attributes?.url)}
+                    alt="company logo"
+                    className={"h-12 sm:h-14 md:h-16"}
+                  />
+                );
+              }
+            })}
           </div>
         </Container>
       </section>
