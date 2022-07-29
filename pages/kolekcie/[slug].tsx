@@ -40,13 +40,11 @@ export default function CollectionPageSlug({
     windowWidth = size.width;
   }
 
-  console.log(galleryRef?.current?.clientHeight);
-
   return (
     <Layout>
       <Container>
         <div
-          className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:w-2/3 lg:w-1/2 md:my-16`}
+          className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:my-16`}
         >
           <img
             src={getStrapiUrl(
@@ -55,7 +53,9 @@ export default function CollectionPageSlug({
             alt={""}
             className={`h-14 w-14 -mb-4 md:w-20 md:h-20`}
           />
-          <h1 className={`text-center lea leading-tight mt-2 md:mt-6`}>
+          <h1
+            className={`text-center lea leading-tight mt-2 md:mt-6 md:w-2/3 lg:w-1/2`}
+          >
             {collection ? collection?.attributes?.title : "Loading"}
           </h1>
           <article
@@ -64,30 +64,33 @@ export default function CollectionPageSlug({
               __html: collection?.attributes?.description ?? "",
             }}
           />
-          <div
-            className={`flex flex-col md:flex-row items-center space-y-4 md:mt-4 md:space-y-0 md:space-x-4`}
-          >
-            {collection?.attributes?.shop_link && (
+          <div className={`flex flex-wrap sm:w-2/3 md:w-3/5 justify-center`}>
+            {collection?.attributes?.header_links?.map((headerLink, index) => (
               <Button
-                label={collection?.attributes?.shop_button_text}
-                link={collection?.attributes?.shop_link ?? ""}
+                key={index}
+                label={headerLink?.title}
+                link={headerLink?.link ?? ""}
                 arrow={true}
                 arrowColor={"white"}
                 arrowColorHover={"black"}
                 className={
-                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black"
+                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black m-2"
                 }
               />
-            )}
-            {collection?.attributes?.checklist?.data?.attributes?.url && (
+            ))}
+
+            {collection?.attributes?.header_files?.map((headerFile, index) => (
               <Button
-                label={collection?.attributes?.checklist_button_text}
+                key={index}
+                label={headerFile?.title}
                 link={
-                  collection?.attributes?.checklist?.data?.attributes?.url ?? ""
+                  getStrapiUrl(headerFile?.file?.data?.attributes?.url) ?? ""
                 }
                 arrow={true}
+                className={"m-2"}
+                target={"_blank"}
               />
-            )}
+            ))}
           </div>
         </div>
         <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />

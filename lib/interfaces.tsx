@@ -27,6 +27,13 @@ interface TitleLink {
   link: string;
 }
 
+interface TitleFile {
+  title: string;
+  file: {
+    data: StrapiImage;
+  };
+}
+
 interface TitleContent {
   title: string;
   content: string;
@@ -164,7 +171,6 @@ export interface Collections {
       data: StrapiImage;
     };
     is_published: IsPublished;
-    shop_link: string;
     kolekcia_section: {
       title: string;
       text: string;
@@ -176,11 +182,8 @@ export interface Collections {
       info_section_item: TitleContent[];
     };
     kolekcia: string;
-    shop_button_text: string;
-    checklist_button_text: string;
     info_title: string;
     collection_type: string;
-    checklist: { data: StrapiImage };
     competition: {
       data: {
         attributes: {
@@ -194,6 +197,8 @@ export interface Collections {
     products: {
       data: Products[];
     };
+    header_links: TitleLink[];
+    header_files: TitleFile[];
   };
 }
 
