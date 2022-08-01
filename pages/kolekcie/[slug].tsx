@@ -1,6 +1,5 @@
 import Container from "@/components/Container";
 import Layout from "@/components/Layout";
-import Link from "next/link";
 import {
   getCollectionBySlug,
   getCollectionPage,
@@ -10,12 +9,12 @@ import { CollectionInterface, Collections } from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import React, { useRef, useState } from "react";
-import StackGrid from "react-stack-grid";
 import Lightbox from "react-image-lightbox";
 import ScrollLock from "react-scrolllock";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import SlidesPerView from "@/components/SlidesPerView";
 import useWindowDimensions from "@/components/useWindowDimensions";
+import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 
 interface Props {
   collection: Collections;
@@ -45,7 +44,7 @@ export default function CollectionPageSlug({
     <Layout>
       <Container>
         <div
-          className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:w-2/3 lg:w-1/2 md:my-16`}
+          className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:my-16`}
         >
           <img
             src={getStrapiUrl(
@@ -54,7 +53,9 @@ export default function CollectionPageSlug({
             alt={""}
             className={`h-14 w-14 -mb-4 md:w-20 md:h-20`}
           />
-          <h1 className={`text-center lea leading-tight mt-2 md:mt-6`}>
+          <h1
+            className={`text-center lea leading-tight mt-2 md:mt-6 md:w-2/3 lg:w-1/2`}
+          >
             {collection ? collection?.attributes?.title : "Loading"}
           </h1>
           <article
@@ -63,30 +64,33 @@ export default function CollectionPageSlug({
               __html: collection?.attributes?.description ?? "",
             }}
           />
-          <div
-            className={`flex flex-col md:flex-row items-center space-y-4 md:mt-4 md:space-y-0 md:space-x-4`}
-          >
-            {collection?.attributes?.shop_link && (
+          <div className={`flex flex-wrap sm:w-2/3 md:w-3/5 justify-center`}>
+            {collection?.attributes?.header_links?.map((headerLink, index) => (
               <Button
-                label={collection?.attributes?.shop_button_text}
-                link={collection?.attributes?.shop_link ?? ""}
+                key={index}
+                label={headerLink?.title}
+                link={headerLink?.link ?? ""}
                 arrow={true}
                 arrowColor={"white"}
                 arrowColorHover={"black"}
                 className={
-                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black"
+                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black m-2"
                 }
               />
-            )}
-            {collection?.attributes?.checklist?.data?.attributes?.url && (
+            ))}
+
+            {collection?.attributes?.header_files?.map((headerFile, index) => (
               <Button
-                label={collection?.attributes?.checklist_button_text}
+                key={index}
+                label={headerFile?.title}
                 link={
-                  collection?.attributes?.checklist?.data?.attributes?.url ?? ""
+                  getStrapiUrl(headerFile?.file?.data?.attributes?.url) ?? ""
                 }
                 arrow={true}
+                className={"m-2"}
+                target={"_blank"}
               />
-            )}
+            ))}
           </div>
         </div>
         <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
@@ -107,7 +111,9 @@ export default function CollectionPageSlug({
               </div>
               <div className={`basis-1/2`}>
                 <img
-                  src={getStrapiUrl(kolekcia.image.data.attributes.url)}
+                  src={
+                    getStrapiUrl(kolekcia?.image?.data?.attributes?.url) ?? ""
+                  }
                   alt={""}
                 />
               </div>
@@ -140,61 +146,66 @@ export default function CollectionPageSlug({
 
         {collection?.attributes?.gallery_images?.data?.length > 0 && (
           <>
-            <div className={"flex flex-col py-12 md:py-20"}>
-              <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
-                {collectionPage?.slug_gallery_title}
-              </h2>
-
-              <div
-                className={`overflow-hidden z-50 ${
-                  !galleryIsOpen && galleryHeight >= 800
-                    ? "max-h-[800px] background-white-gradient"
-                    : "max-h-fit"
-                }`}
-                ref={galleryRef}
-              >
-                <StackGrid
-                  columnWidth={300}
-                  gutterWidth={10}
-                  gutterHeight={10}
-                  onLayout={() => {
-                    setTimeout(() => {
-                      setGalleryHeight(galleryRef?.current?.clientHeight);
-                    }, 200);
-                  }}
+            <Container>
+              <div className={"flex flex-col py-12 md:py-20"}>
+                <h2
+                  className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}
                 >
-                  {collection?.attributes?.gallery_images?.data?.map(
-                    (image, index) => (
-                      <img
-                        className={
-                          "cursor-pointer hover:scale-105 transform transition-transform"
-                        }
-                        key={index}
-                        src={getStrapiUrl(image?.attributes?.url)}
-                        alt="gallery item"
-                        loading={"lazy"}
-                        onClick={() => {
-                          setLightBoxIsOpen(true);
-                          setLightBoxIndex(index);
-                        }}
-                      />
-                    )
-                  )}
-                </StackGrid>
-              </div>
+                  {collectionPage?.slug_gallery_title}
+                </h2>
 
-              {galleryHeight >= 800 && (
-                <Button
-                  label={
-                    galleryIsOpen
-                      ? collectionPage?.slug_button_text_hide
-                      : collectionPage?.slug_button_text_show
-                  }
-                  className={"mt-8 md:mt-10 mx-auto"}
-                  onClick={() => setGalleryIsOpen((prev) => !prev)}
-                />
-              )}
-            </div>
+                <div
+                  className={`overflow-hidden z-50 ${
+                    !galleryIsOpen && galleryRef?.current?.clientHeight >= 800
+                      ? "max-h-[800px] background-white-gradient"
+                      : "max-h-fit"
+                  }`}
+                  ref={galleryRef}
+                >
+                  <ResponsiveMasonry
+                    columnsCountBreakPoints={{
+                      350: 1,
+                      600: 2,
+                      900: 3,
+                      1300: 4,
+                    }}
+                  >
+                    <Masonry gutter={"15px"}>
+                      {collection?.attributes?.gallery_images?.data?.map(
+                        (image, index) => (
+                          <img
+                            className={
+                              "cursor-pointer hover:scale-105 transform transition-transform"
+                            }
+                            key={index}
+                            src={getStrapiUrl(image?.attributes?.url)}
+                            alt="gallery item"
+                            loading={"lazy"}
+                            onClick={() => {
+                              setLightBoxIsOpen(true);
+                              setLightBoxIndex(index);
+                            }}
+                          />
+                        )
+                      )}
+                    </Masonry>
+                  </ResponsiveMasonry>
+                </div>
+
+                {galleryRef?.current?.clientHeight >= 800 && (
+                  <Button
+                    label={
+                      galleryIsOpen
+                        ? collectionPage?.slug_button_text_hide
+                        : collectionPage?.slug_button_text_show
+                    }
+                    className={"mt-8 md:mt-10 mx-auto"}
+                    onClick={() => setGalleryIsOpen((prev) => !prev)}
+                  />
+                )}
+              </div>
+            </Container>
+
             {lightBoxIsOpen && (
               <>
                 <Lightbox
@@ -294,12 +305,12 @@ export default function CollectionPageSlug({
       )}
 
       <Container>
-        {collection?.attributes?.info_section.info_section_item &&
+        {collection?.attributes?.info_section?.info_section_item &&
           collection?.attributes?.info_section.info_section_item.length > 0 && (
             <div className={`h-[1px] bg-neutral-200 w-5/6 mx-auto`} />
           )}
 
-        {collection?.attributes?.info_section.info_section_item.length > 0 && (
+        {collection?.attributes?.info_section?.info_section_item.length > 0 && (
           <div className={"flex flex-col items-center py-12 md:py-20"}>
             <h2 className={"text-center mb-6 md:mb-12 text-4xl sm:text-5xl"}>
               {collectionPage?.slug_info_title}

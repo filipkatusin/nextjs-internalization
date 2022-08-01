@@ -25,7 +25,7 @@ export default function AboutUsPage({ about }: Props) {
     <Layout title={about.title}>
       <Heading label={about.title} />
       <Container>
-        {about.about_general.map((s) =>
+        {about?.about_general?.map((s) =>
           s.id % 2 == 0 ? (
             <div
               className={`flex flex-col-reverse gap-y-6 lg:flex-row items-center lg:gap-y-0 lg:gap-x-8 mx-auto mb-10 lg:mb-20 w-11/12`}

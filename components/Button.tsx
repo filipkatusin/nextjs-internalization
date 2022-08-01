@@ -16,6 +16,7 @@ interface Props {
   arrowColor?: string;
   arrowColorHover?: string;
   disabled?: boolean;
+  target?: string;
 }
 
 export default function Button({
@@ -28,10 +29,11 @@ export default function Button({
   onClick,
   type,
   disabled,
+  target,
 }: Props) {
   return link ? (
     <Link href={link ?? ""}>
-      <a className="inline-block">
+      <a className="inline-block" target={target}>
         <button
           disabled={disabled}
           type={type}
