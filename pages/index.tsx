@@ -1,6 +1,12 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { getCollections, getMainPage, getPlannedCollections } from "@/lib/api";
-import { IsPublished, MainPage, PlannedCollections } from "@/lib/interfaces";
+import {
+  Collections,
+  IsPublished,
+  MainPage,
+  PlannedCollections,
+  StrapiImage,
+} from "@/lib/interfaces";
 import Image from "next/image";
 import Container from "@/components/Container";
 import Link from "next/link";
@@ -10,7 +16,7 @@ import TextEllipsis from "react-text-ellipsis";
 import Button from "@/components/Button";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SocialNetworks from "@/components/SocialNetworks";
 import SlidesPerView from "@/components/SlidesPerView";
 import { formatDate } from "@/lib/utils";
@@ -18,24 +24,33 @@ import { formatDate } from "@/lib/utils";
 interface Props {
   main: MainPage;
   planned_collections: PlannedCollections;
-  collection_images: string[];
+  collections_images: StrapiImage[];
 }
 
 export default function HomePage({
   main,
   planned_collections,
-  collection_images,
+  collections_images,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
   const colLink = router.locale == "sk" ? "kolekcie" : "collections";
   const newsLink = router.locale == "sk" ? "novinky" : "news";
+  const [collectionImages, setCollectionImages] = useState<StrapiImage[]>([]);
 
   let windowWidth = 0;
   if (typeof window !== "undefined") {
     const size = useWindowDimensions();
     windowWidth = size.width;
   }
+
+  useEffect(() => {
+    const images = collections_images
+      ?.sort(() => Math.random() - 0.5)
+      .slice(0, 10);
+
+    setCollectionImages(images);
+  }, []);
 
   return (
     <Layout>
@@ -443,21 +458,17 @@ export default function HomePage({
         }}
         className="gallery-splide bg-[#232221] mb-20"
       >
-        {collection_images
-          ?.map((imageUrl) => ({ imageUrl, sort: Math.random() }))
-          .sort((a, b) => a.sort - b.sort)
-          .slice(0, 6)
-          .map(({ imageUrl }, index) => (
-            <SplideSlide key={index}>
-              <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
-                <img
-                  src={imageUrl}
-                  alt={""}
-                  className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
-                />
-              </div>
-            </SplideSlide>
-          ))}
+        {collectionImages?.map((image, index) => (
+          <SplideSlide key={index}>
+            <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
+              <img
+                src={getStrapiUrl(image?.attributes?.url)}
+                alt={""}
+                className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
+              />
+            </div>
+          </SplideSlide>
+        ))}
       </Splide>
       <SocialNetworks />
     </Layout>
@@ -467,14 +478,18 @@ export default function HomePage({
 export async function getStaticProps({ locale }) {
   const main = (await getMainPage(locale)) || [];
   const planned_collections = (await getPlannedCollections(locale)) || [];
-  const collections = (await getCollections(locale)) || [];
-  const collection_images = [];
+  const collections = ((await getCollections(locale)) || []) as Collections[];
 
-  Object.values(collections).forEach((collection) => {
-    collection_images.push(collection?.attributes.image?.data?.attributes?.url);
+  const collections_images = [];
+  collections.forEach((collection) => {
+    if (collection?.attributes?.is_published === IsPublished.published) {
+      collection?.attributes?.gallery_images?.data?.map((image) =>
+        collections_images.push(image)
+      );
+    }
   });
 
   return {
-    props: { main, planned_collections, collection_images },
+    props: { main, planned_collections, collections_images },
   };
 }
