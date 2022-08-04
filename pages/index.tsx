@@ -25,12 +25,14 @@ interface Props {
   main: MainPage;
   planned_collections: PlannedCollections;
   collections_images: StrapiImage[];
+  preview: boolean;
 }
 
 export default function HomePage({
   main,
   planned_collections,
   collections_images,
+  preview,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -53,7 +55,7 @@ export default function HomePage({
   }, []);
 
   return (
-    <Layout>
+    <Layout preview={preview}>
       <Splide
         options={{
           speed: 1500,
@@ -475,7 +477,7 @@ export default function HomePage({
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const main = (await getMainPage(locale)) || [];
   const planned_collections = (await getPlannedCollections(locale)) || [];
   const collections = ((await getCollections(locale)) || []) as Collections[];
@@ -490,6 +492,6 @@ export async function getStaticProps({ locale }) {
   });
 
   return {
-    props: { main, planned_collections, collections_images },
+    props: { main, planned_collections, collections_images, preview },
   };
 }

@@ -12,14 +12,20 @@ interface Props {
   news: News;
   nextNews: News[];
   newsPage: NewPage;
+  preview: boolean;
 }
 
-export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
+export default function NewsPageSlug({
+  news,
+  nextNews,
+  newsPage,
+  preview,
+}: Props) {
   const router = useRouter();
   const newsLink = router.locale == "sk" ? "novinky" : "news";
 
   return (
-    <Layout>
+    <Layout preview={preview}>
       {!news ? (
         <p className={"text-center py-20"}>
           {router.locale == "sk" ? "Načitava sa..." : "Loading..."}
@@ -107,7 +113,7 @@ export default function NewsPageSlug({ news, nextNews, newsPage }: Props) {
   );
 }
 
-export async function getStaticProps({ locale, params }) {
+export async function getStaticProps({ locale, params, preview = false }) {
   const data = await getNews(locale, params.slug);
   const news = (await getNews(locale)) || [];
   const newsPage = (await getNewPage(locale)) || [];
@@ -124,6 +130,7 @@ export async function getStaticProps({ locale, params }) {
       },
       nextNews: threeNews,
       newsPage: newsPage,
+      preview,
     },
   };
 }

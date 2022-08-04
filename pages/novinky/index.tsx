@@ -14,9 +14,10 @@ import { getStrapiUrl } from "@/lib/get-strapi-url";
 interface Props {
   news: News[];
   newPage: NewPage;
+  preview: boolean;
 }
 
-export default function NewsPage({ news, newPage }: Props) {
+export default function NewsPage({ news, newPage, preview }: Props) {
   const router = useRouter();
   const newsLink = router.locale == "sk" ? "novinky" : "news";
   const [newsNumber, setNewsNumber] = useState(7);
@@ -24,7 +25,7 @@ export default function NewsPage({ news, newPage }: Props) {
   const firstNew = news[0]?.attributes;
 
   return (
-    <Layout>
+    <Layout preview={preview}>
       <Heading label={newPage?.title} className={"text-center"} center={true} />
       <Link as={`/${newsLink}/${firstNew?.slug}`} href={`/${newsLink}/[slug]`}>
         <a>
@@ -63,11 +64,11 @@ export default function NewsPage({ news, newPage }: Props) {
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const newPage = (await getNewPage(locale)) || [];
   const news = (await getNews(locale)) || [];
 
   return {
-    props: { news, newPage },
+    props: { news, newPage, preview },
   };
 }
