@@ -9,7 +9,7 @@ export default function NotFound() {
 
   return (
     <>
-      <Layout>
+      <Layout preview={false}>
         <Head>
           <title>
             {router.locale == "sk" ? "Stránka neexistuje" : "Wrong page"}

@@ -32,6 +32,7 @@ interface Props {
   collections: Collections[];
   competitions: Competition[];
   plannedCollections: PlannedCollections;
+  preview: boolean;
 }
 
 const initialValues: InitialCollectionsFilterValues = {
@@ -48,6 +49,7 @@ function CollectionPage({
   collections,
   competitions,
   plannedCollections,
+  preview,
 }: Props) {
   const [mobileFilterOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [typeTitle, setTypeTitle] = useState({});
@@ -215,7 +217,7 @@ function CollectionPage({
   };
 
   return (
-    <Layout>
+    <Layout preview={preview}>
       <Heading label={data.title} />
       <Container className={"flex items-start"}>
         {mobileFilterOpen && <ScrollLock />}
@@ -635,7 +637,7 @@ export default withFormik({
   }),
 })(CollectionPage);
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const data = ((await getCollectionPage(locale)) || []) as CollectionInterface;
   const collections = ((await getCollections(locale)) || []) as Collections[];
   const competitions = (await getCompetitions(locale)) || [];
@@ -667,6 +669,7 @@ export async function getStaticProps({ locale }) {
       collections,
       competitions,
       plannedCollections,
+      preview,
     },
   };
 }

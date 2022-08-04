@@ -10,11 +10,12 @@ import Button from "@/components/Button";
 
 interface Props {
   data: FaqPage;
+  preview: boolean;
 }
 
-const FaqPage: React.FC<Props> = ({ data }) => {
+const FaqPage: React.FC<Props> = ({ data, preview }) => {
   return (
-    <Layout title={data?.title}>
+    <Layout title={data?.title} preview={preview}>
       <Heading label={data?.title} />
       <Container className={"pt-8 md:pt-12 pb-16 md:pb-24"}>
         <ul className={"space-y-4 max-w-[940px] mx-auto"}>
@@ -74,10 +75,10 @@ const FaqPage: React.FC<Props> = ({ data }) => {
 
 export default FaqPage;
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const data = (await getFaqPage(locale)) || [];
 
   return {
-    props: { data },
+    props: { data, preview },
   };
 }

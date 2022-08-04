@@ -6,11 +6,12 @@ import Container from "@/components/Container";
 import { getGeneralConditionsPage } from "@/lib/api";
 interface Props {
   data: GeneralCondition;
+  preview: boolean;
 }
 
-const GeneralConditionsPage: React.FC<Props> = ({ data }) => {
+const GeneralConditionsPage: React.FC<Props> = ({ data, preview }) => {
   return (
-    <Layout title={data?.title}>
+    <Layout title={data?.title} preview={preview}>
       <Heading label={data?.title} />
       <Container className={"mb-12 md:pb-20"}>
         <article
@@ -24,10 +25,10 @@ const GeneralConditionsPage: React.FC<Props> = ({ data }) => {
 
 export default GeneralConditionsPage;
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const data = (await getGeneralConditionsPage(locale)) || [];
 
   return {
-    props: { data },
+    props: { data, preview },
   };
 }

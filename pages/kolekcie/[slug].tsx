@@ -19,11 +19,13 @@ import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 interface Props {
   collection: Collections;
   collectionPage: CollectionInterface;
+  preview: boolean;
 }
 
 export default function CollectionPageSlug({
   collection,
   collectionPage,
+  preview,
 }: Props) {
   const [infoIsOpen, setInfoIsOpen] = useState<boolean>(false);
   const [galleryIsOpen, setGalleryIsOpen] = useState<boolean>(false);
@@ -41,7 +43,7 @@ export default function CollectionPageSlug({
   }
 
   return (
-    <Layout>
+    <Layout preview={preview}>
       <Container>
         <div
           className={`flex flex-col items-center gap-y-6 mx-auto my-10 lg:gap-y-8 md:my-16`}
@@ -359,7 +361,7 @@ export default function CollectionPageSlug({
   );
 }
 
-export async function getStaticProps({ locale, params }) {
+export async function getStaticProps({ locale, params, preview = false }) {
   const data = (await getCollections(locale, params?.slug)) || [];
   const collectionPage = (await getCollectionPage(locale)) || [];
 
@@ -369,6 +371,7 @@ export async function getStaticProps({ locale, params }) {
         ...data[0],
       },
       collectionPage,
+      preview,
     },
   };
 }

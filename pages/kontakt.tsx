@@ -16,13 +16,14 @@ import { useEffect, useState } from "react";
 
 interface Props {
   contact: Contact;
+  preview: boolean;
 }
 
-export default function ContactPage({ contact }: Props) {
+export default function ContactPage({ contact, preview }: Props) {
   const { locale } = useRouter();
 
   return (
-    <Layout title={contact.title}>
+    <Layout title={contact.title} preview={preview}>
       <Heading label={contact.title} />
       <Container className="flex flex-col md:flex-row mb-10 md:space-x-4">
         <div className={"contact-info md:flex-1 space-y-2"}>
@@ -184,10 +185,10 @@ export default function ContactPage({ contact }: Props) {
   );
 }
 
-export async function getStaticProps({ locale }) {
+export async function getStaticProps({ locale, preview = false }) {
   const contact = (await getContactPage(locale)) || [];
 
   return {
-    props: { contact },
+    props: { contact, preview },
   };
 }
