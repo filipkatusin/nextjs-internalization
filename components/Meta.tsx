@@ -15,7 +15,7 @@ export default function Meta({
   image,
   description,
 }: Props) {
-  const mainPage = "Sportzoo" + (title ? " - " + title : "");
+  const mainPage = "SportZoo" + (title ? " - " + title : "");
 
   return (
     <Head>

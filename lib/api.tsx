@@ -203,8 +203,7 @@ export async function getProductsInfo(
   localization: string
 ): Promise<ProductsInfo> {
   const data = await fetchAPI(`product-info?locale=${localization}`);
-  console.log(data.attributes);
-  return data?.attributes;
+  return data?.attributes ?? {};
 }
 
 export async function getPlannedCollections(localization: string) {

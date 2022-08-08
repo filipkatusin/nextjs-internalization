@@ -75,30 +75,36 @@ export default function CollectionPageSlug({
           />
           <div className={`flex flex-wrap sm:w-2/3 md:w-3/5 justify-center`}>
             {collection?.attributes?.header_links?.map((headerLink, index) => (
-              <Button
-                key={index}
-                label={headerLink?.title}
-                link={headerLink?.link ?? ""}
-                arrow={true}
-                arrowColor={"white"}
-                arrowColorHover={"black"}
-                className={
-                  "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black m-2"
-                }
-              />
+              <a href={headerLink?.link ?? ""} target={"_blank"}>
+                <Button
+                  key={index}
+                  label={headerLink?.title}
+                  arrow={true}
+                  arrowColor={"white"}
+                  arrowColorHover={"black"}
+                  className={
+                    "bg-red border-red text-white hover:bg-white hover:border-black hover:text-black m-2"
+                  }
+                />
+              </a>
             ))}
 
             {collection?.attributes?.header_files?.map((headerFile, index) => (
-              <Button
-                key={index}
-                label={headerFile?.title}
-                link={
+              <a
+                href={
                   getStrapiUrl(headerFile?.file?.data?.attributes?.url) ?? ""
                 }
-                arrow={true}
-                className={"m-2"}
                 target={"_blank"}
-              />
+              >
+                <Button
+                  key={index}
+                  label={headerFile?.title}
+                  arrow={true}
+                  arrowColor={"black"}
+                  className={"m-2"}
+                  target={"_blank"}
+                />
+              </a>
             ))}
           </div>
         </div>
@@ -135,7 +141,7 @@ export default function CollectionPageSlug({
               }
             >
               <div className={`basis-1/2`}>
-                <img src={kolekcia.image.data.attributes.url} alt={""} />
+                <img src={kolekcia?.image?.data?.attributes?.url} alt={""} />
               </div>
               <div className={`basis-1/2  `}>
                 <h2>{kolekcia.title}</h2>
