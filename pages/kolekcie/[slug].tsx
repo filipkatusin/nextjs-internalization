@@ -4,8 +4,13 @@ import {
   getCollectionBySlug,
   getCollectionPage,
   getCollections,
+  getProductsInfo,
 } from "@/lib/api";
-import { CollectionInterface, Collections } from "@/lib/interfaces";
+import {
+  CollectionInterface,
+  Collections,
+  ProductsInfo,
+} from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import React, { useRef, useState } from "react";
@@ -20,12 +25,14 @@ interface Props {
   collection: Collections;
   collectionPage: CollectionInterface;
   preview: boolean;
+  productsInfo: ProductsInfo;
 }
 
 export default function CollectionPageSlug({
   collection,
   collectionPage,
   preview,
+  productsInfo,
 }: Props) {
   const [infoIsOpen, setInfoIsOpen] = useState<boolean>(false);
   const [galleryIsOpen, setGalleryIsOpen] = useState<boolean>(false);
@@ -254,7 +261,6 @@ export default function CollectionPageSlug({
               options={{
                 speed: 1500,
                 rewind: true,
-                type: "loop",
                 perPage: SlidesPerView(),
                 pauseOnFocus: false,
                 pauseOnHover: false,
@@ -286,18 +292,30 @@ export default function CollectionPageSlug({
                     key={index}
                   >
                     <img src={product?.attributes?.image} alt="" />
+                    <div
+                      className={
+                        "flex flex-wrap items-center justify-between px-10 pb-4 pt-2 custom-gap"
+                      }
+                    >
+                      <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
+                        {product?.attributes?.price} €
+                      </p>
+
+                      <p
+                        className={`px-4 py-1 text-white ${
+                          product?.attributes?.isAvailable
+                            ? "cut-corner-left-green"
+                            : "cut-corner-left-red"
+                        }`}
+                      >
+                        {product?.attributes?.isAvailable
+                          ? productsInfo?.available_text
+                          : productsInfo?.unavailable_text}
+                      </p>
+                    </div>
                     <h5 className=" px-10 group-hover:underline">
                       {product?.attributes?.title}
                     </h5>
-                    <div
-                      className="px-4 py-1 price-corner inline-block mx-10 mt-4"
-                      style={{
-                        color: "white",
-                        backgroundColor: "black",
-                      }}
-                    >
-                      {product?.attributes?.price} €
-                    </div>
                   </a>
                 </SplideSlide>
               ))}
@@ -364,6 +382,7 @@ export default function CollectionPageSlug({
 export async function getStaticProps({ locale, params, preview = false }) {
   const data = (await getCollections(locale, params?.slug)) || [];
   const collectionPage = (await getCollectionPage(locale)) || [];
+  const productsInfo = await getProductsInfo(locale);
 
   return {
     props: {
@@ -372,6 +391,7 @@ export async function getStaticProps({ locale, params, preview = false }) {
       },
       collectionPage,
       preview,
+      productsInfo,
     },
   };
 }

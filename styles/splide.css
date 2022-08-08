@@ -60,6 +60,10 @@
         opacity: 1;
         height: 3rem;
         width: 3rem;
+
+        &:disabled {
+            opacity: 0;
+        }
     }
 }
 

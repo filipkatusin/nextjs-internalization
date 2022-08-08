@@ -1,10 +1,16 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { getCollections, getMainPage, getPlannedCollections } from "@/lib/api";
+import {
+  getCollections,
+  getMainPage,
+  getPlannedCollections,
+  getProductsInfo,
+} from "@/lib/api";
 import {
   Collections,
   IsPublished,
   MainPage,
   PlannedCollections,
+  ProductsInfo,
   StrapiImage,
 } from "@/lib/interfaces";
 import Image from "next/image";
@@ -26,6 +32,7 @@ interface Props {
   planned_collections: PlannedCollections;
   collections_images: StrapiImage[];
   preview: boolean;
+  productsInfo: ProductsInfo;
 }
 
 export default function HomePage({
@@ -33,6 +40,7 @@ export default function HomePage({
   planned_collections,
   collections_images,
   preview,
+  productsInfo,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -250,7 +258,6 @@ export default function HomePage({
         options={{
           speed: 1500,
           rewind: true,
-          type: "loop",
           perPage: SlidesPerView(),
           pauseOnFocus: false,
           pauseOnHover: false,
@@ -276,24 +283,36 @@ export default function HomePage({
         {main?.products?.data.map((product, index) => (
           <SplideSlide key={index}>
             <a
-              className={"group"}
+              className={"group mt-auto mb-0"}
               href={product?.attributes?.eshop_url}
               target={"_blank"}
               key={index}
             >
               <img src={product?.attributes?.image} alt="" />
+              <div
+                className={
+                  "flex flex-wrap items-center justify-between px-10 pb-4 pt-2 custom-gap"
+                }
+              >
+                <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
+                  {product?.attributes?.price} €
+                </p>
+
+                <p
+                  className={`px-4 py-1 text-white ${
+                    product?.attributes?.isAvailable
+                      ? "cut-corner-left-green"
+                      : "cut-corner-left-red"
+                  }`}
+                >
+                  {product?.attributes?.isAvailable
+                    ? productsInfo?.available_text
+                    : productsInfo?.unavailable_text}
+                </p>
+              </div>
               <h5 className=" px-10 group-hover:underline">
                 {product?.attributes?.title}
               </h5>
-              <div
-                className="px-4 py-1 price-corner inline-block mx-10 mt-4"
-                style={{
-                  color: "white",
-                  backgroundColor: "black",
-                }}
-              >
-                {product?.attributes?.price} €
-              </div>
             </a>
           </SplideSlide>
         ))}
@@ -481,6 +500,7 @@ export async function getStaticProps({ locale, preview = false }) {
   const main = (await getMainPage(locale)) || [];
   const planned_collections = (await getPlannedCollections(locale)) || [];
   const collections = ((await getCollections(locale)) || []) as Collections[];
+  const productsInfo = await getProductsInfo(locale);
 
   const collections_images = [];
   collections.forEach((collection) => {
@@ -492,6 +512,12 @@ export async function getStaticProps({ locale, preview = false }) {
   });
 
   return {
-    props: { main, planned_collections, collections_images, preview },
+    props: {
+      main,
+      planned_collections,
+      collections_images,
+      preview,
+      productsInfo,
+    },
   };
 }

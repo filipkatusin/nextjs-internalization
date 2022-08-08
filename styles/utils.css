@@ -2,7 +2,7 @@
   margin: -5px;
 }
 
-.custom-gap li {
+.custom-gap * {
   margin: 5px;
 }
 
@@ -17,6 +17,17 @@
   border-left: 12px solid transparent;
   width: 0;
 }
+
+.cut-corner-left-red {
+  position: relative;
+  background: linear-gradient(135deg, transparent 9px, #EE2D3A 0) top left;
+}
+
+.cut-corner-left-green {
+  position: relative;
+  background: linear-gradient(135deg, transparent 9px, #228B22 0) top left;
+}
+
 
 .cut-corner-white:before {
   border-top: 12px solid white;

@@ -394,6 +394,7 @@ export interface Products {
     eshop_url: string;
     price: number;
     slug: string;
+    isAvailable: boolean;
   };
 }
 
@@ -440,4 +441,9 @@ export interface FaqPage {
 export interface GeneralCondition {
   title: string;
   conditions: string;
+}
+
+export interface ProductsInfo {
+  available_text: string;
+  unavailable_text: string;
 }
