@@ -6,5 +6,5 @@ export default function handler(req: NextApiRequest, res: NextApiResponse) {
   }
 
   res.setPreviewData({ data: "data" }, { maxAge: 60 * 60 });
-  res.redirect(200, "/");
+  res.redirect("/");
 }
