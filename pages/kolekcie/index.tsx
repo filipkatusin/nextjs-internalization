@@ -13,6 +13,7 @@ import {
   InitialCollectionsFilterValues,
   IsPublished,
   PlannedCollections,
+  PlannedStatus,
 } from "@/lib/interfaces";
 import Heading from "@/components/Heading";
 import React, { useEffect, useState } from "react";
@@ -173,6 +174,10 @@ function CollectionPage({
       : filterValues?.state?.includes(collection?.attributes?.is_published);
   };
 
+  const checkPlannedCollection = (collection: Collections): boolean => {
+    return collection?.attributes?.planned_status === PlannedStatus.planned;
+  };
+
   const checkPlanStatus = (
     collection: Collections,
     filterValues: InitialCollectionsFilterValues
@@ -192,14 +197,6 @@ function CollectionPage({
     if (filterValues?.plan?.includes("notPlanned")) {
       return !checkPlannedCollection(collection);
     }
-  };
-
-  const checkPlannedCollection = (collection: Collections): boolean => {
-    return (
-      plannedCollections?.collections?.data?.findIndex(
-        (item) => item?.attributes?.slug === collection?.attributes?.slug
-      ) !== -1
-    );
   };
 
   const filterCollections = (
@@ -641,8 +638,8 @@ export async function getStaticProps({ locale, preview = false }) {
   const data = ((await getCollectionPage(locale)) || []) as CollectionInterface;
   const collections = ((await getCollections(locale)) || []) as Collections[];
   const competitions = (await getCompetitions(locale)) || [];
-  const plannedCollections =
-    ((await getPlannedCollections(locale)) as PlannedCollections) || [];
+  const plannedCollections = ((await getPlannedCollections(locale)) ||
+    []) as PlannedCollections;
 
   data?.filter_year?.data?.attributes?.title_type?.sort(function (a, b) {
     return b.title?.localeCompare(a.title);

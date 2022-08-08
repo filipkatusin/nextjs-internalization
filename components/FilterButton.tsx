@@ -12,14 +12,14 @@ export default function FilterButton({ label, onClick }: Props) {
       onClick={onClick}
     >
       {label}
-      <button className={"group-hover:hidden p-3"}>
+      <button className={"group-hover:hidden p-2"}>
         <img
           src="/assets/close.svg"
           alt="remove filter icon"
           className={" h-4"}
         />
       </button>
-      <button className={"hidden group-hover:block p-3"}>
+      <button className={"hidden group-hover:block p-2"}>
         <img src="/assets/close-white.svg" alt="" className={"h-4"} />
       </button>
     </div>

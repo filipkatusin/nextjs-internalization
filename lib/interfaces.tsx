@@ -158,6 +158,11 @@ export enum CollectionType {
   stickers = "stickers",
 }
 
+export enum PlannedStatus {
+  planned = "planned",
+  unplanned = "unplanned",
+}
+
 export interface Collections {
   attributes: {
     title: string;
@@ -199,6 +204,7 @@ export interface Collections {
     };
     header_links: TitleLink[];
     header_files: TitleFile[];
+    planned_status: PlannedStatus;
   };
 }
 
@@ -369,9 +375,6 @@ export interface PlannedCollections {
   planned_date_text: string;
   published_collection_button_text: string;
   unpublished_collection_text: string;
-  collections: {
-    data: Collections[];
-  };
   show_more_button_text: string;
 }
 
@@ -394,6 +397,7 @@ export interface Products {
     eshop_url: string;
     price: number;
     slug: string;
+    isAvailable: boolean;
   };
 }
 
@@ -440,4 +444,9 @@ export interface FaqPage {
 export interface GeneralCondition {
   title: string;
   conditions: string;
+}
+
+export interface ProductsInfo {
+  available_text: string;
+  unavailable_text: string;
 }

@@ -12,6 +12,7 @@ import {
   Menu,
   NewPage,
   News,
+  ProductsInfo,
 } from "@/lib/interfaces";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
@@ -196,6 +197,13 @@ export async function getNewPage(localization: string): Promise<NewPage> {
 export async function getMainPage(localization: string): Promise<MainPage> {
   const data = await fetchAPI(`main-page?locale=${localization}`);
   return data?.attributes;
+}
+
+export async function getProductsInfo(
+  localization: string
+): Promise<ProductsInfo> {
+  const data = await fetchAPI(`product-info?locale=${localization}`);
+  return data?.attributes ?? {};
 }
 
 export async function getPlannedCollections(localization: string) {

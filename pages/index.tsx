@@ -1,10 +1,17 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
-import { getCollections, getMainPage, getPlannedCollections } from "@/lib/api";
+import {
+  getCollections,
+  getMainPage,
+  getPlannedCollections,
+  getProductsInfo,
+} from "@/lib/api";
 import {
   Collections,
   IsPublished,
   MainPage,
   PlannedCollections,
+  PlannedStatus,
+  ProductsInfo,
   StrapiImage,
 } from "@/lib/interfaces";
 import Image from "next/image";
@@ -26,6 +33,8 @@ interface Props {
   planned_collections: PlannedCollections;
   collections_images: StrapiImage[];
   preview: boolean;
+  productsInfo: ProductsInfo;
+  collections: Collections[];
 }
 
 export default function HomePage({
@@ -33,6 +42,8 @@ export default function HomePage({
   planned_collections,
   collections_images,
   preview,
+  productsInfo,
+  collections,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -53,6 +64,14 @@ export default function HomePage({
 
     setCollectionImages(images);
   }, []);
+
+  const filterPlannedCollections = (
+    collections: Collections[]
+  ): Collections[] => {
+    return collections?.filter(
+      (item) => item?.attributes?.planned_status === PlannedStatus.planned
+    );
+  };
 
   return (
     <Layout preview={preview}>
@@ -173,72 +192,80 @@ export default function HomePage({
       </Container>
 */}
 
-      <Container>
-        <h2
-          className={
-            "text-center text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] mb-8 sm:mb-10 md:mb-16"
-          }
-        >
-          {planned_collections?.title}
-        </h2>
-        <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
-          {planned_collections?.collections?.data?.map((collection, index) => (
-            <li
-              key={index}
-              className={
-                "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
-              }
-            >
-              <div className={"flex items-center"}>
-                {collection?.attributes?.manufacturer_logo?.data?.attributes
-                  ?.url && (
-                  <img
-                    className={"h-12 mr-4 md:mr-8"}
-                    src={getStrapiUrl(
-                      collection?.attributes?.manufacturer_logo?.data
-                        ?.attributes?.url
+      {filterPlannedCollections(collections)?.length > 0 && (
+        <Container>
+          <h2
+            className={
+              "text-center text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] mb-8 sm:mb-10 md:mb-16"
+            }
+          >
+            {planned_collections?.title}
+          </h2>
+          <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
+            {filterPlannedCollections(collections)
+              ?.slice(0, 3)
+              ?.map((collection, index) => (
+                <li
+                  key={index}
+                  className={
+                    "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
+                  }
+                >
+                  <div className={"flex items-center"}>
+                    {collection?.attributes?.manufacturer_logo?.data?.attributes
+                      ?.url && (
+                      <img
+                        className={"h-12 mr-4 md:mr-8"}
+                        src={getStrapiUrl(
+                          collection?.attributes?.manufacturer_logo?.data
+                            ?.attributes?.url
+                        )}
+                        alt="manufacturer_logo"
+                      />
                     )}
-                    alt="manufacturer_logo"
-                  />
-                )}
-                <div className={"space-y-1"}>
-                  <h6 className={"font-bold"}>
-                    {collection?.attributes?.title}
-                  </h6>
-                  {collection?.attributes?.date && (
-                    <p className={"text-gray"}>
-                      {`${planned_collections?.planned_date_text}: `}
-                      {formatDate(
-                        collection?.attributes?.date,
-                        collection?.attributes?.date_full,
-                        locale
+                    <div className={"space-y-1"}>
+                      <h6 className={"font-bold"}>
+                        {collection?.attributes?.title}
+                      </h6>
+                      {collection?.attributes?.date && (
+                        <p className={"text-gray"}>
+                          {`${planned_collections?.planned_date_text}: `}
+                          {formatDate(
+                            collection?.attributes?.date,
+                            collection?.attributes?.date_full,
+                            locale
+                          )}
+                        </p>
                       )}
+                    </div>
+                  </div>
+                  {collection?.attributes?.is_published ===
+                  IsPublished?.published ? (
+                    <Button
+                      label={
+                        planned_collections?.published_collection_button_text
+                      }
+                      arrow={true}
+                      link={`kolekcie/${collection?.attributes?.slug}`}
+                    />
+                  ) : (
+                    <p className={"text-gray"}>
+                      {planned_collections?.unpublished_collection_text}
                     </p>
                   )}
-                </div>
-              </div>
-              {collection?.attributes?.is_published ===
-              IsPublished?.published ? (
-                <Button
-                  label={planned_collections?.published_collection_button_text}
-                  arrow={true}
-                  link={`kolekcie/${collection?.attributes?.slug}`}
-                />
-              ) : (
-                <p className={"text-gray"}>
-                  {planned_collections?.unpublished_collection_text}
-                </p>
-              )}
-            </li>
-          ))}
-        </ul>
-        <div className={"flex justify-center mt-6 md:mt-8"}>
-          <Button
-            label={planned_collections?.show_more_button_text}
-            link={"kolekcie?plan=planned"}
-          />
-        </div>
-      </Container>
+                </li>
+              ))}
+          </ul>
+          {filterPlannedCollections(collections)?.length > 3 && (
+            <div className={"flex justify-center mt-6 md:mt-8"}>
+              <Button
+                label={planned_collections?.show_more_button_text}
+                link={"kolekcie?plan=planned"}
+              />
+            </div>
+          )}
+        </Container>
+      )}
 
       <Container className="my-20 md:my-40">
         <div className="border-[0.1px] border-gray flex opacity-20 " />
@@ -250,7 +277,6 @@ export default function HomePage({
         options={{
           speed: 1500,
           rewind: true,
-          type: "loop",
           perPage: SlidesPerView(),
           pauseOnFocus: false,
           pauseOnHover: false,
@@ -276,24 +302,36 @@ export default function HomePage({
         {main?.products?.data.map((product, index) => (
           <SplideSlide key={index}>
             <a
-              className={"group"}
+              className={"group mt-auto mb-0"}
               href={product?.attributes?.eshop_url}
               target={"_blank"}
               key={index}
             >
               <img src={product?.attributes?.image} alt="" />
+              <div
+                className={
+                  "flex flex-wrap items-center justify-between px-10 pb-4 pt-2 custom-gap"
+                }
+              >
+                <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
+                  {product?.attributes?.price} €
+                </p>
+
+                <p
+                  className={`px-4 py-1 text-white ${
+                    product?.attributes?.isAvailable
+                      ? "cut-corner-left-green"
+                      : "cut-corner-left-red"
+                  }`}
+                >
+                  {product?.attributes?.isAvailable
+                    ? productsInfo?.available_text
+                    : productsInfo?.unavailable_text}
+                </p>
+              </div>
               <h5 className=" px-10 group-hover:underline">
                 {product?.attributes?.title}
               </h5>
-              <div
-                className="px-4 py-1 price-corner inline-block mx-10 mt-4"
-                style={{
-                  color: "white",
-                  backgroundColor: "black",
-                }}
-              >
-                {product?.attributes?.price} €
-              </div>
             </a>
           </SplideSlide>
         ))}
@@ -481,6 +519,7 @@ export async function getStaticProps({ locale, preview = false }) {
   const main = (await getMainPage(locale)) || [];
   const planned_collections = (await getPlannedCollections(locale)) || [];
   const collections = ((await getCollections(locale)) || []) as Collections[];
+  const productsInfo = await getProductsInfo(locale);
 
   const collections_images = [];
   collections.forEach((collection) => {
@@ -492,6 +531,13 @@ export async function getStaticProps({ locale, preview = false }) {
   });
 
   return {
-    props: { main, planned_collections, collections_images, preview },
+    props: {
+      main,
+      planned_collections,
+      collections_images,
+      preview,
+      productsInfo,
+      collections,
+    },
   };
 }
