@@ -192,78 +192,80 @@ export default function HomePage({
       </Container>
 */}
 
-      <Container>
-        <h2
-          className={
-            "text-center text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] mb-8 sm:mb-10 md:mb-16"
-          }
-        >
-          {planned_collections?.title}
-        </h2>
-        <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
-          {filterPlannedCollections(collections)
-            ?.slice(0, 3)
-            ?.map((collection, index) => (
-              <li
-                key={index}
-                className={
-                  "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
-                }
-              >
-                <div className={"flex items-center"}>
-                  {collection?.attributes?.manufacturer_logo?.data?.attributes
-                    ?.url && (
-                    <img
-                      className={"h-12 mr-4 md:mr-8"}
-                      src={getStrapiUrl(
-                        collection?.attributes?.manufacturer_logo?.data
-                          ?.attributes?.url
-                      )}
-                      alt="manufacturer_logo"
-                    />
-                  )}
-                  <div className={"space-y-1"}>
-                    <h6 className={"font-bold"}>
-                      {collection?.attributes?.title}
-                    </h6>
-                    {collection?.attributes?.date && (
-                      <p className={"text-gray"}>
-                        {`${planned_collections?.planned_date_text}: `}
-                        {formatDate(
-                          collection?.attributes?.date,
-                          collection?.attributes?.date_full,
-                          locale
+      {filterPlannedCollections(collections)?.length > 0 && (
+        <Container>
+          <h2
+            className={
+              "text-center text-3xl sm:text-4xl md:text-5xl lg:text-[3rem] mb-8 sm:mb-10 md:mb-16"
+            }
+          >
+            {planned_collections?.title}
+          </h2>
+          <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
+            {filterPlannedCollections(collections)
+              ?.slice(0, 3)
+              ?.map((collection, index) => (
+                <li
+                  key={index}
+                  className={
+                    "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
+                  }
+                >
+                  <div className={"flex items-center"}>
+                    {collection?.attributes?.manufacturer_logo?.data?.attributes
+                      ?.url && (
+                      <img
+                        className={"h-12 mr-4 md:mr-8"}
+                        src={getStrapiUrl(
+                          collection?.attributes?.manufacturer_logo?.data
+                            ?.attributes?.url
                         )}
-                      </p>
+                        alt="manufacturer_logo"
+                      />
                     )}
+                    <div className={"space-y-1"}>
+                      <h6 className={"font-bold"}>
+                        {collection?.attributes?.title}
+                      </h6>
+                      {collection?.attributes?.date && (
+                        <p className={"text-gray"}>
+                          {`${planned_collections?.planned_date_text}: `}
+                          {formatDate(
+                            collection?.attributes?.date,
+                            collection?.attributes?.date_full,
+                            locale
+                          )}
+                        </p>
+                      )}
+                    </div>
                   </div>
-                </div>
-                {collection?.attributes?.is_published ===
-                IsPublished?.published ? (
-                  <Button
-                    label={
-                      planned_collections?.published_collection_button_text
-                    }
-                    arrow={true}
-                    link={`kolekcie/${collection?.attributes?.slug}`}
-                  />
-                ) : (
-                  <p className={"text-gray"}>
-                    {planned_collections?.unpublished_collection_text}
-                  </p>
-                )}
-              </li>
-            ))}
-        </ul>
-        {filterPlannedCollections(collections)?.length > 3 && (
-          <div className={"flex justify-center mt-6 md:mt-8"}>
-            <Button
-              label={planned_collections?.show_more_button_text}
-              link={"kolekcie?plan=planned"}
-            />
-          </div>
-        )}
-      </Container>
+                  {collection?.attributes?.is_published ===
+                  IsPublished?.published ? (
+                    <Button
+                      label={
+                        planned_collections?.published_collection_button_text
+                      }
+                      arrow={true}
+                      link={`kolekcie/${collection?.attributes?.slug}`}
+                    />
+                  ) : (
+                    <p className={"text-gray"}>
+                      {planned_collections?.unpublished_collection_text}
+                    </p>
+                  )}
+                </li>
+              ))}
+          </ul>
+          {filterPlannedCollections(collections)?.length > 3 && (
+            <div className={"flex justify-center mt-6 md:mt-8"}>
+              <Button
+                label={planned_collections?.show_more_button_text}
+                link={"kolekcie?plan=planned"}
+              />
+            </div>
+          )}
+        </Container>
+      )}
 
       <Container className="my-20 md:my-40">
         <div className="border-[0.1px] border-gray flex opacity-20 " />
