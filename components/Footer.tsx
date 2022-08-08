@@ -79,9 +79,12 @@ export default function Footer() {
             {footerData?.card_production_title}
           </h3>
           <div
-            className={
-              "grid grid-cols-3 gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch"
-            }
+            className={`grid gap-x-10 lg:gap-x-16 gap-y-6 lg:gap-y-8 justify-items-stretch`}
+            style={{
+              gridTemplateColumns: `repeat(${Math.ceil(
+                footerData?.card_production_images?.length / 2
+              )}, minmax(0, 1fr))`,
+            }}
           >
             {footerData?.card_production_images?.map((data, index) => {
               if (data?.image?.data?.attributes?.url) {

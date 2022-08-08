@@ -10,6 +10,7 @@ import {
   IsPublished,
   MainPage,
   PlannedCollections,
+  PlannedStatus,
   ProductsInfo,
   StrapiImage,
 } from "@/lib/interfaces";
@@ -33,6 +34,7 @@ interface Props {
   collections_images: StrapiImage[];
   preview: boolean;
   productsInfo: ProductsInfo;
+  collections: Collections[];
 }
 
 export default function HomePage({
@@ -41,6 +43,7 @@ export default function HomePage({
   collections_images,
   preview,
   productsInfo,
+  collections,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -61,6 +64,14 @@ export default function HomePage({
 
     setCollectionImages(images);
   }, []);
+
+  const filterPlannedCollections = (
+    collections: Collections[]
+  ): Collections[] => {
+    return collections?.filter(
+      (item) => item?.attributes?.planned_status === PlannedStatus.planned
+    );
+  };
 
   return (
     <Layout preview={preview}>
@@ -190,62 +201,68 @@ export default function HomePage({
           {planned_collections?.title}
         </h2>
         <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
-          {planned_collections?.collections?.data?.map((collection, index) => (
-            <li
-              key={index}
-              className={
-                "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
-              }
-            >
-              <div className={"flex items-center"}>
-                {collection?.attributes?.manufacturer_logo?.data?.attributes
-                  ?.url && (
-                  <img
-                    className={"h-12 mr-4 md:mr-8"}
-                    src={getStrapiUrl(
-                      collection?.attributes?.manufacturer_logo?.data
-                        ?.attributes?.url
-                    )}
-                    alt="manufacturer_logo"
-                  />
-                )}
-                <div className={"space-y-1"}>
-                  <h6 className={"font-bold"}>
-                    {collection?.attributes?.title}
-                  </h6>
-                  {collection?.attributes?.date && (
-                    <p className={"text-gray"}>
-                      {`${planned_collections?.planned_date_text}: `}
-                      {formatDate(
-                        collection?.attributes?.date,
-                        collection?.attributes?.date_full,
-                        locale
+          {filterPlannedCollections(collections)
+            ?.slice(0, 3)
+            ?.map((collection, index) => (
+              <li
+                key={index}
+                className={
+                  "bg-gray-footer flex flex-col md:flex-row justify-between items-center p-4 sm:p-6 md:p-8 space-y-8 md:space-y-0 md:space-x-8"
+                }
+              >
+                <div className={"flex items-center"}>
+                  {collection?.attributes?.manufacturer_logo?.data?.attributes
+                    ?.url && (
+                    <img
+                      className={"h-12 mr-4 md:mr-8"}
+                      src={getStrapiUrl(
+                        collection?.attributes?.manufacturer_logo?.data
+                          ?.attributes?.url
                       )}
-                    </p>
+                      alt="manufacturer_logo"
+                    />
                   )}
+                  <div className={"space-y-1"}>
+                    <h6 className={"font-bold"}>
+                      {collection?.attributes?.title}
+                    </h6>
+                    {collection?.attributes?.date && (
+                      <p className={"text-gray"}>
+                        {`${planned_collections?.planned_date_text}: `}
+                        {formatDate(
+                          collection?.attributes?.date,
+                          collection?.attributes?.date_full,
+                          locale
+                        )}
+                      </p>
+                    )}
+                  </div>
                 </div>
-              </div>
-              {collection?.attributes?.is_published ===
-              IsPublished?.published ? (
-                <Button
-                  label={planned_collections?.published_collection_button_text}
-                  arrow={true}
-                  link={`kolekcie/${collection?.attributes?.slug}`}
-                />
-              ) : (
-                <p className={"text-gray"}>
-                  {planned_collections?.unpublished_collection_text}
-                </p>
-              )}
-            </li>
-          ))}
+                {collection?.attributes?.is_published ===
+                IsPublished?.published ? (
+                  <Button
+                    label={
+                      planned_collections?.published_collection_button_text
+                    }
+                    arrow={true}
+                    link={`kolekcie/${collection?.attributes?.slug}`}
+                  />
+                ) : (
+                  <p className={"text-gray"}>
+                    {planned_collections?.unpublished_collection_text}
+                  </p>
+                )}
+              </li>
+            ))}
         </ul>
-        <div className={"flex justify-center mt-6 md:mt-8"}>
-          <Button
-            label={planned_collections?.show_more_button_text}
-            link={"kolekcie?plan=planned"}
-          />
-        </div>
+        {filterPlannedCollections(collections)?.length > 3 && (
+          <div className={"flex justify-center mt-6 md:mt-8"}>
+            <Button
+              label={planned_collections?.show_more_button_text}
+              link={"kolekcie?plan=planned"}
+            />
+          </div>
+        )}
       </Container>
 
       <Container className="my-20 md:my-40">
@@ -518,6 +535,7 @@ export async function getStaticProps({ locale, preview = false }) {
       collections_images,
       preview,
       productsInfo,
+      collections,
     },
   };
 }
