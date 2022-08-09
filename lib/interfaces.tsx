@@ -453,3 +453,8 @@ export interface ProductsInfo {
   available_text: string;
   unavailable_text: string;
 }
+
+export interface SlugStrapiImage {
+  slug: string;
+  image: StrapiImage;
+}

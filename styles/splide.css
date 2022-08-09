@@ -108,3 +108,21 @@
         width: 40px;
     }
 }
+
+.collections_gallery_splide {
+    @media (min-width: 800px) {
+        .splide__slide {
+            opacity: 0.15;
+            transform: scale(0.70);
+            transition: 0.5s all;
+            pointer-events: none;
+        }
+
+        .splide__slide.is-next {
+            opacity: 1;
+            transform: scale(1);
+            cursor: pointer;
+            pointer-events: auto;
+        }
+    }
+}
