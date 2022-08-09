@@ -113,7 +113,6 @@
     @media (min-width: 800px) {
         .splide__slide {
             opacity: 0.15;
-            transform: scale(0.70);
             transition: 0.5s all;
             pointer-events: none;
         }
