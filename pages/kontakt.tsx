@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import SocialNetworks from "@/components/SocialNetworks";
 import CustomSelect from "@/components/CustomSelect";
+import React from "react";
 
 interface Props {
   contact: Contact;
@@ -183,6 +184,9 @@ export default function ContactPage({ contact, preview }: Props) {
             )}
           </Formik>
         </div>
+      </Container>
+      <Container className="my-16 md:my-20">
+        <div className="border-[0.1px] border-gray flex opacity-20 " />
       </Container>
       <SocialNetworks />
     </Layout>

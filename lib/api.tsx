@@ -165,7 +165,11 @@ export async function getCollections(
   slug?: string,
   type?: string
 ): Promise<Collections> {
-  return await fetchAPI(`collections?locale=${localization}`, slug, type);
+  return await fetchAPI(
+    `collections?locale=${localization}&pagination[pageSize]=100`,
+    slug,
+    type
+  );
 }
 
 export async function getCollectionBySlug(): Promise<Collections[]> {
