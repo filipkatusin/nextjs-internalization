@@ -67,7 +67,7 @@ export interface Contact {
   title: string;
   contact_data: string;
   billing_data: string;
-  contact_form: Form;
+  contact_form: ContactForm;
 }
 
 export interface MyCard {
@@ -101,7 +101,12 @@ interface CardAmountOption {
   customDesignPrice: string;
 }
 
-interface Form {
+interface TextEmail {
+  text: string;
+  email: string;
+}
+
+interface ContactForm {
   title: string;
   name: string;
   mail: string;
@@ -112,9 +117,7 @@ interface Form {
   mail_placeholder: string;
   phone_placeholder: string;
   message_placeholder: string;
-  message_type: {
-    text: string;
-  }[];
+  text_email: TextEmail[];
   message_type_placeholder: string;
 }
 

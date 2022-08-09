@@ -223,6 +223,7 @@ export async function createFormSubmission(formValues) {
       phone: formValues.phone,
       message_type: formValues.message_type,
       message: formValues.message,
+      send_email: formValues.send_email,
     },
   };
   await fetch(

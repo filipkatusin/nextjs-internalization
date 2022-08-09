@@ -4,15 +4,11 @@ import { Contact } from "@/lib/interfaces";
 import Container from "@/components/Container";
 import Heading from "@/components/Heading";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { Listbox } from "@headlessui/react";
 import * as Yup from "yup";
 import { useRouter } from "next/router";
 import Button from "@/components/Button";
 import SocialNetworks from "@/components/SocialNetworks";
-import { Transition } from "@headlessui/react";
-import ArrowIcon from "@/components/ArrowIcon";
 import CustomSelect from "@/components/CustomSelect";
-import { useEffect, useState } from "react";
 
 interface Props {
   contact: Contact;
@@ -44,7 +40,8 @@ export default function ContactPage({ contact, preview }: Props) {
               mail: "",
               phone: "",
               message: "",
-              message_type: contact?.contact_form?.message_type?.[0]?.text,
+              message_type: contact?.contact_form?.text_email?.[0]?.text,
+              send_email: contact?.contact_form?.text_email?.[0]?.email,
             }}
             validationSchema={Yup.object({
               name: Yup.string().required(
@@ -138,12 +135,19 @@ export default function ContactPage({ contact, preview }: Props) {
                   <CustomSelect
                     selectedValue={values?.message_type}
                     setValue={(value) => {
+                      const email_index =
+                        contact?.contact_form?.text_email?.findIndex(
+                          (item) => item.text === value
+                        );
+                      const email =
+                        contact?.contact_form?.text_email?.[email_index]?.email;
                       setValues((values) => ({
                         ...values,
                         message_type: value,
+                        send_email: email,
                       }));
                     }}
-                    values={contact?.contact_form?.message_type?.map(
+                    values={contact?.contact_form?.text_email?.map(
                       (type) => type?.text
                     )}
                   />
