@@ -65,6 +65,7 @@ export interface Competition {
 
 export interface Contact {
   title: string;
+  subtitle: string;
   contact_data: string;
   billing_data: string;
   contact_form: ContactForm;

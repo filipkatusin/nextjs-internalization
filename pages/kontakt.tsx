@@ -75,6 +75,13 @@ export default function ContactPage({ contact, preview }: Props) {
                   {contact?.contact_form?.title}
                 </h2>
 
+                {contact?.subtitle && (
+                  <article
+                    dangerouslySetInnerHTML={{ __html: contact?.subtitle }}
+                    className={"mb-4 md:mb-6 font-semibold text-justify"}
+                  ></article>
+                )}
+
                 <div className="form-grid">
                   <label className={"text-sm"} htmlFor="name">
                     {contact?.contact_form?.name} <span>*</span>
