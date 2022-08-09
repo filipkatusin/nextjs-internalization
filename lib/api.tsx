@@ -165,7 +165,11 @@ export async function getCollections(
   slug?: string,
   type?: string
 ): Promise<Collections> {
-  return await fetchAPI(`collections?locale=${localization}`, slug, type);
+  return await fetchAPI(
+    `collections?locale=${localization}&pagination[pageSize]=100`,
+    slug,
+    type
+  );
 }
 
 export async function getCollectionBySlug(): Promise<Collections[]> {
@@ -223,6 +227,7 @@ export async function createFormSubmission(formValues) {
       phone: formValues.phone,
       message_type: formValues.message_type,
       message: formValues.message,
+      send_email: formValues.send_email,
     },
   };
   await fetch(

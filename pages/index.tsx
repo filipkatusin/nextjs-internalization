@@ -12,7 +12,7 @@ import {
   PlannedCollections,
   PlannedStatus,
   ProductsInfo,
-  StrapiImage,
+  SlugStrapiImage,
 } from "@/lib/interfaces";
 import Image from "next/image";
 import Container from "@/components/Container";
@@ -31,7 +31,7 @@ import { formatDate } from "@/lib/utils";
 interface Props {
   main: MainPage;
   planned_collections: PlannedCollections;
-  collections_images: StrapiImage[];
+  collections_images: SlugStrapiImage[];
   preview: boolean;
   productsInfo: ProductsInfo;
   collections: Collections[];
@@ -49,7 +49,9 @@ export default function HomePage({
   const locale = router.locale;
   const colLink = router.locale == "sk" ? "kolekcie" : "collections";
   const newsLink = router.locale == "sk" ? "novinky" : "news";
-  const [collectionImages, setCollectionImages] = useState<StrapiImage[]>([]);
+  const [collectionImages, setCollectionImages] = useState<SlugStrapiImage[]>(
+    []
+  );
 
   let windowWidth = 0;
   if (typeof window !== "undefined") {
@@ -482,7 +484,7 @@ export default function HomePage({
       <Splide
         options={{
           speed: 1500,
-          perPage: 1,
+          perPage: windowWidth > 800 ? 3 : 1,
           type: "loop",
           pauseOnFocus: true,
           pauseOnHover: true,
@@ -490,23 +492,30 @@ export default function HomePage({
           interval: 5000,
           pagination: false,
           gap: 30,
+          rewind: true,
+          perMove: 1,
+          updateOnMove: true,
           dragMinThreshold: {
             touch: 10,
             mouse: 10,
           },
           padding: 0,
         }}
-        className="gallery-splide bg-[#232221] mb-20"
+        className={`gallery-splide bg-[#232221] mb-20 collections_gallery_splide`}
       >
-        {collectionImages?.map((image, index) => (
+        {collectionImages?.map((item, index) => (
           <SplideSlide key={index}>
-            <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
-              <img
-                src={getStrapiUrl(image?.attributes?.url)}
-                alt={""}
-                className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
-              />
-            </div>
+            <Link href={`kolekcie/${item?.slug}`}>
+              <a>
+                <div className="h-[250px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] px-4 flex">
+                  <img
+                    src={getStrapiUrl(item?.image?.attributes?.url)}
+                    alt={""}
+                    className={`mx-auto max-h-[250px] md:max-h-max md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] self-center`}
+                  />
+                </div>
+              </a>
+            </Link>
           </SplideSlide>
         ))}
       </Splide>
@@ -525,7 +534,10 @@ export async function getStaticProps({ locale, preview = false }) {
   collections.forEach((collection) => {
     if (collection?.attributes?.is_published === IsPublished.published) {
       collection?.attributes?.gallery_images?.data?.map((image) =>
-        collections_images.push(image)
+        collections_images.push({
+          image: image,
+          slug: collection?.attributes?.slug,
+        })
       );
     }
   });
