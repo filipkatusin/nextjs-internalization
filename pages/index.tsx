@@ -75,6 +75,11 @@ export default function HomePage({
     );
   };
 
+  // console.log(
+  //   new Date(collections[0].attributes.date).getDay() -
+  //     new Date(collections[1].attributes.date).getDay()
+  // );
+
   return (
     <Layout preview={preview}>
       <Splide
@@ -101,65 +106,73 @@ export default function HomePage({
         }}
         className="splide-main-page mb-20"
       >
-        {main?.collections?.data.map((collection, index) => (
-          <SplideSlide
-            key={index}
-            className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] splide-slide-main-page"
-          >
-            <Link
-              rel="prefetch"
-              as={`/${colLink}/${collection?.attributes?.slug}`}
-              href={`/${colLink}/[slug]`}
+        {main?.collections?.data
+          ?.sort(
+            (collection1, collection2) =>
+              new Date(collection1?.attributes?.date).getTime() -
+              new Date(collection2?.attributes?.date).getTime()
+          )
+          ?.reverse()
+          ?.map((collection, index) => (
+            <SplideSlide
+              key={index}
+              className="relative h-[300px] md:h-[350px] lg:h-[400px] 2xl:h-[480px] 3xl:h-[560px] splide-slide-main-page"
             >
-              <a>
-                <Image
-                  src={
-                    collection?.attributes?.image?.data?.attributes?.url ?? ""
-                  }
-                  layout={"fill"}
-                  objectFit="cover"
-                  priority
-                />
-                <div
-                  style={{
-                    background:
-                      "linear-gradient(360deg, #191919 -8.52%, rgba(25, 25, 25, 0) 100%)",
-                  }}
-                  className={`absolute top-0 left-0 w-full h-full z-10 transition-all hover:opacity-60 
+              <Link
+                rel="prefetch"
+                as={`/${colLink}/${collection?.attributes?.slug}`}
+                href={`/${colLink}/[slug]`}
+              >
+                <a>
+                  <Image
+                    src={
+                      collection?.attributes?.image?.data?.attributes?.url ?? ""
+                    }
+                    layout={"fill"}
+                    objectFit="cover"
+                    priority
+                  />
+                  <div
+                    style={{
+                      background:
+                        "linear-gradient(360deg, #191919 -8.52%, rgba(25, 25, 25, 0) 100%)",
+                    }}
+                    className={`absolute top-0 left-0 w-full h-full z-10 transition-all hover:opacity-60 
                 }`}
-                />
-                <h5
-                  style={{
-                    color: collection?.attributes?.title_color,
-                    backgroundColor:
-                      collection?.attributes?.title_background_color,
-                  }}
-                  className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden z-20 pointer-events-none"
-                >
-                  <TextEllipsis
-                    lines={2}
-                    tag={"div"}
-                    ellipsisChars={"..."}
-                    tagClass={"className"}
-                    debounceTimeoutOnResize={200}
+                  />
+                  <h5
+                    style={{
+                      color: collection?.attributes?.title_color,
+                      backgroundColor:
+                        collection?.attributes?.title_background_color,
+                    }}
+                    className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden z-20 pointer-events-none"
                   >
-                    {collection?.attributes?.title}
-                  </TextEllipsis>
-                </h5>
-                <div className="absolute bottom-5 right-2 md:left-10 z-20 pointer-events-none">
-                  <div className="flex">
-                    <button
-                      className={` splide-slide-main-page-button bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors`}
+                    {index}
+                    <TextEllipsis
+                      lines={2}
+                      tag={"div"}
+                      ellipsisChars={"..."}
+                      tagClass={"className"}
+                      debounceTimeoutOnResize={200}
                     >
-                      {main?.collection_button}
-                      <div className="arrow h-3 w-3 ml-3" />
-                    </button>
+                      {collection?.attributes?.title}
+                    </TextEllipsis>
+                  </h5>
+                  <div className="absolute bottom-5 right-2 md:left-10 z-20 pointer-events-none">
+                    <div className="flex">
+                      <button
+                        className={` splide-slide-main-page-button bg-white px-5 py-3 flex justify-center  items-center border-2 border-black text-sm md:text-base font-semibold transition-colors`}
+                      >
+                        {main?.collection_button}
+                        <div className="arrow h-3 w-3 ml-3" />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </a>
-            </Link>
-          </SplideSlide>
-        ))}
+                </a>
+              </Link>
+            </SplideSlide>
+          ))}
       </Splide>
       {/*<Container className="grid sm:grid-cols-3 gap-14 mt-20 md:mt-32">
         {main?.link_section?.map((link, index) => (

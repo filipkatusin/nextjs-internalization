@@ -435,7 +435,7 @@ function CollectionPage({
           >
             {collections
               ?.filter((item) => filterCollections(item, values))
-              .map((collection, index) =>
+              ?.map((collection, index) =>
                 collection?.attributes?.is_published ===
                 IsPublished.published ? (
                   <Link
