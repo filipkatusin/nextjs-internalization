@@ -261,11 +261,13 @@ export default function TopMenu() {
           </div>
           <div className={`flex mt-4 justify-end space-x-4`}>
             {headerData && (
-              <Link href={headerData.button_shop?.link ?? ""}>
-                <a className={`menu-button-shop hover:bg-black/20`}>
-                  {headerData.button_shop?.name}
-                </a>
-              </Link>
+              <a
+                href={headerData.button_shop?.link}
+                target={"_blank"}
+                className={`menu-button-shop hover:bg-black/20`}
+              >
+                {headerData.button_shop?.name}
+              </a>
             )}
             {/*{headerData && (*/}
             {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
@@ -300,13 +302,13 @@ export default function TopMenu() {
           </div>
           <div className={`flex space-x-4`}>
             {headerData && (
-              <Link href={headerData.button_shop?.link ?? ""}>
-                <a
-                  className={`menu-button-shop hover:bg-black hover:text-white`}
-                >
-                  {headerData.button_shop?.name}
-                </a>
-              </Link>
+              <a
+                href={headerData.button_shop?.link}
+                target={"_blank"}
+                className={`menu-button-shop hover:bg-black hover:text-white`}
+              >
+                {headerData.button_shop?.name}
+              </a>
             )}
             {/*{headerData && (*/}
             {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
