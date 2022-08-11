@@ -113,7 +113,13 @@ function CollectionPage({
       }
     });
 
-    router.push({ query: router.query }, undefined, { shallow: true });
+    router.push(
+      { pathname: router.asPath.split("?")[0], query: router.query },
+      undefined,
+      {
+        shallow: true,
+      }
+    );
   }, [values]);
 
   const checkYear = (
