@@ -113,7 +113,7 @@ export default function TopMenu() {
           >
             <button className={``}>
               {headerData && (
-                <Link href={router?.asPath ?? ""} locale={"sk"}>
+                <Link href={"/"} locale={"sk"}>
                   <a onClick={() => (router.locale = "sk")}>
                     <img
                       alt={""}
@@ -130,7 +130,7 @@ export default function TopMenu() {
             </button>
             <button className={``}>
               {headerData && (
-                <Link href={router?.asPath ?? ""} locale={"en"}>
+                <Link href={"/"} locale={"en"}>
                   <a onClick={() => (router.locale = "en")}>
                     <img
                       alt={""}
