@@ -10,6 +10,7 @@ import NewsSection from "@/components/NewsSection";
 import Link from "next/link";
 import NewsTopBanner from "@/components/NewsTopBanner";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
+import navigationLinks from "../../navigationLinks.json";
 
 interface Props {
   news: News[];
@@ -19,7 +20,6 @@ interface Props {
 
 export default function NewsPage({ news, newPage, preview }: Props) {
   const router = useRouter();
-  const newsLink = router.locale == "sk" ? "novinky" : "news";
   const [newsNumber, setNewsNumber] = useState(7);
 
   const firstNew = news[0]?.attributes;
@@ -27,7 +27,10 @@ export default function NewsPage({ news, newPage, preview }: Props) {
   return (
     <Layout preview={preview}>
       <Heading label={newPage?.title} className={"text-center"} center={true} />
-      <Link as={`/${newsLink}/${firstNew?.slug}`} href={`/${newsLink}/[slug]`}>
+      <Link
+        as={`/${navigationLinks.news[router.locale]}/${firstNew?.slug}`}
+        href={`/${navigationLinks.news[router.locale]}/[slug]`}
+      >
         <a>
           <NewsTopBanner
             date={firstNew?.date}
@@ -49,7 +52,11 @@ export default function NewsPage({ news, newPage, preview }: Props) {
 
       <Container className="grid md:grid-cols-2 xl:grid-cols-3 justify-center my-10 md:my-20 gap-6 lg:gap-8 z-10">
         {news?.slice(1, newsNumber).map((novinka, index) => (
-          <NewsSection novinka={novinka} newsLink={newsLink} key={index} />
+          <NewsSection
+            novinka={novinka}
+            newsLink={navigationLinks.news[router.locale]}
+            key={index}
+          />
         ))}
       </Container>
       {newPage?.button_title && news.length > newsNumber && (

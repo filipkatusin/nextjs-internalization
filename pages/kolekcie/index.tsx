@@ -26,6 +26,7 @@ import { getStrapiUrl } from "@/lib/get-strapi-url";
 import Button from "@/components/Button";
 import Link from "next/link";
 import { formatDate } from "@/lib/utils";
+import navigationLinks from "../../navigationLinks.json";
 
 interface Props {
   data: CollectionInterface;
@@ -447,7 +448,9 @@ function CollectionPage({
                     href={
                       collection?.attributes?.is_published ===
                       IsPublished.published
-                        ? `/kolekcie/${collection.attributes.slug}`
+                        ? `/${navigationLinks.collections[router.locale]}/${
+                            collection.attributes.slug
+                          }`
                         : ""
                     }
                   >
