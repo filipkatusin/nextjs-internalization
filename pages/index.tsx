@@ -75,11 +75,6 @@ export default function HomePage({
     );
   };
 
-  // console.log(
-  //   new Date(collections[0].attributes.date).getDay() -
-  //     new Date(collections[1].attributes.date).getDay()
-  // );
-
   return (
     <Layout preview={preview}>
       <Splide
@@ -148,7 +143,6 @@ export default function HomePage({
                     }}
                     className="absolute bottom-5 md:top-1/2 left-2 md:left-10 p-5 w-1/2 h-20 lg:h-28 flex items-center collections-corner overflow-hidden z-20 pointer-events-none"
                   >
-                    {index}
                     <TextEllipsis
                       lines={2}
                       tag={"div"}
