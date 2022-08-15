@@ -49,6 +49,22 @@ export default function CollectionPageSlug({
     windowWidth = size.width;
   }
 
+  const splideCenterFormat = (count: number = 0) => {
+    if (count === 1) {
+      return "splide-center";
+    }
+
+    if (count === 2 && windowWidth > 600) {
+      return "splide-center";
+    }
+
+    if (count === 3 && windowWidth > 1000) {
+      return "splide-center";
+    }
+
+    return "";
+  };
+
   return (
     <Layout preview={preview}>
       <Container>
@@ -287,7 +303,9 @@ export default function CollectionPageSlug({
                     : { left: "0%", right: "3%" },
                 gap: 20,
               }}
-              className="splide-products container-productsd"
+              className={`splide-products ${splideCenterFormat(
+                collection?.attributes?.products?.data?.length
+              )}`}
             >
               {collection?.attributes?.products?.data?.map((product, index) => (
                 <SplideSlide key={index}>

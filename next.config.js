@@ -11,74 +11,28 @@ module.exports = {
   async rewrites() {
     return [
       {
-        source: "/en/about-us",
-        destination: "/en/o-nas",
-        locale: false,
+        source: "/news",
+        destination: "/novinky",
       },
       {
-        source: "/o-nas",
-        destination: "/about-us",
-        locale: false,
+        source: "/news/:slug",
+        destination: "/novinky/:slug",
       },
       {
-        source: "/en/news",
-        destination: "/en/novinky",
-        locale: false,
+        source: "/collections",
+        destination: "/kolekcie",
       },
       {
-        source: "/novinky",
-        destination: "/news",
-        locale: false,
+        source: "/collections/:slug",
+        destination: "/kolekcie/:slug",
       },
       {
-        source: "/en/news/:slug",
-        destination: "/en/novinky/:slug",
-        locale: false,
+        source: "/about-us",
+        destination: "/o-nas",
       },
       {
-        source: "/novinky/:slug",
-        destination: "/news/:slug",
-        locale: false,
-      },
-      {
-        source: "/en/collections",
-        destination: "/en/kolekcie",
-        locale: false,
-      },
-      {
-        source: "/kolekcie",
-        destination: "/collections",
-        locale: false,
-      },
-      {
-        source: "/en/collections/:slug",
-        destination: "/en/kolekcie/:slug",
-        locale: false,
-      },
-      {
-        source: "/kolekcie/:slug",
-        destination: "/collections/:slug",
-        locale: false,
-      },
-      {
-        source: "/en/contact",
-        destination: "/en/kontakt",
-        locale: false,
-      },
-      {
-        source: "/kontakt",
-        destination: "/contact",
-        locale: false,
-      },
-      {
-        source: "/en/preparing",
-        destination: "/en/pripravujeme",
-        locale: false,
-      },
-      {
-        source: "/en/products",
-        destination: "/en/produkty",
-        locale: false,
+        source: "/contact",
+        destination: "/kontakt",
       },
     ];
   },

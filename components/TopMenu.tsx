@@ -113,7 +113,7 @@ export default function TopMenu() {
           >
             <button className={``}>
               {headerData && (
-                <Link href={router?.asPath ?? ""} locale={"sk"}>
+                <Link href={"/"} locale={"sk"}>
                   <a onClick={() => (router.locale = "sk")}>
                     <img
                       alt={""}
@@ -130,7 +130,7 @@ export default function TopMenu() {
             </button>
             <button className={``}>
               {headerData && (
-                <Link href={router?.asPath ?? ""} locale={"en"}>
+                <Link href={"/"} locale={"en"}>
                   <a onClick={() => (router.locale = "en")}>
                     <img
                       alt={""}
@@ -261,11 +261,13 @@ export default function TopMenu() {
           </div>
           <div className={`flex mt-4 justify-end space-x-4`}>
             {headerData && (
-              <Link href={headerData.button_shop?.link ?? ""}>
-                <a className={`menu-button-shop hover:bg-black/20`}>
-                  {headerData.button_shop?.name}
-                </a>
-              </Link>
+              <a
+                href={headerData.button_shop?.link}
+                target={"_blank"}
+                className={`menu-button-shop hover:bg-black/20`}
+              >
+                {headerData.button_shop?.name}
+              </a>
             )}
             {/*{headerData && (*/}
             {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
@@ -300,13 +302,13 @@ export default function TopMenu() {
           </div>
           <div className={`flex space-x-4`}>
             {headerData && (
-              <Link href={headerData.button_shop?.link ?? ""}>
-                <a
-                  className={`menu-button-shop hover:bg-black hover:text-white`}
-                >
-                  {headerData.button_shop?.name}
-                </a>
-              </Link>
+              <a
+                href={headerData.button_shop?.link}
+                target={"_blank"}
+                className={`menu-button-shop hover:bg-black hover:text-white`}
+              >
+                {headerData.button_shop?.name}
+              </a>
             )}
             {/*{headerData && (*/}
             {/*  <Link href={headerData.button_my_card?.link ?? ""}>*/}
