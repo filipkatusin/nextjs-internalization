@@ -67,6 +67,13 @@
     }
 }
 
+.splide-center {
+    .splide__list {
+        width: 100vw;
+        justify-content: center;
+    }
+}
+
 .gallery-splide {
     .splide__arrow--prev {
         left: 10px;
