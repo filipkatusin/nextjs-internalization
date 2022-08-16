@@ -91,9 +91,8 @@ export default function CollectionPageSlug({
           />
           <div className={`flex flex-wrap sm:w-2/3 md:w-3/5 justify-center`}>
             {collection?.attributes?.header_links?.map((headerLink, index) => (
-              <a href={headerLink?.link ?? ""} target={"_blank"}>
+              <a href={headerLink?.link ?? ""} target={"_blank"} key={index}>
                 <Button
-                  key={index}
                   label={headerLink?.title}
                   arrow={true}
                   arrowColor={"white"}
@@ -111,9 +110,9 @@ export default function CollectionPageSlug({
                   getStrapiUrl(headerFile?.file?.data?.attributes?.url) ?? ""
                 }
                 target={"_blank"}
+                key={index}
               >
                 <Button
-                  key={index}
                   label={headerFile?.title}
                   arrow={true}
                   arrowColor={"black"}

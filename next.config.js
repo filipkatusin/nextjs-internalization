@@ -4,7 +4,7 @@ module.exports = {
     domains: ["res.cloudinary.com", "localhost"],
   },
   i18n: {
-    locales: ["sk", "en"],
+    locales: ["sk", "en", "cs"],
     defaultLocale: "sk",
     localeDetection: false,
   },
@@ -33,6 +33,14 @@ module.exports = {
       {
         source: "/contact",
         destination: "/kontakt",
+      },
+      {
+        source: "/kolekce",
+        destination: "/kolekcie",
+      },
+      {
+        source: "/kolekce/:slug",
+        destination: "/kolekcie/:slug",
       },
     ];
   },

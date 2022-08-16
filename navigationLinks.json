@@ -1,10 +1,12 @@
 {
   "news": {
     "sk": "novinky",
+    "cs": "novinky",
     "en": "news"
   },
   "collections": {
     "sk": "kolekcie",
+    "cs": "kolekce",
     "en": "collections"
   }
 }

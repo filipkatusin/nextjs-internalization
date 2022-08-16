@@ -33,7 +33,7 @@ export default function Footer() {
       {
         [att?.locale]: att,
         ...localizations,
-      }[localization == "en" ? "en" : "sk"]
+      }[localization == "cs" ? "cs" : "sk"]
     );
   });
 
@@ -45,6 +45,15 @@ export default function Footer() {
       },
       checkbox: {
         required: "Súhlas je povinný",
+      },
+    },
+    cs: {
+      email: {
+        required: "Email je povinen.",
+        valid: "Email musí mít validní formát.",
+      },
+      checkbox: {
+        required: "Souhlas je povinen.",
       },
     },
     en: {

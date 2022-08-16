@@ -39,7 +39,7 @@ export default function TopMenu() {
         ...localizations,
       }[localization]
     );
-    setMenuData(localization === "sk" ? menu[0] : menu[1]);
+    setMenuData(localization === "sk" ? menu[0] : menu[2]);
   }, [localization]);
 
   useEffect(() => {
@@ -130,21 +130,38 @@ export default function TopMenu() {
             </button>
             <button className={``}>
               {headerData && (
-                <Link href={"/"} locale={"en"}>
-                  <a onClick={() => (router.locale = "en")}>
+                <Link href={"/"} locale={"cs"}>
+                  <a onClick={() => (router.locale = "cs")}>
                     <img
                       alt={""}
-                      src={headerData.en_icon?.data?.attributes?.url}
+                      src={headerData.cz_icon?.data?.attributes?.url}
                       className={`menu-lang-icon hover:opacity-100`}
                       onClick={() => {
-                        setLangIcon("en_icon");
-                        setLocalization("en");
+                        setLangIcon("cz_icon");
+                        setLocalization("cs");
                       }}
                     />
                   </a>
                 </Link>
               )}
             </button>
+            {/*<button className={``}>*/}
+            {/*  {headerData && (*/}
+            {/*    <Link href={"/"} locale={"en"}>*/}
+            {/*      <a onClick={() => (router.locale = "en")}>*/}
+            {/*        <img*/}
+            {/*          alt={""}*/}
+            {/*          src={headerData.en_icon?.data?.attributes?.url}*/}
+            {/*          className={`menu-lang-icon hover:opacity-100`}*/}
+            {/*          onClick={() => {*/}
+            {/*            setLangIcon("en_icon");*/}
+            {/*            setLocalization("en");*/}
+            {/*          }}*/}
+            {/*        />*/}
+            {/*      </a>*/}
+            {/*    </Link>*/}
+            {/*  )}*/}
+            {/*</button>*/}
           </div>
         </Container>
         <div

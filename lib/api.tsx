@@ -16,6 +16,10 @@ import {
 } from "@/lib/interfaces";
 
 async function fetchAPI(url: string, slug?: string, type?: string) {
+  if (slug === "cz") {
+    slug = "cs";
+  }
+
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/${url}${
@@ -91,6 +95,15 @@ async function fetchAPIMenu() {
       }
     );
 
+    const res3 = await fetch(
+      `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/navigation/render/navigation-cz?type=tree`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
     if (res.status != 200) {
       new Error("Failed request");
     }
@@ -99,8 +112,13 @@ async function fetchAPIMenu() {
       new Error("Failed request2");
     }
 
+    if (res2.status != 200) {
+      new Error("Failed request3");
+    }
+
     const json = await res.json();
     const json2 = await res2.json();
+    const json3 = await res3.json();
     if (json.errors) {
       console.error(json.errors);
       new Error("Failed to fetch APIMenu");
@@ -111,7 +129,12 @@ async function fetchAPIMenu() {
       new Error("Failed to fetch APIMenu2");
     }
 
-    return [[...json], [...json2]];
+    if (json3.errors) {
+      console.error(json3.errors);
+      new Error("Failed to fetch APIMenu3");
+    }
+
+    return [[...json], [...json2], [...json3]];
   } catch (e) {
     console.error(e);
   }
