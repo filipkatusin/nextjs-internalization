@@ -16,6 +16,18 @@ interface Props {
   preview: boolean;
 }
 
+const errorMessages = {
+  sk: {
+    required: "Povinné pole",
+  },
+  cs: {
+    required: "Povinné pole",
+  },
+  en: {
+    required: "Required field",
+  },
+};
+
 export default function ContactPage({ contact, preview }: Props) {
   const { locale } = useRouter();
 
@@ -45,22 +57,12 @@ export default function ContactPage({ contact, preview }: Props) {
               send_email: contact?.contact_form?.text_email?.[0]?.email,
             }}
             validationSchema={Yup.object({
-              name: Yup.string().required(
-                locale == "en" ? "Required field" : "Povinné pole"
-              ),
+              name: Yup.string().required(errorMessages[locale].required),
               mail: Yup.string()
-                .email(
-                  locale == "en"
-                    ? "Invalid email address"
-                    : "Neplatná mailová adresa"
-                )
-                .required(locale == "en" ? "Required field" : "Povinné pole"),
-              phone: Yup.string().required(
-                locale == "en" ? "Required field" : "Povinné pole"
-              ),
-              message: Yup.string().required(
-                locale == "en" ? "Required field" : "Povinné pole"
-              ),
+                .email(errorMessages[locale].required)
+                .required(errorMessages[locale].required),
+              phone: Yup.string().required(errorMessages[locale].required),
+              message: Yup.string().required(errorMessages[locale].required),
             })}
             onSubmit={(values, { setSubmitting, resetForm }) => {
               createFormSubmission(values).then((_) => {

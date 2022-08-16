@@ -45,13 +45,7 @@ const initialValues: InitialCollectionsFilterValues = {
   plan: [],
 };
 
-function CollectionPage({
-  data,
-  collections,
-  competitions,
-  plannedCollections,
-  preview,
-}: Props) {
+function CollectionPage({ data, collections, competitions, preview }: Props) {
   const [mobileFilterOpen, setMobileMenuOpen] = useState<boolean>(false);
   const [typeTitle, setTypeTitle] = useState({});
   const [typeState, setTypeState] = useState({});
