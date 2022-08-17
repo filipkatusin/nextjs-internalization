@@ -152,11 +152,13 @@ export default function Footer() {
                   <h4 className={"font-bold mb-2 md:mb-4 text-xl lg:text-lg"}>
                     {footerData?.contact?.title}
                   </h4>
-                  <ul>
+                  <ul className={"flex flex-col items-cener lg:items-start"}>
                     {footerData?.contact?.title_value?.map((item, index) => (
                       <li
                         key={index}
-                        className={"text-black font-medium lg:text-lg flex"}
+                        className={
+                          "text-black font-medium lg:text-lg flex justify-center"
+                        }
                       >
                         {item.title}:
                         <article
