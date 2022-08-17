@@ -76,6 +76,8 @@ export default function Footer() {
       .required(errorMessages[footerData?.locale]?.checkbox.required),
   });
 
+  console.log(footerData);
+
   return (
     <div>
       <section className={"border-top-bottom"}>
@@ -154,10 +156,13 @@ export default function Footer() {
                     {footerData?.contact?.title_value?.map((item, index) => (
                       <li
                         key={index}
-                        className={"text-black font-medium lg:text-lg"}
+                        className={"text-black font-medium lg:text-lg flex"}
                       >
                         {item.title}:
-                        <span className={"underline ml-2"}>{item.link}</span>
+                        <article
+                          className={"underline ml-2"}
+                          dangerouslySetInnerHTML={{ __html: item?.content }}
+                        ></article>
                       </li>
                     ))}
                   </ul>
