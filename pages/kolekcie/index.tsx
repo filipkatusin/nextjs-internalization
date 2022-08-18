@@ -251,27 +251,35 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
             />
           </div>
 
-          <FilterSection
-            title={data?.filter_type?.data?.attributes?.title}
-            data={data?.filter_type?.data?.attributes?.title_type?.map(
-              (type) => {
-                return { label: type?.title, value: type?.filter_type };
-              }
-            )}
-            name={"type"}
-          />
+          {data?.filter_planned?.data?.attributes?.title_type?.length > 0 && (
+            <>
+              <FilterSection
+                title={data?.filter_planned?.data?.attributes?.title}
+                data={data?.filter_planned?.data?.attributes?.title_type?.map(
+                  (state) => ({
+                    label: state?.title,
+                    value: state?.filter_type,
+                  })
+                )}
+                name={"plan"}
+              />
+            </>
+          )}
 
-          <div className={"bg-gray-footer h-[1px] w-full my-4"} />
-
-          <FilterSection
-            title={data?.filter_year?.data?.attributes?.title}
-            data={data?.filter_year?.data?.attributes?.title_type?.map(
-              (year) => {
-                return { label: year?.title, value: year?.title };
-              }
-            )}
-            name={"year"}
-          />
+          {data?.filter_year?.data?.attributes?.title_type.length > 0 && (
+            <>
+              <div className={"bg-gray-footer h-[1px] w-full my-4"} />
+              <FilterSection
+                title={data?.filter_year?.data?.attributes?.title}
+                data={data?.filter_year?.data?.attributes?.title_type?.map(
+                  (year) => {
+                    return { label: year?.title, value: year?.title };
+                  }
+                )}
+                name={"year"}
+              />
+            </>
+          )}
 
           {competitions.length > 0 && (
             <>
@@ -306,18 +314,18 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
             </>
           )}
 
-          {data?.filter_planned?.data?.attributes?.title_type?.length > 0 && (
+          {data?.filter_type?.data?.attributes?.title_type.length > 0 && (
             <>
               <div className={"bg-gray-footer h-[1px] w-full my-4"} />
+
               <FilterSection
-                title={data?.filter_planned?.data?.attributes?.title}
-                data={data?.filter_planned?.data?.attributes?.title_type?.map(
-                  (state) => ({
-                    label: state?.title,
-                    value: state?.filter_type,
-                  })
+                title={data?.filter_type?.data?.attributes?.title}
+                data={data?.filter_type?.data?.attributes?.title_type?.map(
+                  (type) => {
+                    return { label: type?.title, value: type?.filter_type };
+                  }
                 )}
-                name={"plan"}
+                name={"type"}
               />
             </>
           )}
@@ -349,14 +357,14 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
               </li>
             )}
 
-            {values?.type?.map((type, index) => (
-              <li key={type + index}>
+            {values?.plan?.map((item, index) => (
+              <li key={index}>
                 <FilterButton
-                  label={typeTitle[type]}
+                  label={typePlan[item]}
                   onClick={() =>
                     setValues({
                       ...values,
-                      type: [...values.type.filter((item) => item !== type)],
+                      plan: [...values.plan.filter((item) => item !== item)],
                     })
                   }
                 />
@@ -412,14 +420,14 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
               </li>
             ))}
 
-            {values?.plan?.map((item, index) => (
-              <li key={index}>
+            {values?.type?.map((type, index) => (
+              <li key={type + index}>
                 <FilterButton
-                  label={typePlan[item]}
+                  label={typeTitle[type]}
                   onClick={() =>
                     setValues({
                       ...values,
-                      plan: [...values.plan.filter((item) => item !== item)],
+                      type: [...values.type.filter((item) => item !== type)],
                     })
                   }
                 />
