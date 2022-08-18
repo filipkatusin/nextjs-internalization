@@ -76,8 +76,6 @@ export default function Footer() {
       .required(errorMessages[footerData?.locale]?.checkbox.required),
   });
 
-  console.log(footerData);
-
   return (
     <div>
       <section className={"border-top-bottom"}>

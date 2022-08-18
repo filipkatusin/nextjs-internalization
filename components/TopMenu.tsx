@@ -16,7 +16,6 @@ export default function TopMenu() {
   const [langDropdown, setLangDropdown] = useState(false);
   const [headerData, setHeaderData] = useState<any>({});
   const [menuData, setMenuData] = useState<any>([]);
-  const [langIcon, setLangIcon] = useState(router.locale + "_icon");
   const [localization, setLocalization] = useState(router.locale);
 
   const menuRef = useRef<HTMLDivElement>();
@@ -100,7 +99,7 @@ export default function TopMenu() {
               {headerData && (
                 <img
                   alt={""}
-                  src={header[langIcon]?.data?.attributes?.url}
+                  src={`/icons/${router.locale}-icon.svg`}
                   className={`h-5 w-5`}
                 />
               )}
@@ -117,10 +116,9 @@ export default function TopMenu() {
                   <a onClick={() => (router.locale = "sk")}>
                     <img
                       alt={""}
-                      src={headerData.sk_icon?.data?.attributes?.url}
+                      src={"/icons/sk-icon.svg"}
                       className={`menu-lang-icon hover:opacity-100`}
                       onClick={() => {
-                        setLangIcon("sk_icon");
                         setLocalization("sk");
                       }}
                     />
@@ -134,10 +132,9 @@ export default function TopMenu() {
                   <a onClick={() => (router.locale = "cs")}>
                     <img
                       alt={""}
-                      src={headerData.cz_icon?.data?.attributes?.url}
+                      src={"/icons/cs-icon.svg"}
                       className={`menu-lang-icon hover:opacity-100`}
                       onClick={() => {
-                        setLangIcon("cz_icon");
                         setLocalization("cs");
                       }}
                     />
