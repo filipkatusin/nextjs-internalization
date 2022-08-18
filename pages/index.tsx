@@ -212,6 +212,12 @@ export default function HomePage({
           </h2>
           <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
             {filterPlannedCollections(collections)
+              ?.sort(
+                (collection1, collection2) =>
+                  new Date(collection1?.attributes?.date).getTime() -
+                  new Date(collection2?.attributes?.date).getTime()
+              )
+              ?.reverse()
               ?.slice(0, 3)
               ?.map((collection, index) => (
                 <li
