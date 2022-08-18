@@ -1,12 +1,14 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import {
   getCollections,
+  getCurrency,
   getMainPage,
   getPlannedCollections,
   getProductsInfo,
 } from "@/lib/api";
 import {
   Collections,
+  Currency,
   IsPublished,
   MainPage,
   PlannedCollections,
@@ -35,6 +37,7 @@ interface Props {
   preview: boolean;
   productsInfo: ProductsInfo;
   collections: Collections[];
+  currency: Currency;
 }
 
 export default function HomePage({
@@ -44,6 +47,7 @@ export default function HomePage({
   preview,
   productsInfo,
   collections,
+  currency,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -212,6 +216,12 @@ export default function HomePage({
           </h2>
           <ul className={"space-y-1 max-w-[1200px] mx-auto"}>
             {filterPlannedCollections(collections)
+              ?.sort(
+                (collection1, collection2) =>
+                  new Date(collection1?.attributes?.date).getTime() -
+                  new Date(collection2?.attributes?.date).getTime()
+              )
+              ?.reverse()
               ?.slice(0, 3)
               ?.map((collection, index) => (
                 <li
@@ -323,7 +333,7 @@ export default function HomePage({
                 }
               >
                 <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
-                  {product?.attributes?.price} €
+                  {product?.attributes?.price} {currency?.currency}
                 </p>
 
                 <p
@@ -536,6 +546,7 @@ export async function getStaticProps({ locale, preview = false }) {
   const planned_collections = (await getPlannedCollections(locale)) || [];
   const collections = ((await getCollections(locale)) || []) as Collections[];
   const productsInfo = await getProductsInfo(locale);
+  const currency = (await getCurrency(locale)) as Currency;
 
   const collections_images = [];
   collections.forEach((collection) => {
@@ -557,6 +568,7 @@ export async function getStaticProps({ locale, preview = false }) {
       preview,
       productsInfo,
       collections,
+      currency,
     },
   };
 }

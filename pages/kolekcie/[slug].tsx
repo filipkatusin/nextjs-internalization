@@ -4,11 +4,13 @@ import {
   getCollectionBySlug,
   getCollectionPage,
   getCollections,
+  getCurrency,
   getProductsInfo,
 } from "@/lib/api";
 import {
   CollectionInterface,
   Collections,
+  Currency,
   ProductsInfo,
 } from "@/lib/interfaces";
 import { getStrapiUrl } from "@/lib/get-strapi-url";
@@ -26,6 +28,7 @@ interface Props {
   collectionPage: CollectionInterface;
   preview: boolean;
   productsInfo: ProductsInfo;
+  currency: Currency;
 }
 
 export default function CollectionPageSlug({
@@ -33,6 +36,7 @@ export default function CollectionPageSlug({
   collectionPage,
   preview,
   productsInfo,
+  currency,
 }: Props) {
   const [infoIsOpen, setInfoIsOpen] = useState<boolean>(false);
   const [galleryIsOpen, setGalleryIsOpen] = useState<boolean>(false);
@@ -321,7 +325,7 @@ export default function CollectionPageSlug({
                       }
                     >
                       <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
-                        {product?.attributes?.price} €
+                        {product?.attributes?.price} {currency?.currency}
                       </p>
 
                       <p
@@ -406,6 +410,7 @@ export async function getStaticProps({ locale, params, preview = false }) {
   const data = (await getCollections(locale, params?.slug)) || [];
   const collectionPage = (await getCollectionPage(locale)) || [];
   const productsInfo = await getProductsInfo(locale);
+  const currency = (await getCurrency(locale)) as Currency;
 
   return {
     props: {
@@ -415,6 +420,7 @@ export async function getStaticProps({ locale, params, preview = false }) {
       collectionPage,
       preview,
       productsInfo,
+      currency,
     },
   };
 }
