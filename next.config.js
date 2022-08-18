@@ -6,7 +6,6 @@ module.exports = {
   i18n: {
     locales: ["sk", "cs"],
     defaultLocale: "sk",
-    localeDetection: false,
     domains: [
       {
         domain: "test.sportzoo.sk",
