@@ -344,6 +344,10 @@ export interface Menu {
   items: Menu[];
 }
 
+export interface Currency {
+  currency: string;
+}
+
 export interface MainPage {
   collection_button: string;
   link_section: LinkSection[];

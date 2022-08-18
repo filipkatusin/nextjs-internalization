@@ -1,12 +1,14 @@
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import {
   getCollections,
+  getCurrency,
   getMainPage,
   getPlannedCollections,
   getProductsInfo,
 } from "@/lib/api";
 import {
   Collections,
+  Currency,
   IsPublished,
   MainPage,
   PlannedCollections,
@@ -35,6 +37,7 @@ interface Props {
   preview: boolean;
   productsInfo: ProductsInfo;
   collections: Collections[];
+  currency: Currency;
 }
 
 export default function HomePage({
@@ -44,6 +47,7 @@ export default function HomePage({
   preview,
   productsInfo,
   collections,
+  currency,
 }: Props) {
   const router = useRouter();
   const locale = router.locale;
@@ -329,7 +333,7 @@ export default function HomePage({
                 }
               >
                 <p className="px-4 py-1 cut-corner cut-corner-white inline-block bg-black text-white">
-                  {product?.attributes?.price} €
+                  {product?.attributes?.price} {currency?.currency}
                 </p>
 
                 <p
@@ -542,6 +546,7 @@ export async function getStaticProps({ locale, preview = false }) {
   const planned_collections = (await getPlannedCollections(locale)) || [];
   const collections = ((await getCollections(locale)) || []) as Collections[];
   const productsInfo = await getProductsInfo(locale);
+  const currency = (await getCurrency(locale)) as Currency;
 
   const collections_images = [];
   collections.forEach((collection) => {
@@ -563,6 +568,7 @@ export async function getStaticProps({ locale, preview = false }) {
       preview,
       productsInfo,
       collections,
+      currency,
     },
   };
 }

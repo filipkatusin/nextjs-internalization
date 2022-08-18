@@ -364,7 +364,9 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
                   onClick={() =>
                     setValues({
                       ...values,
-                      plan: [...values.plan.filter((item) => item !== item)],
+                      plan: values.plan.filter(
+                        (filterItem) => filterItem !== item
+                      ),
                     })
                   }
                 />
@@ -442,6 +444,17 @@ function CollectionPage({ data, collections, competitions, preview }: Props) {
           >
             {collections
               ?.filter((item) => filterCollections(item, values))
+              // .sort((a, b) => {
+              //   if (
+              //     values?.plan?.includes("planned") &&
+              //     values?.plan?.includes("notPlanned")
+              //   ) {
+              //     return 0;
+              //   }
+              //   return a?.attributes?.is_published.localeCompare(
+              //     b?.attributes?.is_published
+              //   );
+              // })
               ?.map((collection, index) =>
                 collection?.attributes?.is_published ===
                 IsPublished.published ? (
@@ -654,20 +667,14 @@ export async function getStaticProps({ locale, preview = false }) {
     return b.title?.localeCompare(a.title);
   });
 
-  collections
-    ?.sort(function (a, b) {
-      return (
-        b.attributes?.date
-          ?.toString()
-          .localeCompare(a.attributes?.date?.toString()) ||
-        a?.attributes?.title?.localeCompare(b?.attributes?.title)
-      );
-    })
-    .sort((a, b) => {
-      return a?.attributes?.is_published.localeCompare(
-        b?.attributes?.is_published
-      );
-    });
+  collections?.sort(function (a, b) {
+    return (
+      b.attributes?.date
+        ?.toString()
+        .localeCompare(a.attributes?.date?.toString()) ||
+      a?.attributes?.title?.localeCompare(b?.attributes?.title)
+    );
+  });
 
   return {
     props: {

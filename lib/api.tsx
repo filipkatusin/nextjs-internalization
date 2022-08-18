@@ -3,6 +3,7 @@ import {
   CollectionInterface,
   Collections,
   Contact,
+  Currency,
   FaqPage,
   GeneralCondition,
   Header,
@@ -223,6 +224,11 @@ export async function getNewPage(localization: string): Promise<NewPage> {
 
 export async function getMainPage(localization: string): Promise<MainPage> {
   const data = await fetchAPI(`main-page?locale=${localization}`);
+  return data?.attributes;
+}
+
+export async function getCurrency(localization: string): Promise<Currency> {
+  const data = await fetchAPI(`currency?locale=${localization}`);
   return data?.attributes;
 }
 
