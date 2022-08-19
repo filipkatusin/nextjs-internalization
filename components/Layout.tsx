@@ -48,11 +48,11 @@ export default function Layout({
           </Link>
         </div>
       )}
-      <TopMenu />
+      {/*<TopMenu />*/}
       <div className="min-h-full">
         <main>{children}</main>
       </div>
-      {showFooter && <Footer />}
+      {/*{showFooter && <Footer />}*/}
     </>
   );
 }
