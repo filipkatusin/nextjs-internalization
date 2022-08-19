@@ -8,11 +8,11 @@ const nextConfig = {
       localeDetection: false,
       domains: [
           {
-              domain: "test.sportzoo.sk",
+              domain: "filip.the-software.sk",
               defaultLocale: "sk",
           },
           {
-              domain: "test.sportzoo.cz",
+              domain: "filip.the-software.cz",
               defaultLocale: "cs",
           },
       ],
