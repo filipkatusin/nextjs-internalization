@@ -5,7 +5,7 @@ module.exports = {
   },
   i18n: {
     locales: ["sk", "cs"],
-    defaultLocale: "sk",
+    defaultLocale: "cz",
     domains: [
       {
         domain: "test.sportzoo.sk",
@@ -17,40 +17,40 @@ module.exports = {
       },
     ],
   },
-  // async rewrites() {
-  //   return [
-  //     {
-  //       source: "/news",
-  //       destination: "/novinky",
-  //     },
-  //     {
-  //       source: "/news/:slug",
-  //       destination: "/novinky/:slug",
-  //     },
-  //     {
-  //       source: "/collections",
-  //       destination: "/kolekcie",
-  //     },
-  //     {
-  //       source: "/collections/:slug",
-  //       destination: "/kolekcie/:slug",
-  //     },
-  //     {
-  //       source: "/about-us",
-  //       destination: "/o-nas",
-  //     },
-  //     {
-  //       source: "/contact",
-  //       destination: "/kontakt",
-  //     },
-  //     {
-  //       source: "/kolekce",
-  //       destination: "/kolekcie",
-  //     },
-  //     {
-  //       source: "/kolekce/:slug",
-  //       destination: "/kolekcie/:slug",
-  //     },
-  //   ];
-  // },
+  async rewrites() {
+    return [
+      // {
+      //   source: "/news",
+      //   destination: "/novinky",
+      // },
+      // {
+      //   source: "/news/:slug",
+      //   destination: "/novinky/:slug",
+      // },
+      // {
+      //   source: "/collections",
+      //   destination: "/kolekcie",
+      // },
+      // {
+      //   source: "/collections/:slug",
+      //   destination: "/kolekcie/:slug",
+      // },
+      // {
+      //   source: "/about-us",
+      //   destination: "/o-nas",
+      // },
+      // {
+      //   source: "/contact",
+      //   destination: "/kontakt",
+      // },
+      {
+        source: "/kolekce",
+        destination: "/kolekcie",
+      },
+      // {
+      //   source: "/kolekce/:slug",
+      //   destination: "/kolekcie/:slug",
+      // },
+    ];
+  },
 };
