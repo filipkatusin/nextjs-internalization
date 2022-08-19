@@ -19,6 +19,14 @@ module.exports = {
   },
   async rewrites() {
     return [
+      {
+        source: "/kolekce",
+        destination: "/kolekcie",
+      },
+      {
+        source: "/kolekce/:slug",
+        destination: "/kolekcie/:slug",
+      },
       // {
       //   source: "/news",
       //   destination: "/novinky",
@@ -42,14 +50,6 @@ module.exports = {
       // {
       //   source: "/contact",
       //   destination: "/kontakt",
-      // },
-      {
-        source: "/kolekce",
-        destination: "/kolekcie",
-      },
-      // {
-      //   source: "/kolekce/:slug",
-      //   destination: "/kolekcie/:slug",
       // },
     ];
   },
