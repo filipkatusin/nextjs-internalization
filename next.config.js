@@ -10,12 +10,10 @@ module.exports = {
     domains: [
       {
         domain: "test.sportzoo.sk",
-        locales: ["sk"],
         defaultLocale: "sk",
       },
       {
         domain: "test.sportzoo.cz",
-        locales: ["cs"],
         defaultLocale: "cs",
       },
     ],
